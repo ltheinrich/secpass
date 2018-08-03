@@ -1,0 +1,21 @@
+{
+    "postgresql": {
+        "database": "jshwybrv",
+        "host": "horton.elephantsql.com",
+        "password": "",
+        "port": "5432",
+        "ssl": "disable",
+        "username": "jshwybrv"
+    },
+    "webserver": {
+        "address": ":2215",
+        "certificateFile": "cert.pem",
+        "keyFile": "key.pem"
+    },
+    "web": {
+        "title": "secpass"
+    },
+    "app": {
+        "logFile": "logs/2006-01-02.txt"
+    }
+}
