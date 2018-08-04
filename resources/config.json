@@ -9,13 +9,17 @@
     },
     "webserver": {
         "address": ":2215",
-        "certificateFile": "cert.pem",
-        "keyFile": "key.pem"
+        "certificateFile": "resources/ssl/cert.pem",
+        "keyFile": "resources/ssl/key.pem",
+        "templatesDirectory": "resources/templates/*/*",
+        "cssDirectory": "resources/css"
     },
     "web": {
         "title": "secpass"
     },
     "app": {
-        "logFile": "logs/2006-01-02.txt"
+        "logInfo": "true",
+        "logFile": "logs/2006-01-02.txt",
+        "languageDirectory": "resources/language"
     }
 }

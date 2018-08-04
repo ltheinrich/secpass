@@ -1,0 +1,10 @@
+{
+    "name": "Name",
+    "password": "Passwort",
+    "repeatPassword": "Passwort wiederholen",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "nameExists": "Der Name existiert bereits.",
+    "passwordNotEqual": "Die Passwörter stimmen nicht überein.",
+    "loginWrong": "Deine Anmeldedaten sind nicht korrekt."
+}

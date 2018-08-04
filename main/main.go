@@ -1,31 +1,50 @@
 package main
 
 import (
+	"io/ioutil"
 	"net/http"
+	"strings"
 	"time"
-
-	"lheinrich.de/extgo/shorts"
 
 	"lheinrich.de/secpass/conf"
 	"lheinrich.de/secpass/handler"
+	"lheinrich.de/secpass/shorts"
 )
 
 // main function
 func main() {
-	setup()
-}
-
-// setup application
-func setup() {
-	// load config
-	conf.Config = conf.ReadConfig("config.json")
-
-	// initialize logging to file
-	shorts.InitLoggingFile(time.Now().Format(conf.Config["app"]["logFile"]))
-
 	// setups
+	setupConfig()
+	setupLogging()
 	setupDB()
 	setupWebserver()
+}
+
+// setup config and languages
+func setupConfig() {
+	// load config
+	conf.Config = conf.ReadConfig("resources/config.json")
+
+	// define language directory and list files
+	langDir := conf.Config["app"]["languageDirectory"]
+	files, err := ioutil.ReadDir(langDir)
+	shorts.Check(err, true)
+
+	// loop files and load language
+	for _, file := range files {
+		lang := strings.Split(file.Name(), ".")
+		conf.Lang[lang[0]] = conf.ReadLanguage(langDir + "/" + file.Name())
+	}
+}
+
+// setup logging
+func setupLogging() {
+	// define logging configurations
+	logFile := conf.Config["app"]["logFile"]
+	logInfo := conf.Config["app"]["logInfo"] == "true"
+
+	// initialize logging to file
+	shorts.InitLoggingFile(time.Now().Format(logFile), logInfo)
 }
 
 // setup database
@@ -58,6 +77,12 @@ func setupWebserver() {
 
 // setup webserver handlers
 func setupHandlers() {
+	// load templates
+	handler.LoadTemplates()
+
 	// register handlers
-	http.HandleFunc("/index.html", handler.Index)
+	http.HandleFunc("/", handler.Index)
+	http.HandleFunc("/css/", handler.CSS)
+	http.HandleFunc("/register", handler.Register)
+	http.HandleFunc("/login", handler.Login)
 }
