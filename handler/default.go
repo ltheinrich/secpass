@@ -5,25 +5,38 @@ import (
 	"net/http"
 	"strings"
 
-	"lheinrich.de/extgo/shorts"
-
 	"lheinrich.de/secpass/conf"
+	"lheinrich.de/secpass/shorts"
 )
 
 var (
 	// define functions
-	funcs = template.FuncMap{"config": func(key string) string {
-		// split key string by . to get group.key
-		keys := strings.Split(key, ".")
-		return conf.Config[keys[0]][keys[1]]
-	}}
+	funcs = template.FuncMap{
+		"config": func(key string) string {
+			// split key string by . to get group.key and return value
+			keys := strings.Split(key, ".")
+			return conf.Config[keys[0]][keys[1]]
+		}}
 
-	// load templates
-	tpl, _ = template.New("").Funcs(funcs).ParseGlob("templates/*/*")
+	// define templates
+	tpl *template.Template
 )
 
 // name function
 func name(w http.ResponseWriter, r *http.Request) {
 	// execute template
-	shorts.Check(tpl.ExecuteTemplate(w, "name", nil))
+	shorts.Check(tpl.ExecuteTemplate(w, "name", nil), false)
+}
+
+// LoadTemplates parse
+func LoadTemplates() {
+	// parse templates and check error
+	var err error
+	tpl, err = template.New("").Funcs(funcs).ParseGlob(conf.Config["webserver"]["templatesDirectory"])
+	shorts.Check(err, true)
+}
+
+func redirect(w http.ResponseWriter, location string) {
+	w.Header().Set("location", location)
+	w.WriteHeader(307)
 }
