@@ -1,0 +1,8 @@
+{
+    "$WARNING": "UNCOMPLETE TRANSLATION",
+    "name": "имя",
+    "password": "пароль",
+    "repeatPassword": "Повторить пароль",
+    "login": "авторизоваться",
+    "register": "регистр"
+}
