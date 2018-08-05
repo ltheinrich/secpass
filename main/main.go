@@ -82,7 +82,12 @@ func setupHandlers() {
 
 	// register handlers
 	http.HandleFunc("/", handler.Index)
+
+	// directories
 	http.HandleFunc("/css/", handler.CSS)
+	http.HandleFunc("/images/", handler.Image)
+
+	// pages
 	http.HandleFunc("/register", handler.Register)
 	http.HandleFunc("/login", handler.Login)
 }
