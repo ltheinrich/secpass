@@ -86,6 +86,7 @@ func setupHandlers() {
 	// directories
 	http.HandleFunc("/css/", handler.CSS)
 	http.HandleFunc("/images/", handler.Image)
+	http.HandleFunc("/js/", handler.JS)
 
 	// pages
 	http.HandleFunc("/register", handler.Register)
