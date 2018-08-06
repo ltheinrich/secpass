@@ -2,7 +2,7 @@
     "postgresql": {
         "database": "jshwybrv",
         "host": "horton.elephantsql.com",
-        "password": "s",
+        "password": "",
         "port": "5432",
         "ssl": "disable",
         "username": "jshwybrv"
@@ -18,7 +18,7 @@
     },
     "web": {
         "title": "secpass",
-        "version": "1.0.0 Alpha"
+        "version": "0.0.0"
     },
     "app": {
         "logInfo": "true",

@@ -1,4 +1,4 @@
-{{template "header"}} {{$name := lang + "name"}} {{$password := index .Lang "password"}}
+{{template "header"}} {{$name := lang .Lang "name"}} {{$password := lang .Lang "password"}}
 
 <style>
     body {
@@ -39,8 +39,8 @@
                 if (response == "true") {
                     CreateNotify(
                         '<span class="fa fa-check"></span>',
-                        '{{index .Lang "loginSuccessTitle"}}',
-                        '{{index .Lang "loginSuccess"}}',
+                        '{{lang .Lang "loginSuccessTitle"}}',
+                        '{{lang .Lang "loginSuccess"}}',
                         'success',
                         '#main_notifies',
                     );
@@ -50,8 +50,8 @@
                 } else {
                     CreateNotify(
                         '<span class="fa fa-times"></span>',
-                        '{{index .Lang "loginWrongTitle"}}',
-                        '{{index .Lang "loginWrong"}}',
+                        '{{lang .Lang "loginWrongTitle"}}',
+                        '{{lang .Lang "loginWrong"}}',
                         'alert',
                         '#main_notifies',
                     );

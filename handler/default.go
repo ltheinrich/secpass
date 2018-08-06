@@ -17,10 +17,8 @@ var (
 			keys := strings.Split(key, ".")
 			return conf.Config[keys[0]][keys[1]]
 		},
-		"lang": func(key string) string {
-			// split key string by . to get language.key and return value
-			keys := strings.Split(key, ".")
-			return (*conf.Lang[keys[0]])[keys[1]]
+		"lang": func(keys ...interface{}) string {
+			return (*conf.Lang[keys[0].(string)])[keys[1].(string)]
 		}}
 
 	// define templates
