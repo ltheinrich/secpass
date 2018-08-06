@@ -1,0 +1,45 @@
+input.greedy-textbox[type=text],
+input.greedy-textbox[type=password],
+input.greedy-textbox[type=date],
+input.greedy-textbox[type=datetime],
+input.greedy-textbox[type=number],
+input.greedy-textbox[type=search],
+input.greedy-textbox[type=time],
+input.greedy-textbox[type=url],
+input.greedy-textbox[type=email],
+textarea.greedy-textarea,
+select.greedy-select{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border:1px solid #BEBEBE;
+    padding: 7px;
+    margin:0px;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    width: 100%;
+    border-radius: 15px;
+}
+input.greedy-textbox[type=text]:focus,
+input.greedy-textbox[type=password]:focus,
+input.greedy-textbox[type=date]:focus,
+input.greedy-textbox[type=datetime]:focus,
+input.greedy-textbox[type=number]:focus,
+input.greedy-textbox[type=search]:focus,
+input.greedy-textbox[type=time]:focus,
+input.greedy-textbox[type=url]:focus,
+input.greedy-textbox[type=email]:focus,
+textarea.greedy-textarea:focus,
+select.greedy-select:focus{
+    -moz-box-shadow: 0 0 8px #1ba1e2;
+    -webkit-box-shadow: 0 0 8px #1ba1e2;
+    box-shadow: 0 0 8px #1ba1e2;
+    border: 1px solid #1ba1e2;
+}
+
+input.greedy-textbox.rounded{
+	border-radius: 5px;
+}

@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"io"
 	"net/http"
 
 	"golang.org/x/crypto/bcrypt"
@@ -28,7 +29,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		// compare passwords
 		if bcrypt.CompareHashAndPassword([]byte(passwordHash), []byte(password)) == nil {
 			// login done
-			redirect(w, "/")
+			io.WriteString(w, "true")
+			return
 		} else {
 			special = -2
 		}
