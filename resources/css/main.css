@@ -1,0 +1,179 @@
+/*BODY*/
+body{
+	font-family: 'PT Sans', sans-serif;
+}
+
+#loginWrapper {
+	margin: auto;
+	width: 50%;
+	float: none;
+	max-width: 400px;
+	position: relative;
+	margin-top: 40px;
+	border-radius: 20px;
+	height: auto;
+}
+
+
+
+/*greedy WRAPPER*/
+.greedy-wrapper{
+	position: absolute;
+	min-width: 1024px;
+	max-width: 100%;
+	width: 100%;
+	min-height: 768px;
+	max-height: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	overflow-x: hidden;
+}
+
+/*NAVIGATION TOP*/
+.greedy-wrapper > .navigation-top-wrapper{
+	position: relative;
+	display: table;
+	width: calc(100% - 300px);
+	width: -moz-calc(100% - 300px);
+	height: 61px;
+	float: right;
+	padding: 0;
+	z-index: 99;
+	box-sizing: border-box;
+}
+.greedy-wrapper > .navigation-top-wrapper-mclosed{
+	position: relative;
+	display: table;
+	width: 100%;
+	height: 61px;
+	float: right;
+	padding: 0;
+	z-index: 99;
+	box-sizing: border-box;
+}
+
+/*NAVIGATION LEFT*/
+.greedy-wrapper > .navigation-left-wrapper{
+	position: absolute;
+	width: 300px;
+	height: 100%;
+	float: left;
+	overflow: hidden;
+	background-color: #1e282c;
+	padding: 0;
+	z-index: 99;
+	box-sizing: border-box;
+}
+.greedy-wrapper > .navigation-left-wrapper-mclosed{
+	position: absolute;
+	width: 0px;
+	height: 100%;
+	float: left;
+	background-color: #1e282c;
+	padding: 0;
+	z-index: 99;
+	box-sizing: border-box;
+}
+
+/*CONTENT WRAPPER*/
+.greedy-wrapper > .content-wrapper{
+	position: relative;
+	width: calc(100% - 300px);
+	width: -moz-calc(100% - 300px);
+	height: calc(100% - 61px);
+	height: -moz-calc(100% - 61px);
+	float: right;
+	overflow: auto;
+	background-color: #FFFFFF;
+	z-index: 98;
+	overflow-x: hidden;
+	box-sizing: border-box;
+}
+.greedy-wrapper > .content-wrapper-mclosed{
+	position: relative;
+	width: 100%;
+	height: calc(100% - 61px);
+	height: -moz-calc(100% - 61px);
+	float: right;
+	overflow: auto;
+	background-color: #FFFFFF;
+	z-index: 98;
+	overflow-x: hidden;
+	box-sizing: border-box;
+}
+
+/*CONTENT*/
+.greedy-wrapper > .content-wrapper > .content,
+.greedy-wrapper > .content-wrapper-mclosed > .content{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	padding: 5px 25px 5px 25px;
+	box-sizing: border-box;
+}
+
+/*CONTENT ELEMENT FULL*/
+.greedy-wrapper > .content-wrapper > .content > .element-full-wrapper,
+.greedy-wrapper > .content-wrapper-mclosed > .content > .element-full-wrapper{
+	position: relative;
+	width: 100%;
+	padding: 5px 0px 5px 0px;
+	box-sizing: border-box;
+}
+/*CONTENT ELEMENT LEFT*/
+.greedy-wrapper > .content-wrapper > .content > .element-left-wrapper,
+.greedy-wrapper > .content-wrapper-mclosed > .content > .element-left-wrapper{
+	position: relative;
+	width: calc(50% - 10px);
+	width: -moz-calc(50% - 10px);
+	padding: 5px 0px 5px 0px;
+	float: left;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+/*CONTENT ELEMENT RIGHT*/
+.greedy-wrapper > .content-wrapper > .content > .element-right-wrapper,
+.greedy-wrapper > .content-wrapper-mclosed > .content > .element-right-wrapper{
+	position: relative;
+	width: calc(50% - 10px);
+	width: -moz-calc(50% - 10px);
+	padding: 5px 0px 5px 0px;
+	float: right;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+/*CONTENT ELEMENT TOP FULL*/
+.greedy-wrapper > .content-wrapper > .content > .element-full-top-wrapper,
+.greedy-wrapper > .content-wrapper-mclosed > .content > .element-full-top-wrapper{
+	position: relative;
+	width: calc(100% + 50px);
+	width: -moz-calc(100% + 50px);
+	margin-left: -25px;
+	margin-top: -5px;
+	padding: 10px 10px 10px 10px;
+	overflow: hidden;
+	background-color: #ebebec;
+	box-sizing: border-box;
+}
+/*CONTENT ABSOLUTE TOP*/
+.greedy-wrapper > .content-wrapper > .content.absoluteTop,
+.greedy-wrapper > .content-wrapper-mclosed > .content.absoluteTop{
+	position: absolute;
+	top: 0;
+	z-index: 2;
+	box-sizing: border-box;
+}
+.greedy-wrapper > .content-wrapper > .content.loadingBar,
+.greedy-wrapper > .content-wrapper-mclosed > .content.loadingBar{
+	position: fixed;
+	top: 60px;
+	z-index: 2;
+	box-sizing: border-box;
+}
+.clear-elements{
+	clear: both;
+}
+.obj-rounded{
+	border-radius: 5px;
+}

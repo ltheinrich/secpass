@@ -1,0 +1,12 @@
+body{
+	padding: 0;
+	margin: 0;
+	overflow-x: hidden;
+}
+a{
+	color: #2771bf;
+	text-decoration: none;
+}
+a:hover{
+	color: #2086bf;
+}

@@ -12,7 +12,7 @@ var Sessions = map[string]Session{}
 type User struct {
 	ID   int
 	Name string
-	Lang *map[string]string
+	Lang string
 }
 
 // Session structure

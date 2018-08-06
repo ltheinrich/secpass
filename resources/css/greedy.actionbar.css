@@ -1,0 +1,44 @@
+.greedy-actionbar{
+	position: relative;
+	width: 100%;
+	margin-top: 10px;
+	background-color: #FFFFFF;
+	border-radius: 5px;
+	overflow: hidden;
+	box-sizing: border-box;
+	height: 40px;
+}
+.greedy-actionbar > .content{
+	position: relative;
+	width: 100%;
+	color: #ffffff;
+	background-color: #1ba1e2;
+	font-size: 16px;
+	/*box-shadow: 0 2px 1px -1px gray;*/
+	z-index: 2;
+	height: 100%;
+}
+.greedy-actionbar > .content > .icon{
+	position: absolute;
+	background-color: #1b6eae;
+	padding: 13px 10px 10px 10px;
+	width: 20px;
+	text-align: center;
+	font-size: 16px;
+	height: 100%;
+	top: 0;
+}
+.greedy-actionbar > .content > .text{
+	position: absolute;
+	padding: 5px 5px 5px 5px;
+	height: 100%;
+	top: 0;
+	left: 40px;
+}
+.greedy-actionbar > .content > .textRight{
+	position: relative;
+	padding: 5px 5px 5px 5px;
+	float: right;
+	height: 15px;
+	height: 100%;
+}
