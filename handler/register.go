@@ -48,5 +48,5 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// execute template
-	shorts.Check(tpl.ExecuteTemplate(w, "register.html", user.User{ID: special, Lang: conf.Lang["de"]}), false)
+	shorts.Check(tpl.ExecuteTemplate(w, "register.html", user.User{ID: special, Lang: "de"}), false)
 }

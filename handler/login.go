@@ -31,11 +31,10 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			// login done
 			io.WriteString(w, "true")
 			return
-		} else {
-			special = -2
 		}
+		special = -2
 	}
 
 	// execute template
-	shorts.Check(tpl.ExecuteTemplate(w, "login.html", user.User{ID: special, Lang: conf.Lang["de"]}), false)
+	shorts.Check(tpl.ExecuteTemplate(w, "login.html", user.User{ID: special, Lang: "de"}), false)
 }
