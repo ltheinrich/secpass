@@ -4,11 +4,17 @@ import (
 	"net/http"
 
 	"lheinrich.de/secpass/shorts"
-	"lheinrich.de/secpass/user"
 )
 
 // Index function
 func Index(w http.ResponseWriter, r *http.Request) {
-	// execute template
-	shorts.Check(tpl.ExecuteTemplate(w, "index.html", user.User{ID: -1, Lang: "de"}), false)
+	// check session
+	user := checkSession(r)
+	if user != "" {
+		// execute template
+		shorts.Check(tpl.ExecuteTemplate(w, "index.html", Data{User: user, Lang: getLang(r)}), false)
+	}
+
+	// redirect to login
+	redirect(w, "/login")
 }

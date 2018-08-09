@@ -1,0 +1,17 @@
+.border {
+    margin-top: 5%;
+    margin-right: 10%;
+    margin-left: 10%;
+    margin-bottom: 2%;
+}
+
+.vertical-center {
+    width: inherit;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.error {
+    color: firebrick;
+}
