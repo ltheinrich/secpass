@@ -2,29 +2,18 @@ package user
 
 import "time"
 
-// Users map
-var Users = map[int]User{}
-
 // Sessions map
 var Sessions = map[string]Session{}
 
-// User structure
-type User struct {
-	ID   int
-	Name string
-	Lang string
-}
-
 // Session structure
 type Session struct {
-	UUID   string
-	UserID int
-	Valid  time.Time
+	User    string
+	Expires time.Time
 }
 
 // IsValid check session is valid
 func (s Session) IsValid() bool {
-	return s.Valid.Before(time.Now())
+	return s.Expires.Before(time.Now())
 }
 
 // CleanupSessions delete sessions no longer valid

@@ -8,13 +8,18 @@ import (
 
 	"lheinrich.de/secpass/conf"
 	"lheinrich.de/secpass/shorts"
-	"lheinrich.de/secpass/user"
 )
 
 // Register function
 func Register(w http.ResponseWriter, r *http.Request) {
+	// check logged in and redirect to index if so
+	if checkSession(r) != "" {
+		redirect(w, "/")
+		return
+	}
+
 	// output text if equals special
-	special := -1
+	special := 0
 
 	// define values
 	name, password, repeat := r.PostFormValue("name"), r.PostFormValue("password"), r.PostFormValue("repeat")
@@ -25,7 +30,6 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		if password == repeat {
 			// check whether name already exists
 			errQuery := conf.DB.QueryRow("SELECT password FROM users WHERE name = $1", name).Scan(nil)
-			shorts.Check(errQuery, false)
 
 			// name does not exist
 			if errQuery == sql.ErrNoRows {
@@ -40,13 +44,13 @@ func Register(w http.ResponseWriter, r *http.Request) {
 			}
 
 			// name exists, print
-			special = -2
+			special = 1
 		} else {
 			// passwords does not match, print
-			special = -3
+			special = 2
 		}
 	}
 
 	// execute template
-	shorts.Check(tpl.ExecuteTemplate(w, "register.html", user.User{ID: special, Lang: "de"}), false)
+	shorts.Check(tpl.ExecuteTemplate(w, "register.html", Data{User: "", Lang: getLang(r), Special: special}), false)
 }
