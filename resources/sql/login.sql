@@ -1,0 +1,1 @@
+SELECT name, password FROM users WHERE name = $1;

@@ -30,7 +30,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		// read password hash from database and check for error
 		var username string
 		var passwordHash string
-		err := conf.DB.QueryRow("SELECT name, password FROM users WHERE name = $1", name).Scan(&username, &passwordHash)
+		err := conf.DB.QueryRow(conf.GetSQL("login"), name).Scan(&username, &passwordHash)
 		shorts.Check(err, true)
 
 		// compare passwords

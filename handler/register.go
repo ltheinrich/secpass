@@ -35,7 +35,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 			if errQuery == sql.ErrNoRows {
 				// hash password and insert user
 				passwordHash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost+1)
-				_, errExec := conf.DB.Exec("INSERT INTO users (name, password) VALUES ($1, $2)", name, string(passwordHash))
+				_, errExec := conf.DB.Exec(conf.GetSQL("register"), name, string(passwordHash))
 				shorts.Check(errExec, true)
 
 				// redirect and return

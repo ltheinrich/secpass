@@ -24,6 +24,7 @@
         "logInfo": "true",
         "logFile": "logs/2006-01-02.txt",
         "languageDirectory": "resources/language",
-        "defaultLanguage": "en"
+        "defaultLanguage": "en",
+        "sqlDirectory": "resources/sql"
     }
 }

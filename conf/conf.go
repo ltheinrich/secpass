@@ -55,3 +55,32 @@ func ReadLanguage(jsonFile string) *map[string]string {
 	// return the language map
 	return &jsonConfig
 }
+
+// ExecSQL execute query
+func ExecSQL(name string, data ...interface{}) {
+	// open file and check error
+	file, errFile := os.Open(Config["app"]["sqlDirectory"] + "/" + name + ".sql")
+	shorts.Check(errFile, true)
+
+	// read from file and check error
+	query, errQuery := ioutil.ReadAll(file)
+	shorts.Check(errQuery, true)
+
+	// execute query and check error
+	_, err := DB.Exec(string(query), data)
+	shorts.Check(err, true)
+}
+
+// GetSQL return sql query string
+func GetSQL(name string) string {
+	// open file and check error
+	file, errFile := os.Open(Config["app"]["sqlDirectory"] + "/" + name + ".sql")
+	shorts.Check(errFile, true)
+
+	// read from file and check error
+	query, errQuery := ioutil.ReadAll(file)
+	shorts.Check(errQuery, true)
+
+	// return query as string
+	return string(query)
+}

@@ -57,8 +57,9 @@ func setupDB() {
 	password := conf.Config["postgresql"]["password"]
 	ssl := conf.Config["postgresql"]["ssl"]
 
-	// connect to postgresql database
+	// connect to postgresql database and setup
 	conf.DB = shorts.ConnectPostgreSQL(host, port, database, username, password, ssl)
+	conf.ExecSQL("setup")
 }
 
 // setup webserver
