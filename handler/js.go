@@ -19,6 +19,7 @@ func JS(w http.ResponseWriter, r *http.Request) {
 	_, fileName := path.Split(r.URL.Path)
 	file, errFile := os.Open(conf.Config["webserver"]["jsDirectory"] + "/" + fileName)
 	shorts.Check(errFile, false)
+	defer file.Close()
 
 	// write out file
 	_, errCopy := io.Copy(w, file)
