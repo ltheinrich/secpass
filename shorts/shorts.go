@@ -31,6 +31,7 @@ func InitLogging(logInfo bool) {
 	} else {
 		fmt.Println(err)
 	}
+	file.Close()
 }
 
 // InitLoggingFile Enable logging to specified file
@@ -47,6 +48,7 @@ func InitLoggingFile(fileName string, logInfo bool) error {
 	if err == nil {
 		log.SetOutput(file)
 	}
+	defer file.Close()
 
 	return err
 }
