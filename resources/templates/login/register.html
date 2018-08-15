@@ -1,4 +1,4 @@
-{{template "header"}}
+{{template "header" .}}
 <!-- -->
 {{$name := lang .Lang "name"}} {{$password := lang .Lang "password"}} {{$repeatPassword := lang .Lang "repeatPassword"}}
 <div class="card-panel blue-grey darken-1 border">
@@ -34,4 +34,4 @@
         </div>
     </form>
 </div>
-{{template "footer"}}
+{{template "footer" .}}

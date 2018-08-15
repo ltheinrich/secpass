@@ -6,5 +6,7 @@
     "register": "Register",
     "nameExists": "The name already exists.",
     "passwordNotEqual": "The passwords doesn't equal.",
-    "loginWrong": "Your login data is wrong."
+    "loginWrong": "Your login data is wrong.",
+    "imprint": "Imprint",
+    "privacy": "Privacy"
 }
