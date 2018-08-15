@@ -1,4 +1,4 @@
-{{template "header"}} {{$name := lang .Lang "name"}} {{$password := lang .Lang "password"}}
+{{template "header" .}} {{$name := lang .Lang "name"}} {{$password := lang .Lang "password"}}
 <div class="card-panel blue-grey darken-1 border">
     <form method="POST">
         <div class="col card-content white-text">
@@ -25,4 +25,4 @@
         </div>
     </form>
 </div>
-{{template "footer"}}
+{{template "footer" .}}

@@ -3,7 +3,6 @@ package handler
 import (
 	"html/template"
 	"net/http"
-	"strings"
 
 	"lheinrich.de/secpass/conf"
 	"lheinrich.de/secpass/shorts"
@@ -20,9 +19,7 @@ type Data struct {
 var (
 	// define functions
 	funcs = template.FuncMap{
-		"config": func(key string) string {
-			// split key string by . to get group.key and return value
-			keys := strings.Split(key, ".")
+		"config": func(keys ...string) string {
 			return conf.Config[keys[0]][keys[1]]
 		},
 		"lang": func(keys ...interface{}) string {

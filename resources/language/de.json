@@ -7,8 +7,6 @@
     "nameExists": "Der Name existiert bereits.",
     "passwordNotEqual": "Die Passwörter stimmen nicht überein.",
     "loginWrong": "Deine Anmeldedaten sind nicht korrekt.",
-    "loginWrongTitle": "Anmeldung fehlgeschlagen",
-    "loginSuccess": "Deine Anmeldung war erfolgreich. Weiterleitung...",
-    "loginSuccessTitle": "Anmeldung erfolgreich",
-    "dashboard": "Dashboard"
+    "imprint": "Impressum",
+    "privacy": "Datenschutz"
 }
