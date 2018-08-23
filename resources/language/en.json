@@ -1,4 +1,6 @@
 {
+    "LanguageID": "en",
+    "LanguageName": "English",
     "name": "Name",
     "password": "Password",
     "repeatPassword": "Repeat password",
@@ -8,5 +10,14 @@
     "passwordNotEqual": "The passwords doesn't equal.",
     "loginWrong": "Your login data is wrong.",
     "imprint": "Imprint",
-    "privacy": "Privacy"
+    "privacy": "Privacy",
+    "deleteAccount": "Delete account and data irrevocable!",
+    "settings": "Settings",
+    "logout": "Logout",
+    "save": "Save",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "repeatNewPassword": "Repeat new password",
+    "language": "Language",
+    "changeLanguage": "Change language"
 }

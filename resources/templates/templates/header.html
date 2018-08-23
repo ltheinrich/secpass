@@ -12,4 +12,32 @@
 </head>
 
 <body>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <li><a href="/">{{config "web" "title"}}</a></li>
+            </ul>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                {{if .LoggedOut}}
+                <li><a href="/login">{{lang .Lang "login"}}</a></li>
+                <li><a href="/register">{{lang .Lang "register"}}</a></li>
+                {{else}}
+                <li><a href="/settings">{{lang .Lang "settings"}}</a></li>
+                <li><a href="/login/logout">{{lang .Lang "logout"}}</a></li>
+                {{end}}
+            </ul>
+        </div>
+    </nav>
+    <ul class="sidenav" id="mobile-demo">
+        <li><a href="/">{{config "web" "title"}}</a></li>
+        {{if .LoggedOut}}
+        <li><a href="/login">{{lang .Lang "login"}}</a></li>
+        <li><a href="/register">{{lang .Lang "register"}}</a></li>
+        {{else}}
+        <li><a href="/settings">{{lang .Lang "settings"}}</a></li>
+        <li><a href="/login/logout">{{lang .Lang "logout"}}</a></li>
+        {{end}}
+    </ul>
+
     {{end}}

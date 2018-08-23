@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"strings"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -17,6 +18,10 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	if checkSession(r) != "" {
 		redirect(w, "/")
 		return
+	}
+
+	if strings.Compare(r.URL.Path, "/login/logout") == 0 {
+		delete(user.Sessions, cookie(r, "secpass_uuid"))
 	}
 
 	// output login data wrong
@@ -58,5 +63,5 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// execute template
-	shorts.Check(tpl.ExecuteTemplate(w, "login.html", Data{User: "", Lang: getLang(r), Special: special}), false)
+	shorts.Check(tpl.ExecuteTemplate(w, "login.html", Data{User: "", Lang: getLang(r), Special: special, LoggedOut: true}), false)
 }

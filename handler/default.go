@@ -11,9 +11,10 @@ import (
 
 // Data to pass into template
 type Data struct {
-	User    string
-	Lang    string
-	Special int
+	User      string
+	Lang      string
+	Special   int
+	LoggedOut bool
 }
 
 var (
@@ -24,6 +25,14 @@ var (
 		},
 		"lang": func(keys ...interface{}) string {
 			return (*conf.Lang[keys[0].(string)])[keys[1].(string)]
+		},
+		"languages": func() []string {
+			languages := []string{}
+			for lang := range conf.Lang {
+				languages = append(languages, lang)
+			}
+
+			return languages
 		}}
 
 	// define templates
@@ -47,7 +56,7 @@ func LoadTemplates() {
 // redirect to location
 func redirect(w http.ResponseWriter, location string) {
 	w.Header().Set("location", location)
-	w.WriteHeader(307)
+	w.WriteHeader(http.StatusTemporaryRedirect)
 }
 
 // cookiesExist check whether the cookies exist
@@ -84,4 +93,12 @@ func checkSession(r *http.Request) string {
 		}
 	}
 	return ""
+}
+
+// cookie return cookie value
+func cookie(r *http.Request, name string) string {
+	cookie, err := r.Cookie(name)
+	shorts.Check(err, false)
+
+	return cookie.Value
 }

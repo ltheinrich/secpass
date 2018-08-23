@@ -1,4 +1,6 @@
 {
+    "LanguageID": "de",
+    "LanguageName": "Deutsch",
     "name": "Name",
     "password": "Passwort",
     "repeatPassword": "Passwort wiederholen",
@@ -8,5 +10,14 @@
     "passwordNotEqual": "Die Passwörter stimmen nicht überein.",
     "loginWrong": "Deine Anmeldedaten sind nicht korrekt.",
     "imprint": "Impressum",
-    "privacy": "Datenschutz"
+    "privacy": "Datenschutz",
+    "deleteAccount": "Account und Daten unwiderruflich löschen!",
+    "settings": "Einstellungen",
+    "logout": "Abmelden",
+    "save": "Speichern",
+    "currentPassword": "Aktuelles Passwort",
+    "newPassword": "Neues Passwort",
+    "repeatNewPassword": "Neues Passwort wiederholen",
+    "language": "Sprache",
+    "changeLanguage": "Sprache ändern"
 }
