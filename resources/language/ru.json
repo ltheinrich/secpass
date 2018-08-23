@@ -1,8 +1,24 @@
 {
     "$WARNING": "UNCOMPLETE TRANSLATION",
+    "LanguageID": "ru",
+    "LanguageName": "русский",
     "name": "имя",
     "password": "пароль",
     "repeatPassword": "Повторить пароль",
     "login": "авторизоваться",
-    "register": "регистр"
+    "register": "регистр",
+    "nameExists": "Имя уже существует",
+    "passwordNotEqual": "Пароли не совпадают",
+    "loginWrong": "Ваши учетные данные неверны",
+    "imprint": "Выходные данные",
+    "privacy": "Конфиденциальность",
+    "deleteAccount": "удалить учетную запись и данные безотзывно!",
+    "settings": "Настройки",
+    "logout": "отписаться",
+    "save": "Сохранить",
+    "currentPassword": "Текущий пароль",
+    "newPassword": "Новый пароль",
+    "repeatNewPassword": "повторить новый пароль",
+    "language": "язык",
+    "changeLanguage": "Изменить язык"
 }

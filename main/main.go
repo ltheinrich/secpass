@@ -92,4 +92,6 @@ func setupHandlers() {
 	// pages
 	http.HandleFunc("/register", handler.Register)
 	http.HandleFunc("/login", handler.Login)
+	http.HandleFunc("/login/logout", handler.Login)
+	http.HandleFunc("/settings", handler.Settings)
 }

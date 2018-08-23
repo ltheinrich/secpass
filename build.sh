@@ -1,5 +1,5 @@
 # linux (amd64, 386, arm64, arm)
-go build -o ../../../bin/secpass/secpass-linux-amd64 main/main.go
+GOOS=linux GOARCH=amd64 go build -o ../../../bin/secpass/secpass-linux-amd64 main/main.go
 GOOS=linux GOARCH=386 go build -o ../../../bin/secpass/secpass-linux-386 main/main.go
 GOOS=linux GOARCH=arm64 go build -o ../../../bin/secpass/secpass-linux-arm64 main/main.go
 GOOS=linux GOARCH=arm go build -o ../../../bin/secpass/secpass-linux-arm main/main.go
