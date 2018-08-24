@@ -59,7 +59,7 @@ func setupDB() {
 
 	// connect to postgresql database and setup
 	conf.DB = shorts.ConnectPostgreSQL(host, port, database, username, password, ssl)
-	conf.ExecSQL("setup")
+	conf.DB.Exec(conf.GetSQL("setup"))
 }
 
 // setup webserver
@@ -94,4 +94,5 @@ func setupHandlers() {
 	http.HandleFunc("/login", handler.Login)
 	http.HandleFunc("/login/logout", handler.Login)
 	http.HandleFunc("/settings", handler.Settings)
+	http.HandleFunc("/settings/delete_forever", handler.Settings)
 }

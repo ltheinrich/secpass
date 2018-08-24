@@ -26,12 +26,13 @@ func InitLogging(logInfo bool) {
 
 	// create new file and check for error
 	file, err := os.Create("logs/" + time.Now().Format("2006-01-02.txt"))
+	defer file.Close()
+
 	if err == nil {
 		log.SetOutput(file)
 	} else {
 		fmt.Println(err)
 	}
-	file.Close()
 }
 
 // InitLoggingFile Enable logging to specified file
@@ -45,10 +46,10 @@ func InitLoggingFile(fileName string, logInfo bool) error {
 
 	// create new file and check for error
 	file, err := os.Create(fileName)
+	defer file.Close()
 	if err == nil {
 		log.SetOutput(file)
 	}
-	defer file.Close()
 
 	return err
 }

@@ -25,7 +25,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	name, password, repeat := r.PostFormValue("name"), r.PostFormValue("password"), r.PostFormValue("repeat")
 
 	// check for input
-	if name != "" && password != "" && repeat != "" {
+	if name != "" && password != "" && repeat != "" && len(password) >= 8 && len(repeat) >= 8 {
 		// check whether passwords match
 		if password == repeat {
 			// check whether name already exists
