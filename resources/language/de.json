@@ -19,5 +19,8 @@
     "newPassword": "Neues Passwort",
     "repeatNewPassword": "Neues Passwort wiederholen",
     "language": "Sprache",
-    "changeLanguage": "Sprache ändern"
+    "changeLanguage": "Sprache ändern",
+    "changedPassword": "Das Passwort wurde erfolgreich geändert.",
+    "passwordWrong": "Das Passwort ist nicht korrekt.",
+    "cookieWarning": "Diese Seite benutzt Cookies, mit der Nutzung der Webseite erklärst du dich damit einverstanden."
 }

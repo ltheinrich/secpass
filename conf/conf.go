@@ -25,6 +25,7 @@ func ReadConfig(jsonFile string) map[string]map[string]string {
 	// open config file and check for error
 	file, err := os.Open(jsonFile)
 	shorts.Check(err, true)
+	defer file.Close()
 
 	// read config file and check for error
 	jsonBytes, err := ioutil.ReadAll(file)
@@ -43,6 +44,7 @@ func ReadLanguage(jsonFile string) *map[string]string {
 	// open language file and check for error
 	file, err := os.Open(jsonFile)
 	shorts.Check(err, true)
+	defer file.Close()
 
 	// read language file and check for error
 	jsonBytes, err := ioutil.ReadAll(file)
@@ -56,26 +58,12 @@ func ReadLanguage(jsonFile string) *map[string]string {
 	return &jsonConfig
 }
 
-// ExecSQL execute query
-func ExecSQL(name string, data ...interface{}) {
-	// open file and check error
-	file, errFile := os.Open(Config["app"]["sqlDirectory"] + "/" + name + ".sql")
-	shorts.Check(errFile, true)
-
-	// read from file and check error
-	query, errQuery := ioutil.ReadAll(file)
-	shorts.Check(errQuery, true)
-
-	// execute query and check error
-	_, err := DB.Exec(string(query), data)
-	shorts.Check(err, true)
-}
-
 // GetSQL return sql query string
 func GetSQL(name string) string {
 	// open file and check error
 	file, errFile := os.Open(Config["app"]["sqlDirectory"] + "/" + name + ".sql")
 	shorts.Check(errFile, true)
+	defer file.Close()
 
 	// read from file and check error
 	query, errQuery := ioutil.ReadAll(file)

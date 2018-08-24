@@ -2,7 +2,6 @@ package handler
 
 import (
 	"net/http"
-	"strings"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -16,12 +15,19 @@ import (
 func Login(w http.ResponseWriter, r *http.Request) {
 	// check logged in and redirect to index if so
 	if checkSession(r) != "" {
+		// logout
+		if r.URL.Path == "/login/logout" {
+			// delete cookie
+			delete(user.Sessions, cookie(r, "secpass_uuid"))
+
+			// redirect to login page
+			redirect(w, "/login")
+			return
+		}
+
+		// redirect to index
 		redirect(w, "/")
 		return
-	}
-
-	if strings.Compare(r.URL.Path, "/login/logout") == 0 {
-		delete(user.Sessions, cookie(r, "secpass_uuid"))
 	}
 
 	// output login data wrong
@@ -31,7 +37,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	name, password := r.PostFormValue("name"), r.PostFormValue("password")
 
 	// check for input
-	if name != "" && password != "" {
+	if name != "" && password != "" && len(password) >= 8 {
 		// read password hash from database and check for error
 		var username string
 		var passwordHash string

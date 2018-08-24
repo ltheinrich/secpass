@@ -13,12 +13,13 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input name="password" type="password" class="validate" placeholder="{{$password}}" required>
+                    <input name="password" type="password" class="validate" placeholder="{{$password}}" minlength="8" required>
                 </div>
             </div>
-            <button class="btn waves-effect waves-light" type="submit" name="action">{{lang .Lang "login"}}
+            <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "login"}}
                 <i class="material-icons right">send</i>
             </button>
+            <p>{{lang .Lang "cookieWarning"}}</p>
         </div>
     </form>
 </div>

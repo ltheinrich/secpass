@@ -20,5 +20,8 @@
     "newPassword": "Новый пароль",
     "repeatNewPassword": "повторить новый пароль",
     "language": "язык",
-    "changeLanguage": "Изменить язык"
+    "changeLanguage": "Изменить язык",
+    "changedPassword": "Пароль был успешно изменен",
+    "passwordWrong": "Пароль неверен",
+    "cookieWarning": "Этот сайт использует куки-файлы, с помощью используя сайта вы подтверждаете свое согласие"
 }
