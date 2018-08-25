@@ -59,7 +59,8 @@ func setupDB() {
 
 	// connect to postgresql database and setup
 	conf.DB = shorts.ConnectPostgreSQL(host, port, database, username, password, ssl)
-	conf.DB.Exec(conf.GetSQL("setup"))
+	_, err := conf.DB.Exec(conf.GetSQL("setup"))
+	shorts.Check(err, true)
 }
 
 // setup webserver

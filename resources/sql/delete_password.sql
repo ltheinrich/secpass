@@ -1,0 +1,1 @@
+DELETE FROM passwords WHERE name = $1 AND author = $2;

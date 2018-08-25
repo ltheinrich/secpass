@@ -80,7 +80,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 				http.SetCookie(w, &cookieHash)
 
 				// redirect to index
-				redirect(w, "/")
+				w.Header().Set("location", "/")
+				w.WriteHeader(http.StatusSeeOther)
 				return
 			}
 		} else {

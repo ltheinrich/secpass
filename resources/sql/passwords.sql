@@ -1,0 +1,1 @@
+SELECT name, password FROM passwords WHERE author = $1;
