@@ -71,11 +71,13 @@ func Login(w http.ResponseWriter, r *http.Request) {
 				// define cookies
 				cookieUUID := http.Cookie{Name: "secpass_uuid", Value: uuid, Expires: expires}
 				cookieName := http.Cookie{Name: "secpass_name", Value: username, Expires: expires}
+				cookieHash := http.Cookie{Name: "secpass_hash", Value: shorts.Hash(password), Expires: expires}
 
 				// add session and set cookies
 				spuser.Sessions[uuid] = spuser.Session{User: username, Expires: expires}
 				http.SetCookie(w, &cookieUUID)
 				http.SetCookie(w, &cookieName)
+				http.SetCookie(w, &cookieHash)
 
 				// redirect to index
 				redirect(w, "/")

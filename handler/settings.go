@@ -22,8 +22,9 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 	// check session
 	user := checkSession(r)
 	if user != "" {
-		// define special
+		// define variables
 		special := 0
+		var reloadPage bool
 
 		// change language
 		lang := r.PostFormValue("language")
@@ -32,8 +33,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 			http.SetCookie(w, &http.Cookie{Name: "secpass_lang", Value: lang})
 
 			// reload page
-			w.Header().Set("location", r.URL.Path)
-			w.WriteHeader(http.StatusSeeOther)
+			reloadPage = true
 			return
 		}
 
@@ -107,8 +107,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 					spuser.EnableTwoFactor(user, twoFactorSecret)
 
 					// reload page
-					w.Header().Set("location", r.URL.Path)
-					w.WriteHeader(http.StatusSeeOther)
+					reloadPage = true
 					return
 				}
 
@@ -142,13 +141,17 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 				spuser.DisableTwoFactor(user)
 
 				// reload page
-				w.Header().Set("location", r.URL.Path)
-				w.WriteHeader(http.StatusSeeOther)
+				reloadPage = true
 				return
 			}
 
 			// set two-factor data
 			twoFactorData = TwoFactorData{OneTimePasswordWrong: true}
+		}
+
+		if reloadPage {
+			w.Header().Set("location", r.URL.Path)
+			w.WriteHeader(http.StatusSeeOther)
 		}
 
 		// execute template

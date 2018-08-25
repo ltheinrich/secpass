@@ -2,6 +2,7 @@ package shorts
 
 import (
 	"database/sql"
+	"encoding/hex"
 	"fmt"
 	"log"
 	"os"
@@ -11,6 +12,7 @@ import (
 	// implement postgresql driver
 	_ "github.com/lib/pq"
 	"github.com/satori/go.uuid"
+	"golang.org/x/crypto/sha3"
 )
 
 // LogInfo log only error or everything
@@ -82,4 +84,11 @@ func ConnectPostgreSQL(host, port, database, username, password string, ssl stri
 
 	// return database connection
 	return db
+}
+
+// Hash return SHA-3 512 hash string
+func Hash(input string) string {
+	hasher := sha3.New512()
+	hasher.Write([]byte(input))
+	return hex.EncodeToString(hasher.Sum(nil))
 }
