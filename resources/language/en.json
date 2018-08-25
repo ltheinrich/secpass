@@ -27,5 +27,10 @@
     "oneTimePassword": "One-time password",
     "twoFactorAuthentication": "Two-factor authentication",
     "changePassword": "Change password",
-    "disableTwoFactor": "Disable two-factor authentication"
+    "disableTwoFactor": "Disable two-factor authentication",
+    "passwordList": "Password list",
+    "viewEntry": "View entry",
+    "editEntry": "Edit entry",
+    "deleteEntry": "Delete entry",
+    "copyPassword": "Copy password"
 }

@@ -27,5 +27,10 @@
     "oneTimePassword": "Einmalkennwort",
     "twoFactorAuthentication": "Zwei-Faktor Authentifizierung",
     "changePassword": "Passwort ändern",
-    "disableTwoFactor": "Zwei-Faktor Authentifizierung deaktivieren"
+    "disableTwoFactor": "Zwei-Faktor Authentifizierung deaktivieren",
+    "passwordList": "Passwort-Liste",
+    "viewEntry": "Eintrag anzeigen",
+    "editEntry": "Eintrag bearbeiten",
+    "deleteEntry": "Eintrag löschen",
+    "copyPassword": "Passwort kopieren"
 }
