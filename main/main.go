@@ -74,7 +74,7 @@ func setupWebserver() {
 	key := conf.Config["webserver"]["keyFile"]
 
 	// start http server
-	http.ListenAndServeTLS(address, cert, key, nil)
+	shorts.Check(http.ListenAndServeTLS(address, cert, key, nil), true)
 }
 
 // setup webserver handlers
