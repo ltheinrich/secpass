@@ -1,0 +1,1 @@
+UPDATE passwords SET password = $1 WHERE name = $2 AND author = $3;

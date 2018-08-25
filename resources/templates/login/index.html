@@ -3,20 +3,30 @@
 {{$copyPassword := lang .Lang "copyPassword"}} {{$viewEntry := lang .Lang "viewEntry"}}
 <!---->
 {{$editEntry := lang .Lang "editEntry"}} {{$deleteEntry := lang .Lang "deleteEntry"}}
+<!---->
+{{$name := lang .Lang "name"}} {{$password := lang .Lang "password"}}
 <div class="card-panel blue-grey darken-1 border">
     <div class="col card-content white-text">
         <h5>{{lang .Lang "passwordList"}}</h5>
         <br>
         <div>
             <input id="passwordView" value="" readonly hidden>
-            <form id="passwordEdit" hidden>
-                <input id="passwordEditInput" name="passwordEditInput" value="">
+            <form method="POST" id="passwordEdit" onsubmit="return manipulateEditPassword()" hidden>
+                <input id="passwordEditID" name="passwordEditID" value="" hidden>
+                <input id="passwordEditInput" name="passwordEditInput" minlength="8" value="" required>
                 <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "editEntry"}}
-                    <i class="material-icons left">edit</i>
+                    <i class="material-icons right">edit</i>
                 </button>
             </form>
-            <form id="passwordDelete" action="/delete" hidden>
-                <p><label><input type="checkbox" id="passwordDeleteInput" name="passwordDeleteInput" value="">
+            <form method="POST" id="passwordEditAfter" hidden>
+                <input id="passwordEditIDAfter" name="passwordEditIDAfter" value="" hidden>
+                <input id="passwordEditInputAfter" name="passwordEditInputAfter" minlength="8" value="" required>
+                <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "editEntry"}}
+                    <i class="material-icons right">edit</i>
+                </button>
+            </form>
+            <form method="POST" id="passwordDelete" hidden>
+                <p><label><input type="checkbox" id="passwordDeleteInput" name="passwordDeleteInput" value="" required>
                         <span>{{lang .Lang "deleteEntry"}}</span></label></p>
                 <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "deleteEntry"}}
                     <i class="material-icons left">delete</i>
@@ -24,9 +34,9 @@
             </form>
         </div>
         <div class="collection">
-            {{range $rawID, $password := .Passwords}} {{$passwordID := (printf "pw-%s" $rawID)}}
-            <div class="collection-item password">Alvin&nbsp;
-                <input id="{{$passwordID}}" value="{{$password}}" disabled hidden>
+            {{range $passwordID, $password := .Passwords}}
+            <div class="collection-item password">{{$passwordID}}&nbsp;
+                <input id="pw-{{$passwordID}}" value="{{$password}}" disabled hidden>
                 <a class="secondary-content deletebtn" passwordid="{{$passwordID}}" title="{{$deleteEntry}}" href="#"><i
                         class="material-icons deletebtn" passwordid="{{$passwordID}}">delete</i>&nbsp;</a>
                 <a class="secondary-content editbtn" passwordid="{{$passwordID}}" title="{{$editEntry}}" href="#"><i class="material-icons editbtn"
@@ -38,6 +48,28 @@
             </div>
             {{end}}
         </div>
+        <form method="POST" onsubmit="return manipulateAddPassword()">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="namePre" type="text" class="validate" placeholder="{{$name}}" required>
+                    <input id="passwordPre" type="password" class="validate" placeholder="{{$password}}" minlength="8" required>
+                </div>
+            </div>
+            <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "save"}}
+                <i class="material-icons right">save</i>
+            </button>
+        </form>
+        <form id="addPassword" method="POST" hidden>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input name="name" id="name" type="text" class="validate" placeholder="{{$name}}" required>
+                    <input name="password" id="password" type="password" class="validate" placeholder="{{$password}}" required>
+                </div>
+            </div>
+            <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "save"}}
+                <i class="material-icons right">save</i>
+            </button>
+        </form>
     </div>
 </div>
 {{template "javascript" .}}

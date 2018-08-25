@@ -77,7 +77,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 			deleteForever := r.PostFormValue("delete_forever")
 			if deleteForever == "delete_account_forever" {
 				// delete account in db, sessions, cookies
-				conf.DB.Exec(conf.GetSQL("delete_account"), user)
+				conf.DB.Exec(conf.GetSQL("delete_account"), user, user)
 				for sessionUUID, session := range spuser.Sessions {
 					if session.User == user {
 						delete(spuser.Sessions, sessionUUID)
