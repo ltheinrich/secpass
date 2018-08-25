@@ -22,5 +22,10 @@
     "changeLanguage": "Change language",
     "changedPassword": "The password has been changed successfully.",
     "passwordWrong": "The password is not correct.",
-    "cookieWarning": "This site uses cookies, you accept it by using the website."
+    "cookieWarning": "This site uses cookies, you accept it by using the website.",
+    "wrongTwoFactorPassword": "The one-time password for the two-factor authentication is not correct.",
+    "oneTimePassword": "One-time password",
+    "twoFactorAuthentication": "Two-factor authentication",
+    "changePassword": "Change password",
+    "disableTwoFactor": "Disable two-factor authentication"
 }

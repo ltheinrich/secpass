@@ -4,11 +4,13 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/pquerna/otp/totp"
+
 	"golang.org/x/crypto/bcrypt"
 
 	"lheinrich.de/secpass/conf"
 	"lheinrich.de/secpass/shorts"
-	"lheinrich.de/secpass/user"
+	"lheinrich.de/secpass/spuser"
 )
 
 // Login function
@@ -18,7 +20,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		// logout
 		if r.URL.Path == "/login/logout" {
 			// delete cookie
-			delete(user.Sessions, cookie(r, "secpass_uuid"))
+			delete(spuser.Sessions, cookie(r, "secpass_uuid"))
 
 			// redirect to login page
 			redirect(w, "/login")
@@ -46,26 +48,42 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 		// compare passwords
 		if bcrypt.CompareHashAndPassword([]byte(passwordHash), []byte(password)) == nil {
-			// login done
+			// define two-factor authentication variables
+			oneTimePassword := r.PostFormValue("oneTimePassword")
+			twoFactorSecret := spuser.TwoFactorSecret(username)
+			var skipLogin bool
 
-			// generate uuid and define session expiration date
-			uuid := shorts.UUID()
-			expires := time.Now().Add(time.Hour)
+			// check two-factor authentication is enabled
+			if twoFactorSecret != "" {
+				// validate one-time password
+				if len(oneTimePassword) < 6 || len(oneTimePassword) > 8 || !totp.Validate(oneTimePassword, twoFactorSecret) {
+					// skip log-in and output error
+					skipLogin = true
+					special = 2
+				}
+			}
 
-			// define cookies
-			cookieUUID := http.Cookie{Name: "secpass_uuid", Value: uuid, Expires: expires}
-			cookieName := http.Cookie{Name: "secpass_name", Value: username, Expires: expires}
+			if !skipLogin {
+				// generate uuid and define session expiration date
+				uuid := shorts.UUID()
+				expires := time.Now().Add(time.Hour)
 
-			// add session and set cookies
-			user.Sessions[uuid] = user.Session{User: username, Expires: expires}
-			http.SetCookie(w, &cookieUUID)
-			http.SetCookie(w, &cookieName)
+				// define cookies
+				cookieUUID := http.Cookie{Name: "secpass_uuid", Value: uuid, Expires: expires}
+				cookieName := http.Cookie{Name: "secpass_name", Value: username, Expires: expires}
 
-			// redirect to index
-			redirect(w, "/")
-			return
+				// add session and set cookies
+				spuser.Sessions[uuid] = spuser.Session{User: username, Expires: expires}
+				http.SetCookie(w, &cookieUUID)
+				http.SetCookie(w, &cookieName)
+
+				// redirect to index
+				redirect(w, "/")
+				return
+			}
+		} else {
+			special = 1
 		}
-		special = 1
 	}
 
 	// execute template

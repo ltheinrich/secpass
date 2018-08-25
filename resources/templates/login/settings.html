@@ -1,6 +1,8 @@
 {{template "header" .}} {{$currentPassword := lang .Lang "currentPassword"}}
 <!---->
 {{$newPassword := lang .Lang "newPassword"}} {{$repeatNewPassword := lang .Lang "repeatNewPassword"}}
+<!---->
+{{$oneTimePassword := lang .Lang "oneTimePassword"}}
 <div class="card-panel blue-grey darken-1 border">
     <form method="POST">
         <div class="col card-content white-text">
@@ -17,6 +19,7 @@
                 </div>
                 <br>
                 <div class="input-field col s12">
+                    <h6>{{lang .Lang "changePassword"}}</h6>
                     {{if eq .Special -1}}
                     <p class="success">{{lang .Lang "changedPassword"}}</p>
                     {{else if eq .Special -2}}
@@ -28,7 +31,25 @@
                     <input name="newPassword" type="password" class="validate" placeholder="{{$newPassword}}" minlength="8">
                     <input name="repeatNewPassword" type="password" class="validate" placeholder="{{$repeatNewPassword}}" minlength="8">
                 </div>
-                <!-- TODO: Two-factor authentication-->
+                <br>
+                <div class="input-field col s12">
+                    <h6>{{lang .Lang "twoFactorAuthentication"}}</h6>
+                    {{if .TwoFactor.OneTimePasswordWrong}}
+                    <p class="error">{{lang .Lang "wrongTwoFactorPassword"}}</p>
+                    {{end}}
+                    <!---->
+                    {{if .TwoFactor.Disabled}}
+                    <img src="data:image/png;base64,{{.TwoFactor.Image}}" width="200" height="200">
+                    <input name="twoFactorSecret" type="text" value="{{.TwoFactor.Secret}}" readonly>
+                    <!---->
+                    {{else}}
+                    <p><label>
+                            <input type="checkbox" name="disableTwoFactor" value="disableTwoFactorAuthentication">
+                            <span>{{lang .Lang "disableTwoFactor"}}</span>
+                        </label></p>
+                    {{end}}
+                    <input name="oneTimePassword" type="text" class="validate" placeholder="{{$oneTimePassword}}" minlength="6" maxlength="8">
+                </div>
             </div>
             <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "save"}}
                 <i class="material-icons right">save</i>

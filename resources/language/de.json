@@ -22,5 +22,10 @@
     "changeLanguage": "Sprache ändern",
     "changedPassword": "Das Passwort wurde erfolgreich geändert.",
     "passwordWrong": "Das Passwort ist nicht korrekt.",
-    "cookieWarning": "Diese Seite benutzt Cookies, mit der Nutzung der Webseite erklärst du dich damit einverstanden."
+    "cookieWarning": "Diese Seite benutzt Cookies, mit der Nutzung der Webseite erklärst du dich damit einverstanden.",
+    "wrongTwoFactorPassword": "Das Einmalkennwort für die Zwei-Faktor Authentifizierung ist nicht korrekt.",
+    "oneTimePassword": "Einmalkennwort",
+    "twoFactorAuthentication": "Zwei-Faktor Authentifizierung",
+    "changePassword": "Passwort ändern",
+    "disableTwoFactor": "Zwei-Faktor Authentifizierung deaktivieren"
 }
