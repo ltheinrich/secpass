@@ -1,19 +1,20 @@
-{{template "header" .}} {{$name := lang .Lang "name"}} {{$password := lang .Lang "password"}}
+{{template "header" .}}
+<!---->
+{{$name := lang .Lang "name"}} {{$password := lang .Lang "password"}} {{$oneTimePassword := lang .Lang "oneTimePassword"}}
 <div class="card-panel blue-grey darken-1 border">
     <form method="POST">
         <div class="col card-content white-text">
             <h5>{{lang .Lang "login"}}</h5>
             {{if eq .Special 1}}
             <p class="error">{{lang .Lang "loginWrong"}}</p>
+            {{else if eq .Special 2}}
+            <p class="error">{{lang .Lang "wrongTwoFactorPassword"}}</p>
             {{end}}
             <div class="row">
                 <div class="input-field col s12">
                     <input name="name" type="text" class="validate" placeholder="{{$name}}" required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
                     <input name="password" type="password" class="validate" placeholder="{{$password}}" minlength="8" required>
+                    <input name="oneTimePassword" type="text" class="validate" placeholder="{{$oneTimePassword}}" minlength="6" maxlength="8">
                 </div>
             </div>
             <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "login"}}

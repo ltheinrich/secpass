@@ -1,11 +1,16 @@
 package handler
 
 import (
+	"bytes"
+	"encoding/base64"
+	"image/png"
 	"net/http"
 
-	spuser "lheinrich.de/secpass/user"
+	"github.com/pquerna/otp"
+	"github.com/pquerna/otp/totp"
 
 	"lheinrich.de/secpass/conf"
+	"lheinrich.de/secpass/spuser"
 
 	"golang.org/x/crypto/bcrypt"
 
@@ -34,7 +39,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 
 		// change password
 		currentPassword, newPassword, repeatNewPassword := r.PostFormValue("currentPassword"), r.PostFormValue("newPassword"), r.PostFormValue("repeatNewPassword")
-		if currentPassword != "" && newPassword != "" && repeatNewPassword != "" && len(newPassword) >= 8 && len(repeatNewPassword) >= 8 {
+		if currentPassword != "" && len(newPassword) >= 8 && len(repeatNewPassword) >= 8 {
 			// check passwords match
 			if newPassword == repeatNewPassword {
 				// define variables to write into
@@ -87,8 +92,67 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 			special = -4
 		}
 
+		var twoFactorData TwoFactorData
+
+		// check whether two-factor authentication is disabled (== "") or enabled
+		if spuser.TwoFactorSecret(user) == "" {
+			var oneTimePasswordWrong bool
+
+			// enable two factor authentication
+			oneTimePassword, twoFactorSecret := r.PostFormValue("oneTimePassword"), r.PostFormValue("twoFactorSecret")
+			if twoFactorSecret != "" && len(oneTimePassword) >= 6 && len(oneTimePassword) <= 8 {
+				// validate one-time password
+				if totp.Validate(oneTimePassword, twoFactorSecret) {
+					// write to db
+					spuser.EnableTwoFactor(user, twoFactorSecret)
+
+					// reload page
+					w.Header().Set("location", r.URL.Path)
+					w.WriteHeader(http.StatusSeeOther)
+					return
+				}
+
+				// one-time password is not correct
+				oneTimePasswordWrong = true
+			}
+
+			// two-factor authentication key generation
+			key, errKey := totp.Generate(totp.GenerateOpts{Issuer: "secpass", AccountName: user, Algorithm: otp.AlgorithmSHA512})
+			shorts.Check(errKey, true)
+
+			// image generation
+			image, errImg := key.Image(200, 200)
+			shorts.Check(errImg, true)
+
+			// image encoding
+			buf := bytes.Buffer{}
+			png.Encode(&buf, image)
+			encodedImage := base64.StdEncoding.EncodeToString(buf.Bytes())
+
+			// set two-factor data
+			twoFactorData = TwoFactorData{Image: encodedImage, Secret: key.Secret(), Disabled: true, OneTimePasswordWrong: oneTimePasswordWrong}
+		} else if r.PostFormValue("disableTwoFactor") == "disableTwoFactorAuthentication" {
+			// define variables
+			oneTimePassword := r.PostFormValue("oneTimePassword")
+			twoFactorSecret := spuser.TwoFactorSecret(user)
+
+			// validate one-time password
+			if len(oneTimePassword) >= 6 && len(oneTimePassword) <= 8 && totp.Validate(oneTimePassword, twoFactorSecret) {
+				// disable two-factor authentication
+				spuser.DisableTwoFactor(user)
+
+				// reload page
+				w.Header().Set("location", r.URL.Path)
+				w.WriteHeader(http.StatusSeeOther)
+				return
+			}
+
+			// set two-factor data
+			twoFactorData = TwoFactorData{OneTimePasswordWrong: true}
+		}
+
 		// execute template
-		shorts.Check(tpl.ExecuteTemplate(w, "settings.html", Data{User: user, Lang: getLang(r), Special: special}), false)
+		shorts.Check(tpl.ExecuteTemplate(w, "settings.html", Data{User: user, Lang: getLang(r), Special: special, TwoFactor: twoFactorData}), false)
 	}
 
 	// redirect to login

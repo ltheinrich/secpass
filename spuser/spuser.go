@@ -1,10 +1,12 @@
-package user
+package spuser
 
 import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	"lheinrich.de/secpass/conf"
 
 	"lheinrich.de/secpass/shorts"
 )
@@ -59,4 +61,30 @@ func PwnedList(name string) []string {
 
 	// return
 	return titles
+}
+
+// TwoFactorSecret get two-factor authentication secret and "" if disabled
+func TwoFactorSecret(user string) string {
+	// query db
+	row := conf.DB.QueryRow(conf.GetSQL("two_factor"), user)
+
+	// read from query
+	var secret string
+	err := row.Scan(&secret)
+	shorts.Check(err, true)
+
+	// return
+	return secret
+}
+
+// EnableTwoFactor enable two-factor authentication
+func EnableTwoFactor(user, secret string) {
+	_, err := conf.DB.Exec(conf.GetSQL("enable_two_factor"), secret, user)
+	shorts.Check(err, true)
+}
+
+// DisableTwoFactor disable two-factor authentication
+func DisableTwoFactor(user string) {
+	_, err := conf.DB.Exec(conf.GetSQL("disable_two_factor"), user)
+	shorts.Check(err, true)
 }

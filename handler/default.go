@@ -6,7 +6,7 @@ import (
 
 	"lheinrich.de/secpass/conf"
 	"lheinrich.de/secpass/shorts"
-	"lheinrich.de/secpass/user"
+	"lheinrich.de/secpass/spuser"
 )
 
 // Data to pass into template
@@ -15,6 +15,15 @@ type Data struct {
 	Lang      string
 	Special   int
 	LoggedOut bool
+	TwoFactor TwoFactorData
+}
+
+// TwoFactorData data for two-factor authentication
+type TwoFactorData struct {
+	Image                string
+	Secret               string
+	Disabled             bool
+	OneTimePasswordWrong bool
 }
 
 var (
@@ -86,7 +95,7 @@ func checkSession(r *http.Request) string {
 		cookieName, _ := r.Cookie("secpass_name")
 		uuid := cookieUUID.Value
 		name := cookieName.Value
-		user := user.Sessions[uuid].User
+		user := spuser.Sessions[uuid].User
 
 		if user == name {
 			return user
