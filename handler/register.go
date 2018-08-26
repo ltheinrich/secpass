@@ -42,7 +42,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 				// hash password and insert user
 				passwordHash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost+1)
 				_, errExec := conf.DB.Exec(conf.GetSQL("register"), name, string(passwordHash), "", encryptedKey)
-				shorts.Check(errExec, true)
+				shorts.Check(errExec)
 
 				// redirect and return
 				redirect(w, "/login")
@@ -58,5 +58,5 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// execute template
-	shorts.Check(tpl.ExecuteTemplate(w, "register.html", Data{User: "", Lang: getLang(r), Special: special, LoggedOut: true}), false)
+	shorts.Check(tpl.ExecuteTemplate(w, "register.html", Data{User: "", Lang: getLang(r), Special: special, LoggedOut: true}))
 }

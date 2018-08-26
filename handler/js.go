@@ -18,10 +18,10 @@ func JS(w http.ResponseWriter, r *http.Request) {
 	// open file and check for error
 	_, fileName := path.Split(r.URL.Path)
 	file, errFile := os.Open(conf.Config["webserver"]["jsDirectory"] + "/" + fileName)
-	shorts.Check(errFile, false)
+	shorts.Check(errFile)
 	defer file.Close()
 
 	// write out file
 	_, errCopy := io.Copy(w, file)
-	shorts.Check(errCopy, false)
+	shorts.Check(errCopy)
 }

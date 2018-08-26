@@ -8,11 +8,27 @@
 <div class="card-panel blue-grey darken-1 border">
     <div class="col card-content white-text">
         <h5>{{lang .Lang "passwordList"}}</h5>
-        <br> {{if eq .Special -1}}
-        <p clasS="success">{{lang .Lang "pwnedNotFound"}}</p>
-        {{else if eq .Special -2}}
-        <p class="error">{{lang .Lang "pwnedFound"}}</p>
-        <p class="error">{{range $index, $dataset := .Pwns}}- {{$dataset}}<br>{{end}}</p>{{end}}
+        <br>
+        <div class="row" id="pwnedList">
+            <div class="col s12 m5">
+                {{if eq .Special -1}}
+                <div class="card-panel green">
+                    <span class="white-text">
+                        {{lang .Lang "pwnedNotFound"}}
+                        <a class="btn-floating waves-effect waves-light" id="closePwnedList"><i class="material-icons">close</i></a>
+                    </span>
+                </div>
+                {{else if eq .Special -2}}
+                <div class="card-panel red">
+                    <span class="white-text">
+                        {{lang .Lang "pwnedFound"}}<br>
+                        <br> {{range $index, $dataset := .Pwns}}{{$dataset}}<br>{{end}}
+                        <a class="btn-floating waves-effect waves-light right" id="closePwnedList"><i class="material-icons">close</i></a>
+                    </span>
+                </div>
+                {{end}}
+            </div>
+        </div>
         <div>
             <input id="passwordView" value="" readonly hidden>
             <form method="POST" id="passwordEdit" onsubmit="return manipulateEditPassword()" hidden>
@@ -42,14 +58,14 @@
             <div class="collection-item password">{{$passwordID}}&nbsp;
                 <input id="pw-{{$passwordID}}" value="{{$password}}" disabled hidden>
                 <a class="secondary-content" href="/haveibeenpwned?account={{$passwordID}}" title="haveibeenpwned">
-                    <i class="material-icons" passwordid="{{$passwordID}}">check</i>&nbsp;</a>
+                    <i class="material-icons">check</i>&nbsp;</a>
                 <a class="secondary-content" title="{{$deleteEntry}}" href="#">
                     <i class="material-icons deletebtn" passwordid="{{$passwordID}}">delete</i>&nbsp;</a>
-                <a class="secondary-content" passwordid="{{$passwordID}}" title="{{$editEntry}}" href="#">
+                <a class="secondary-content" title="{{$editEntry}}" href="#">
                     <i class="material-icons editbtn" passwordid="{{$passwordID}}">edit</i>&nbsp;</a>
-                <a class="secondary-content" passwordid="{{$passwordID}}" title="{{$viewEntry}}" href="#">
+                <a class="secondary-content" title="{{$viewEntry}}" href="#">
                     <i class="material-icons viewbtn" passwordid="{{$passwordID}}">search</i>&nbsp;</a>
-                <a class="secondary-content" passwordid="{{$passwordID}}" title="{{$copyPassword}}" href="#">
+                <a class="secondary-content" title="{{$copyPassword}}" href="#">
                     <i class="material-icons copybtn" passwordid="{{$passwordID}}">vpn_key</i>&nbsp;</a>
             </div>
             {{end}}

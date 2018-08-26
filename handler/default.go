@@ -3,6 +3,7 @@ package handler
 import (
 	"html/template"
 	"net/http"
+	"time"
 
 	"lheinrich.de/secpass/conf"
 	"lheinrich.de/secpass/shorts"
@@ -48,12 +49,15 @@ var (
 
 	// define templates
 	tpl *template.Template
+
+	// let cookies expire
+	expiresCookie = time.Now().Add(-100 * time.Hour)
 )
 
 // name function
 func name(w http.ResponseWriter, r *http.Request) {
 	// execute template
-	shorts.Check(tpl.ExecuteTemplate(w, "name", nil), false)
+	shorts.Check(tpl.ExecuteTemplate(w, "name", nil))
 }
 
 // LoadTemplates parse
@@ -61,7 +65,7 @@ func LoadTemplates() {
 	// parse templates and check error
 	var err error
 	tpl, err = template.New("").Funcs(funcs).ParseGlob(conf.Config["webserver"]["templatesDirectory"])
-	shorts.Check(err, true)
+	shorts.Check(err)
 }
 
 // redirect to location
@@ -109,7 +113,30 @@ func checkSession(r *http.Request) string {
 // cookie return cookie value
 func cookie(r *http.Request, name string) string {
 	cookie, err := r.Cookie(name)
-	shorts.Check(err, false)
+	shorts.Check(err)
 
 	return cookie.Value
+}
+
+// delete cookie with specified name
+func deleteCookie(w http.ResponseWriter, name string) {
+	// define cookie and delete
+	cookie := http.Cookie{Name: name, Value: "null", Path: "/", MaxAge: -1, Expires: expiresCookie}
+	http.SetCookie(w, &cookie)
+}
+
+// delete cookies with specified names
+func deleteCookies(w http.ResponseWriter, names []string) {
+	// loop through names
+	for _, name := range names {
+		// delete cookie
+		deleteCookie(w, name)
+	}
+}
+
+// delete all secpass cookies
+func deleteAllCookies(w http.ResponseWriter) {
+	// define cookies and delete them
+	cookies := []string{"secpass_hash", "secpass_uuid", "secpass_name", "secpass_lang"}
+	deleteCookies(w, cookies)
 }

@@ -36,7 +36,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		if name != "" && password != "" {
 			// insert into db
 			_, err := conf.DB.Exec(conf.GetSQL("add_password"), name, password, user)
-			shorts.Check(err, true)
+			shorts.Check(err)
 		}
 
 		// edit password
@@ -44,7 +44,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		if passwordEditID != "" && passwordEditInput != "" {
 			// update db
 			_, err := conf.DB.Exec(conf.GetSQL("edit_password"), passwordEditInput, passwordEditID, user)
-			shorts.Check(err, true)
+			shorts.Check(err)
 		}
 
 		// delete password
@@ -52,11 +52,11 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		if passwordDeleteInput != "" {
 			// delete from db
 			_, err := conf.DB.Exec(conf.GetSQL("delete_password"), passwordDeleteInput, user)
-			shorts.Check(err, true)
+			shorts.Check(err)
 		}
 
 		// execute template
-		shorts.Check(tpl.ExecuteTemplate(w, "index.html", Data{User: user, Lang: getLang(r), Passwords: passwords(user), Special: special, Pwns: pwns}), false)
+		shorts.Check(tpl.ExecuteTemplate(w, "index.html", Data{User: user, Lang: getLang(r), Passwords: passwords(user), Special: special, Pwns: pwns}))
 	}
 
 	// redirect to login
@@ -67,7 +67,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 func passwords(user string) map[string]string {
 	// query db and check for error
 	rows, errQuery := conf.DB.Query(conf.GetSQL("passwords"), user)
-	shorts.Check(errQuery, true)
+	shorts.Check(errQuery)
 
 	passwordMap := map[string]string{}
 
@@ -79,7 +79,7 @@ func passwords(user string) map[string]string {
 
 		// read from rows
 		errScan := rows.Scan(&name, &password)
-		shorts.Check(errScan, true)
+		shorts.Check(errScan)
 
 		// put into map
 		passwordMap[name] = password

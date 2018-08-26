@@ -2,7 +2,10 @@ package main
 
 import (
 	"io/ioutil"
+	"log"
 	"net/http"
+	"os"
+	"path"
 	"strings"
 	"time"
 
@@ -30,7 +33,7 @@ func setupConfig() {
 	// define language directory and list files
 	langDir := conf.Config["app"]["languageDirectory"]
 	files, err := ioutil.ReadDir(langDir)
-	shorts.Check(err, true)
+	shorts.Check(err)
 
 	// loop files and load language
 	for _, file := range files {
@@ -42,11 +45,26 @@ func setupConfig() {
 // setup logging
 func setupLogging() {
 	// define logging configurations
-	logFile := conf.Config["app"]["logFile"]
+	logFile := time.Now().Format(conf.Config["app"]["logFile"])
 	logInfo := conf.Config["app"]["logInfo"] == "true"
 
-	// initialize logging to file
-	shorts.InitLoggingFile(time.Now().Format(logFile), logInfo)
+	// set LogInfo
+	shorts.LogInfo = logInfo
+
+	// split directories from filename and create them
+	directory, _ := path.Split(logFile)
+	os.MkdirAll(directory, os.ModePerm)
+
+	// open file and check for error
+	file, err := os.OpenFile(logFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	shorts.Check(err)
+
+	// set file as output
+	if err == nil {
+		log.SetOutput(file)
+	} else {
+		log.Println(err)
+	}
 }
 
 // setup database
@@ -62,7 +80,7 @@ func setupDB() {
 	// connect to postgresql database and setup
 	conf.DB = shorts.ConnectPostgreSQL(host, port, database, username, password, ssl)
 	_, err := conf.DB.Exec(conf.GetSQL("setup"))
-	shorts.Check(err, true)
+	shorts.Check(err)
 }
 
 // setup webserver
@@ -76,7 +94,7 @@ func setupWebserver() {
 	key := conf.Config["webserver"]["keyFile"]
 
 	// start http server
-	shorts.Check(http.ListenAndServeTLS(address, cert, key, nil), true)
+	shorts.Check(http.ListenAndServeTLS(address, cert, key, nil))
 	go cleanSessions()
 }
 

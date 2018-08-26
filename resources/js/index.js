@@ -20,7 +20,7 @@ function getCookie(cname) {
 }
 
 // copy password to clipboard
-var copybtn = document.querySelector('.copybtn');
+var copybtn = document.querySelectorAll('.copybtn');
 if (copybtn != null) {
     for (i = 0; i < copybtn.length; i++) {
         // add click listener
@@ -184,11 +184,26 @@ function manipulateEditPassword() {
     return false;
 }
 
+// generate password function
+function generatePassword() {
+    // chars to use
+    charset = "abcdefghijklmnopqrstuvwxyz!ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_abcdefghijklmnopqrstuvwxyz#ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@";
+    password = "";
+
+    // add random chars
+    for (var i = 0, n = charset.length; i < 16; ++i) {
+        password += charset.charAt(Math.floor(Math.random() * n));
+    }
+
+    // return
+    return password;
+}
+
 // generate random password
 document.getElementById("generatePassword").addEventListener('click', function (event) {
     // get element and modify
     var el = document.getElementById("passwordPre");
-    el.value = Math.random().toString(36).substr(2, 8) + Math.random().toString(36).substr(2, 8);
+    el.value = generatePassword();
 });
 
 // show password
@@ -203,3 +218,10 @@ document.getElementById("showPassword").addEventListener('click', function (even
         el.type = "password";
     }
 });
+
+// close pwned list
+document.getElementById("closePwnedList").addEventListener('click', function (event) {
+    // get element and hide
+    var el = document.getElementById("pwnedList");
+    el.style.display = "none";
+})
