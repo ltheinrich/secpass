@@ -17,7 +17,7 @@ var (
 	Config map[string]map[string]string
 
 	// Lang Languages
-	Lang = map[string]*map[string]string{}
+	Lang = map[string]map[string]string{}
 )
 
 // ReadConfig Unmarshal file to map
@@ -40,7 +40,7 @@ func ReadConfig(jsonFile string) map[string]map[string]string {
 }
 
 // ReadLanguage Unmarshal file to map
-func ReadLanguage(jsonFile string) *map[string]string {
+func ReadLanguage(jsonFile string) map[string]string {
 	// open language file and check for error
 	file, err := os.Open(jsonFile)
 	shorts.Check(err)
@@ -55,7 +55,7 @@ func ReadLanguage(jsonFile string) *map[string]string {
 	shorts.Check(json.Unmarshal(jsonBytes, &jsonConfig))
 
 	// return the language map
-	return &jsonConfig
+	return jsonConfig
 }
 
 // GetSQL return sql query string

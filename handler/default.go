@@ -36,7 +36,7 @@ var (
 			return conf.Config[keys[0]][keys[1]]
 		},
 		"lang": func(keys ...interface{}) string {
-			return (*conf.Lang[keys[0].(string)])[keys[1].(string)]
+			return conf.Lang[keys[0].(string)][keys[1].(string)]
 		},
 		"languages": func() []string {
 			languages := []string{}
