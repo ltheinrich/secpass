@@ -32,5 +32,10 @@
     "viewEntry": "View entry",
     "editEntry": "Edit entry",
     "deleteEntry": "Delete entry",
-    "copyPassword": "Copy password"
+    "copyPassword": "Copy password",
+    "showPassword": "Show password",
+    "createEntry": "Create entry",
+    "generatePassword": "Generate Password",
+    "pwnedFound": "Your account has been found in the following datasets:",
+    "pwnedNotFound": "Your account could not be found."
 }

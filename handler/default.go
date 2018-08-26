@@ -17,6 +17,7 @@ type Data struct {
 	LoggedOut bool
 	TwoFactor TwoFactorData
 	Passwords map[string]string
+	Pwns      []string
 }
 
 // TwoFactorData data for two-factor authentication

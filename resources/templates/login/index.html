@@ -8,7 +8,11 @@
 <div class="card-panel blue-grey darken-1 border">
     <div class="col card-content white-text">
         <h5>{{lang .Lang "passwordList"}}</h5>
-        <br>
+        <br> {{if eq .Special -1}}
+        <p clasS="success">{{lang .Lang "pwnedNotFound"}}</p>
+        {{else if eq .Special -2}}
+        <p class="error">{{lang .Lang "pwnedFound"}}</p>
+        <p class="error">{{range $index, $dataset := .Pwns}}- {{$dataset}}<br>{{end}}</p>{{end}}
         <div>
             <input id="passwordView" value="" readonly hidden>
             <form method="POST" id="passwordEdit" onsubmit="return manipulateEditPassword()" hidden>
@@ -37,6 +41,8 @@
             {{range $passwordID, $password := .Passwords}}
             <div class="collection-item password">{{$passwordID}}&nbsp;
                 <input id="pw-{{$passwordID}}" value="{{$password}}" disabled hidden>
+                <a class="secondary-content" href="/haveibeenpwned?account={{$passwordID}}" title="haveibeenpwned">
+                    <i class="material-icons" passwordid="{{$passwordID}}">check</i>&nbsp;</a>
                 <a class="secondary-content" title="{{$deleteEntry}}" href="#">
                     <i class="material-icons deletebtn" passwordid="{{$passwordID}}">delete</i>&nbsp;</a>
                 <a class="secondary-content" passwordid="{{$passwordID}}" title="{{$editEntry}}" href="#">
@@ -55,8 +61,13 @@
                     <input id="passwordPre" type="password" class="validate" placeholder="{{$password}}" minlength="8" required>
                 </div>
             </div>
-            <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "save"}}
+            <p><label><input type="checkbox" id="showPassword">
+                    <span>{{lang .Lang "showPassword"}}</span></label></p>
+            <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "createEntry"}}
                 <i class="material-icons right">save</i>
+            </button>
+            <button class="btn waves-effect waves-light" id="generatePassword" type="button">{{lang .Lang "generatePassword"}}
+                <i class="material-icons right">cached</i>
             </button>
         </form>
         <form id="addPassword" method="POST" hidden>
@@ -66,7 +77,7 @@
                     <input name="password" id="password" type="password" class="validate" placeholder="{{$password}}" required>
                 </div>
             </div>
-            <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "save"}}
+            <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "createEntry"}}
                 <i class="material-icons right">save</i>
             </button>
         </form>

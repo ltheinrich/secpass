@@ -183,3 +183,23 @@ function manipulateEditPassword() {
     document.getElementById("passwordEditAfter").submit();
     return false;
 }
+
+// generate random password
+document.getElementById("generatePassword").addEventListener('click', function (event) {
+    // get element and modify
+    var el = document.getElementById("passwordPre");
+    el.value = Math.random().toString(36).substr(2, 8) + Math.random().toString(36).substr(2, 8);
+});
+
+// show password
+document.getElementById("showPassword").addEventListener('click', function (event) {
+    // get element
+    var el = document.getElementById("passwordPre");
+
+    // show or hide password
+    if (el.type === "password") {
+        el.type = "text";
+    } else {
+        el.type = "password";
+    }
+});
