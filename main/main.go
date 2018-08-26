@@ -6,6 +6,8 @@ import (
 	"strings"
 	"time"
 
+	"lheinrich.de/secpass/spuser"
+
 	"lheinrich.de/secpass/conf"
 	"lheinrich.de/secpass/handler"
 	"lheinrich.de/secpass/shorts"
@@ -75,6 +77,15 @@ func setupWebserver() {
 
 	// start http server
 	shorts.Check(http.ListenAndServeTLS(address, cert, key, nil), true)
+	go cleanSessions()
+}
+
+// clean sessions every 10 minutes
+func cleanSessions() {
+	for {
+		spuser.CleanupSessions()
+		time.Sleep(10 * time.Minute)
+	}
 }
 
 // setup webserver handlers

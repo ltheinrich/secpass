@@ -20,123 +20,150 @@ function getCookie(cname) {
 }
 
 // copy password to clipboard
-document.querySelector('.copybtn').addEventListener('click', function (event) {
-    // define textarea to copy
-    var el = document.createElement("textarea")
+var copybtn = document.querySelector('.copybtn');
+if (copybtn != null) {
+    for (i = 0; i < copybtn.length; i++) {
+        // add click listener
+        copybtn[i].addEventListener('click', function (event) {
+            // define textarea to copy
+            var el = document.createElement("textarea");
 
-    // get passwordid, password and cookie hash
-    var passwordid = event.srcElement.getAttribute("passwordid")
-    var password = document.getElementById("pw-" + passwordid).value
-    var cookie = getCookie('secpass_hash')
+            // get passwordid, password and cookie hash
+            var passwordid = event.srcElement.getAttribute("passwordid");
+            var password = document.getElementById("pw-" + passwordid).value;
+            var cookie = getCookie('secpass_hash');
 
-    // decrypt and fill element
-    el.value = sjcl.decrypt(cookie, password);
+            // decrypt and fill element
+            el.value = sjcl.decrypt(cookie, password);
 
-    // add element to page and select
-    document.body.appendChild(el);
-    el.select();
+            // add element to page and select
+            document.body.appendChild(el);
+            el.select();
 
-    // copy and remove element
-    document.execCommand('copy');
-    document.body.removeChild(el);
+            // copy and remove element
+            document.execCommand('copy');
+            document.body.removeChild(el);
 
-    // hide others
-    document.getElementById("passwordView").style.display = "none"
-    document.getElementById("passwordEdit").style.display = "none"
-    document.getElementById("passwordDelete").style.display = "none"
-});
+            // hide others
+            document.getElementById("passwordView").style.display = "none";
+            document.getElementById("passwordEdit").style.display = "none";
+            document.getElementById("passwordDelete").style.display = "none";
+        });
+    }
+}
 
 // show password view
-document.querySelector('.viewbtn').addEventListener('click', function (event) {
-    // get element
-    var el = document.getElementById("passwordView")
+var viewbtn = document.querySelectorAll('.viewbtn');
+if (viewbtn != null) {
+    for (i = 0; i < viewbtn.length; i++) {
+        // add click listener
+        viewbtn[i].addEventListener('click', function (event) {
+            // get passwordid, password and cookie hash
+            var passwordid = event.srcElement.getAttribute("passwordid");
+            var password = document.getElementById("pw-" + passwordid).value;
+            var cookie = getCookie('secpass_hash');
 
-    // check that it is not displayed
-    if (el.style.display === "none") {
-        // get passwordid, password and cookie hash
-        var passwordid = event.srcElement.getAttribute("passwordid")
-        var password = document.getElementById("pw-" + passwordid).value
-        var cookie = getCookie('secpass_hash')
+            // get element and decrypt
+            var el = document.getElementById("passwordView");
+            var decrypted = sjcl.decrypt(cookie, password);
 
-        // decrypt and fill element
-        el.value = sjcl.decrypt(cookie, password);
+            // check that it is not displayed
+            if (el.style.display === "none" || el.value != decrypted) {
+                // fill element and hide others
+                el.value = decrypted;
+                document.getElementById("passwordEdit").style.display = "none";
+                document.getElementById("passwordDelete").style.display = "none";
 
-        // hide other password elements
-        document.getElementById("passwordEdit").style.display = "none"
-        document.getElementById("passwordDelete").style.display = "none"
-
-        // show
-        el.style.display = "block";
-    } else {
-        // hide
-        el.style.display = "none";
+                // show
+                el.style.display = "block";
+            } else {
+                // hide
+                el.style.display = "none";
+            }
+        });
     }
-});
+}
 
 // show password edit form
-document.querySelector('.editbtn').addEventListener('click', function (event) {
-    // get element
-    var el = document.getElementById("passwordEdit")
+var editbtn = document.querySelectorAll('.editbtn');
+if (editbtn != null) {
+    for (i = 0; i < editbtn.length; i++) {
+        // add click listener
+        editbtn[i].addEventListener('click', function (event) {
+            // get element
+            var el = document.getElementById("passwordEdit");
 
-    // check that is is not displayed
-    if (el.style.display === "none") {
-        // get passwordid, password and cookie hash
-        var passwordid = event.srcElement.getAttribute("passwordid")
-        var password = document.getElementById("pw-" + passwordid).value
-        var cookie = getCookie('secpass_hash')
+            // get passwordid, password and cookie hash
+            var passwordid = event.srcElement.getAttribute("passwordid");
+            var password = document.getElementById("pw-" + passwordid).value;
+            var cookie = getCookie('secpass_hash');
 
-        // get input elements
-        var input = document.getElementById("passwordEditInput")
-        var elid = document.getElementById("passwordEditID")
+            // get input elements
+            var input = document.getElementById("passwordEditInput");
+            var elid = document.getElementById("passwordEditID");
 
-        // decrypt and fill elements
-        input.value = sjcl.decrypt(cookie, password);
-        elid.value = passwordid
+            // decrypt
+            var decrypted = sjcl.decrypt(cookie, password);
 
-        // hide others
-        document.getElementById("passwordView").style.display = "none"
-        document.getElementById("passwordDelete").style.display = "none"
+            // check that is is not displayed
+            if (el.style.display === "none" || input.value != decrypted || elid.value != passwordid) {
+                // fill elements
+                input.value = decrypted;
+                elid.value = passwordid;
 
-        // show
-        el.style.display = "block";
-    } else {
-        // hide
-        el.style.display = "none";
+                // hide others
+                document.getElementById("passwordView").style.display = "none";
+                document.getElementById("passwordDelete").style.display = "none";
+
+                // show
+                el.style.display = "block";
+            } else {
+                // hide
+                el.style.display = "none";
+            }
+        });
     }
-});
+}
 
 // show password delete button
-document.querySelector('.deletebtn').addEventListener('click', function (event) {
-    // get element
-    var el = document.getElementById("passwordDelete")
+var deletebtn = document.querySelectorAll('.deletebtn');
+if (deletebtn != null) {
+    for (i = 0; i < deletebtn.length; i++) {
+        // add click listener
+        deletebtn[i].addEventListener('click', function (event) {
+            // get element
+            var el = document.getElementById("passwordDelete");
 
-    // check that is is not displayed
-    if (el.style.display === "none") {
-        // hide others
-        document.getElementById("passwordView").style.display = "none"
-        document.getElementById("passwordEdit").style.display = "none"
+            // get passwordid and input element
+            var passwordid = event.srcElement.getAttribute("passwordid");
+            var input = document.getElementById("passwordDeleteInput");
 
-        // get passwordid and input element
-        var passwordid = event.srcElement.getAttribute("passwordid")
-        var input = document.getElementById("passwordDeleteInput")
+            // check that is is not displayed
+            if (el.style.display === "none" || input.value != passwordid) {
+                // hide others
+                document.getElementById("passwordView").style.display = "none";
+                document.getElementById("passwordEdit").style.display = "none";
 
-        // set value to passwordid and show
-        input.value = passwordid
-        el.style.display = "block";
-    } else {
-        //hide
-        el.style.display = "none";
+                // set value to passwordid and show
+                input.value = passwordid;
+                input.checked = false;
+                el.style.display = "block";
+            } else {
+                //hide
+                el.style.display = "none";
+            }
+        });
     }
-});
+}
 
 // encrypt password
 function manipulateAddPassword() {
     // forward name
-    document.getElementById("name").value = document.getElementById("namePre").value
+    document.getElementById("name").value = document.getElementById("namePre").value;
 
     // encrypt password
-    var password = document.getElementById("passwordPre").value
-    document.getElementById("password").value = sjcl.encrypt(getCookie('secpass_hash'), password, { ks: 256 })
+    var password = document.getElementById("passwordPre").value;
+    document.getElementById("password").value = sjcl.encrypt(getCookie('secpass_hash'), password, { ks: 256 });
 
     // submit and return
     document.getElementById("addPassword").submit();
@@ -146,11 +173,11 @@ function manipulateAddPassword() {
 // encrypt password
 function manipulateEditPassword() {
     // forward name
-    document.getElementById("passwordEditIDAfter").value = document.getElementById("passwordEditID").value
+    document.getElementById("passwordEditIDAfter").value = document.getElementById("passwordEditID").value;
 
     // encrypt password
-    var password = document.getElementById("passwordEditInput").value
-    document.getElementById("passwordEditInputAfter").value = sjcl.encrypt(getCookie('secpass_hash'), password, { ks: 256 })
+    var password = document.getElementById("passwordEditInput").value;
+    document.getElementById("passwordEditInputAfter").value = sjcl.encrypt(getCookie('secpass_hash'), password, { ks: 256 });
 
     // submit and return
     document.getElementById("passwordEditAfter").submit();

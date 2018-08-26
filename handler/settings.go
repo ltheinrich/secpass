@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"image/png"
 	"net/http"
+	"strconv"
 
 	"github.com/pquerna/otp"
 	"github.com/pquerna/otp/totp"
@@ -26,6 +27,12 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 		special := 0
 		var reloadPage bool
 
+		// set special from url
+		specialValue := r.FormValue("special")
+		if specialValue != "" {
+			special, _ = strconv.Atoi(specialValue)
+		}
+
 		// change language
 		lang := r.PostFormValue("language")
 		if lang != "" {
@@ -34,7 +41,6 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 
 			// reload page
 			reloadPage = true
-			return
 		}
 
 		// change password
@@ -45,9 +51,11 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 				// define variables to write into
 				var username string
 				var passwordHash string
+				var secret string
+				var key string
 
 				// read user from database
-				errQuery := conf.DB.QueryRow(conf.GetSQL("login"), user).Scan(&username, &passwordHash)
+				errQuery := conf.DB.QueryRow(conf.GetSQL("login"), user).Scan(&username, &passwordHash, &secret, &key)
 				shorts.Check(errQuery, true)
 
 				// compare passwords
@@ -56,8 +64,12 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 					password, errPassword := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost+1)
 					shorts.Check(errPassword, true)
 
+					// re-encrypt key
+					decryptedKey := shorts.Decrypt(key, shorts.GenerateKey(currentPassword))
+					encryptedKey := shorts.Encrypt(decryptedKey, shorts.GenerateKey(newPassword))
+
 					// change password in db and check error
-					_, errExec := conf.DB.Exec(conf.GetSQL("change_password"), string(password), user)
+					_, errExec := conf.DB.Exec(conf.GetSQL("change_password"), string(password), encryptedKey, user)
 					shorts.Check(errExec, true)
 
 					// password changed successfully
@@ -96,6 +108,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 
 		// check whether two-factor authentication is disabled (== "") or enabled
 		if spuser.TwoFactorSecret(user) == "" {
+			var skip bool
 			var oneTimePasswordWrong bool
 
 			// enable two factor authentication
@@ -108,28 +121,32 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 
 					// reload page
 					reloadPage = true
-					return
-				}
 
-				// one-time password is not correct
-				oneTimePasswordWrong = true
+					// skip key generation
+					skip = true
+				} else {
+					// one-time password is not correct
+					oneTimePasswordWrong = true
+				}
 			}
 
-			// two-factor authentication key generation
-			key, errKey := totp.Generate(totp.GenerateOpts{Issuer: "secpass", AccountName: user, Algorithm: otp.AlgorithmSHA512})
-			shorts.Check(errKey, true)
+			if !skip {
+				// two-factor authentication key generation
+				key, errKey := totp.Generate(totp.GenerateOpts{Issuer: "secpass", AccountName: user, Algorithm: otp.AlgorithmSHA512})
+				shorts.Check(errKey, true)
 
-			// image generation
-			image, errImg := key.Image(200, 200)
-			shorts.Check(errImg, true)
+				// image generation
+				image, errImg := key.Image(200, 200)
+				shorts.Check(errImg, true)
 
-			// image encoding
-			buf := bytes.Buffer{}
-			png.Encode(&buf, image)
-			encodedImage := base64.StdEncoding.EncodeToString(buf.Bytes())
+				// image encoding
+				buf := bytes.Buffer{}
+				png.Encode(&buf, image)
+				encodedImage := base64.StdEncoding.EncodeToString(buf.Bytes())
 
-			// set two-factor data
-			twoFactorData = TwoFactorData{Image: encodedImage, Secret: key.Secret(), Disabled: true, OneTimePasswordWrong: oneTimePasswordWrong}
+				// set two-factor data
+				twoFactorData = TwoFactorData{Image: encodedImage, Secret: key.Secret(), Disabled: true, OneTimePasswordWrong: oneTimePasswordWrong}
+			}
 		} else if r.PostFormValue("disableTwoFactor") == "disableTwoFactorAuthentication" {
 			// define variables
 			oneTimePassword := r.PostFormValue("oneTimePassword")
@@ -142,16 +159,16 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 
 				// reload page
 				reloadPage = true
-				return
+			} else {
+				// set two-factor data
+				twoFactorData = TwoFactorData{OneTimePasswordWrong: true}
 			}
-
-			// set two-factor data
-			twoFactorData = TwoFactorData{OneTimePasswordWrong: true}
 		}
 
 		if reloadPage {
-			w.Header().Set("location", r.URL.Path)
+			w.Header().Set("location", "/settings?special="+strconv.Itoa(special))
 			w.WriteHeader(http.StatusSeeOther)
+			return
 		}
 
 		// execute template

@@ -33,9 +33,15 @@ func Register(w http.ResponseWriter, r *http.Request) {
 
 			// name does not exist
 			if errQuery == sql.ErrNoRows {
+				// generate random key
+				key := shorts.Encrypt(shorts.UUID(), shorts.GenerateKey(shorts.UUID()))
+
+				// encrypt key
+				encryptedKey := shorts.Encrypt(key, shorts.GenerateKey(password))
+
 				// hash password and insert user
 				passwordHash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost+1)
-				_, errExec := conf.DB.Exec(conf.GetSQL("register"), name, string(passwordHash))
+				_, errExec := conf.DB.Exec(conf.GetSQL("register"), name, string(passwordHash), "", encryptedKey)
 				shorts.Check(errExec, true)
 
 				// redirect and return

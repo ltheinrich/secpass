@@ -1,1 +1,1 @@
-INSERT INTO users (name, password) VALUES ($1, $2);
+INSERT INTO users (name, password, secret, crypter) VALUES ($1, $2, $3, $4);
