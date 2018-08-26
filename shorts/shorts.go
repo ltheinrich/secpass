@@ -1,9 +1,14 @@
 package shorts
 
 import (
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/rand"
 	"database/sql"
+	"encoding/base64"
 	"encoding/hex"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"path"
@@ -91,4 +96,54 @@ func Hash(input string) string {
 	hasher := sha3.New512()
 	hasher.Write([]byte(input))
 	return hex.EncodeToString(hasher.Sum(nil))
+}
+
+// GenerateKey generate AES key
+func GenerateKey(key string) []byte {
+	length := len(key)
+	switch {
+	case length >= 32:
+		return []byte(key[:32])
+	case length >= 24:
+		return []byte(key[:24])
+	case length >= 16:
+		return []byte(key[:16])
+	}
+
+	return GenerateKey(key + "_secpass_key1gen")
+}
+
+// Encrypt text with key
+func Encrypt(text string, key []byte) string {
+	plain := []byte(text)
+
+	block, err := aes.NewCipher(key)
+	Check(err, true)
+
+	cipherText := make([]byte, aes.BlockSize+len(plain))
+	iv := cipherText[:aes.BlockSize]
+	_, err = io.ReadFull(rand.Reader, iv)
+	Check(err, true)
+
+	stream := cipher.NewCFBEncrypter(block, iv)
+	stream.XORKeyStream(cipherText[aes.BlockSize:], plain)
+
+	return base64.URLEncoding.EncodeToString(cipherText)
+}
+
+// Decrypt text with key
+func Decrypt(text string, key []byte) string {
+	cipherText, err := base64.URLEncoding.DecodeString(text)
+	Check(err, true)
+
+	block, err := aes.NewCipher(key)
+	Check(err, true)
+
+	iv := cipherText[:aes.BlockSize]
+	cipherText = cipherText[aes.BlockSize:]
+
+	stream := cipher.NewCFBDecrypter(block, iv)
+	stream.XORKeyStream(cipherText, cipherText)
+
+	return string(cipherText)
 }

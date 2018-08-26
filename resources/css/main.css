@@ -1,9 +1,21 @@
+/*
+ secpass main CSS file
+*/
+
+/*
+ Border distance for box
+*/
+
 .border {
     margin-top: 5%;
     margin-right: 10%;
     margin-left: 10%;
     margin-bottom: 2%;
 }
+
+/*
+ Center box vertically
+*/
 
 .vertical-center {
     width: inherit;
@@ -12,13 +24,25 @@
     transform: translateY(-50%);
 }
 
+/*
+ Error color (red)
+*/
+
 .error {
     color: firebrick;
 }
 
+/*
+ Success color (light green)
+*/
+
 .success {
     color: greenyellow;
 }
+
+/*
+ Password list item style properties
+*/
 
 .password {
     color: #273746;

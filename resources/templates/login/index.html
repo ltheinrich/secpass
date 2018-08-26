@@ -37,14 +37,14 @@
             {{range $passwordID, $password := .Passwords}}
             <div class="collection-item password">{{$passwordID}}&nbsp;
                 <input id="pw-{{$passwordID}}" value="{{$password}}" disabled hidden>
-                <a class="secondary-content deletebtn" passwordid="{{$passwordID}}" title="{{$deleteEntry}}" href="#"><i
-                        class="material-icons deletebtn" passwordid="{{$passwordID}}">delete</i>&nbsp;</a>
-                <a class="secondary-content editbtn" passwordid="{{$passwordID}}" title="{{$editEntry}}" href="#"><i class="material-icons editbtn"
-                        passwordid="{{$passwordID}}">edit</i>&nbsp;</a>
-                <a class="secondary-content viewbtn" passwordid="{{$passwordID}}" title="{{$viewEntry}}" href="#"><i class="material-icons viewbtn"
-                        passwordid="{{$passwordID}}">search</i>&nbsp;</a>
-                <a class="secondary-content copybtn" passwordid="{{$passwordID}}" title="{{$copyPassword}}" href="#"><i class="material-icons copybtn"
-                        passwordid="{{$passwordID}}">vpn_key</i>&nbsp;</a>
+                <a class="secondary-content" title="{{$deleteEntry}}" href="#">
+                    <i class="material-icons deletebtn" passwordid="{{$passwordID}}">delete</i>&nbsp;</a>
+                <a class="secondary-content" passwordid="{{$passwordID}}" title="{{$editEntry}}" href="#">
+                    <i class="material-icons editbtn" passwordid="{{$passwordID}}">edit</i>&nbsp;</a>
+                <a class="secondary-content" passwordid="{{$passwordID}}" title="{{$viewEntry}}" href="#">
+                    <i class="material-icons viewbtn" passwordid="{{$passwordID}}">search</i>&nbsp;</a>
+                <a class="secondary-content" passwordid="{{$passwordID}}" title="{{$copyPassword}}" href="#">
+                    <i class="material-icons copybtn" passwordid="{{$passwordID}}">vpn_key</i>&nbsp;</a>
             </div>
             {{end}}
         </div>

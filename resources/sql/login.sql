@@ -1,1 +1,1 @@
-SELECT name, password FROM users WHERE name = $1;
+SELECT name, password, secret, crypter FROM users WHERE name = $1;

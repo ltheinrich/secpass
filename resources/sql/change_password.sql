@@ -1,1 +1,1 @@
-UPDATE users SET password = $1 WHERE name = $2;
+UPDATE users SET password = $1, crypter = $2 WHERE name = $3;
