@@ -60,12 +60,12 @@ if (viewbtn != null) {
         viewbtn[i].addEventListener('click', function (event) {
             // get passwordid, password and cookie hash
             var passwordid = event.srcElement.getAttribute("passwordid");
-            var password = document.getElementById("pw-" + passwordid).value;
+            var password = document.getElementById("pw-" + passwordid);
             var cookie = getCookie('secpass_hash');
 
             // get element and decrypt
             var el = document.getElementById("passwordView");
-            var decrypted = sjcl.decrypt(cookie, password);
+            var decrypted = sjcl.decrypt(cookie, password.value);
 
             // check that it is not displayed
             if (el.style.display === "none" || el.value != decrypted) {
@@ -95,21 +95,23 @@ if (editbtn != null) {
 
             // get passwordid, password and cookie hash
             var passwordid = event.srcElement.getAttribute("passwordid");
-            var password = document.getElementById("pw-" + passwordid).value;
+            var password = document.getElementById("pw-" + passwordid);
             var cookie = getCookie('secpass_hash');
 
             // get input elements
             var input = document.getElementById("passwordEditInput");
             var elid = document.getElementById("passwordEditID");
+            var eltitle = document.getElementById("passwordEditTitle");
 
             // decrypt
-            var decrypted = sjcl.decrypt(cookie, password);
+            var decrypted = sjcl.decrypt(cookie, password.value);
 
             // check that is is not displayed
-            if (el.style.display === "none" || input.value != decrypted || elid.value != passwordid) {
+            if (el.style.display === "none" || input.value != decrypted || (elid.value != password.name && eltitle.value != password.title)) {
                 // fill elements
                 input.value = decrypted;
-                elid.value = passwordid;
+                elid.value = password.name;
+                eltitle.value = password.title;
 
                 // hide others
                 document.getElementById("passwordView").style.display = "none";
@@ -134,9 +136,10 @@ if (deletebtn != null) {
             // get element
             var el = document.getElementById("passwordDelete");
 
-            // get passwordid and input element
-            var passwordid = event.srcElement.getAttribute("passwordid");
+            // get passwordid, input and title element
+            var passwordid = document.getElementById("pw-" + event.srcElement.getAttribute("passwordid"));
             var input = document.getElementById("passwordDeleteInput");
+            var title = document.getElementById("passwordDeleteTitle");
 
             // check that is is not displayed
             if (el.style.display === "none" || input.value != passwordid) {
@@ -144,9 +147,10 @@ if (deletebtn != null) {
                 document.getElementById("passwordView").style.display = "none";
                 document.getElementById("passwordEdit").style.display = "none";
 
-                // set value to passwordid and show
-                input.value = passwordid;
+                // set value to name and title and show
+                input.value = passwordid.name;
                 input.checked = false;
+                title.value = passwordid.title;
                 el.style.display = "block";
             } else {
                 //hide
@@ -158,7 +162,8 @@ if (deletebtn != null) {
 
 // encrypt password
 function manipulateAddPassword() {
-    // forward name
+    // forward title and name
+    document.getElementById("title").value = document.getElementById("titlePre").value;
     document.getElementById("name").value = document.getElementById("namePre").value;
 
     // encrypt password
@@ -172,7 +177,8 @@ function manipulateAddPassword() {
 
 // encrypt password
 function manipulateEditPassword() {
-    // forward name
+    // forward title and name
+    document.getElementById("passwordEditTitleAfter").value = document.getElementById("passwordEditTitle").value;
     document.getElementById("passwordEditIDAfter").value = document.getElementById("passwordEditID").value;
 
     // encrypt password
@@ -220,8 +226,10 @@ document.getElementById("showPassword").addEventListener('click', function (even
 });
 
 // close pwned list
-document.getElementById("closePwnedList").addEventListener('click', function (event) {
-    // get element and hide
-    var el = document.getElementById("pwnedList");
-    el.style.display = "none";
-})
+var closePwnedList = document.getElementById("closePwnedList")
+if (closePwnedList != null) {
+    closePwnedList.addEventListener('click', function (event) {
+        // reload page
+        window.location.replace("/");
+    });
+}

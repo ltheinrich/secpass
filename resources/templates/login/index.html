@@ -4,7 +4,7 @@
 <!---->
 {{$editEntry := lang .Lang "editEntry"}} {{$deleteEntry := lang .Lang "deleteEntry"}}
 <!---->
-{{$name := lang .Lang "name"}} {{$password := lang .Lang "password"}}
+{{$name := lang .Lang "name"}} {{$password := lang .Lang "password"}} {{$title := lang .Lang "title"}}
 <div class="card-panel blue-grey darken-1 border">
     <div class="col card-content white-text">
         <h5>{{lang .Lang "passwordList"}}</h5>
@@ -32,6 +32,7 @@
         <div>
             <input id="passwordView" value="" readonly hidden>
             <form method="POST" id="passwordEdit" onsubmit="return manipulateEditPassword()" hidden>
+                <input id="passwordEditTitle" name="passwordEditTitle" value="" hidden>
                 <input id="passwordEditID" name="passwordEditID" value="" hidden>
                 <input id="passwordEditInput" name="passwordEditInput" minlength="8" value="" required>
                 <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "editEntry"}}
@@ -39,6 +40,7 @@
                 </button>
             </form>
             <form method="POST" id="passwordEditAfter" hidden>
+                <input id="passwordEditTitleAfter" name="passwordEditTitleAfter" value="" hidden>
                 <input id="passwordEditIDAfter" name="passwordEditIDAfter" value="" hidden>
                 <input id="passwordEditInputAfter" name="passwordEditInputAfter" minlength="8" value="" required>
                 <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "editEntry"}}
@@ -46,6 +48,7 @@
                 </button>
             </form>
             <form method="POST" id="passwordDelete" hidden>
+                <input type="checkbox" id="passwordDeleteTitle" name="passwordDeleteTitle" value="" checked hidden>
                 <p><label><input type="checkbox" id="passwordDeleteInput" name="passwordDeleteInput" value="" required>
                         <span>{{lang .Lang "deleteEntry"}}</span></label></p>
                 <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "deleteEntry"}}
@@ -54,25 +57,26 @@
             </form>
         </div>
         <div class="collection">
-            {{range $passwordID, $password := .Passwords}}
-            <div class="collection-item password">{{$passwordID}}&nbsp;
-                <input id="pw-{{$passwordID}}" value="{{$password}}" disabled hidden>
-                <a class="secondary-content" href="/haveibeenpwned?account={{$passwordID}}" title="haveibeenpwned">
+            {{range $index, $password := .Passwords}}
+            <div class="collection-item"><a class="passwordTitle">{{$password.Title}}</a> <a class="passwordName">{{$password.Name}}</a>&nbsp;
+                <input id="pw-{{$index}}" title="{{$password.Title}}" name="{{$password.Name}}" value="{{$password.Password}}" disabled hidden>
+                <a class="secondary-content" href="/haveibeenpwned?account={{$password.Name}}" title="haveibeenpwned">
                     <i class="material-icons">check</i>&nbsp;</a>
                 <a class="secondary-content" title="{{$deleteEntry}}" href="#">
-                    <i class="material-icons deletebtn" passwordid="{{$passwordID}}">delete</i>&nbsp;</a>
+                    <i class="material-icons deletebtn" passwordid="{{$index}}">delete</i>&nbsp;</a>
                 <a class="secondary-content" title="{{$editEntry}}" href="#">
-                    <i class="material-icons editbtn" passwordid="{{$passwordID}}">edit</i>&nbsp;</a>
+                    <i class="material-icons editbtn" passwordid="{{$index}}">edit</i>&nbsp;</a>
                 <a class="secondary-content" title="{{$viewEntry}}" href="#">
-                    <i class="material-icons viewbtn" passwordid="{{$passwordID}}">search</i>&nbsp;</a>
+                    <i class="material-icons viewbtn" passwordid="{{$index}}">search</i>&nbsp;</a>
                 <a class="secondary-content" title="{{$copyPassword}}" href="#">
-                    <i class="material-icons copybtn" passwordid="{{$passwordID}}">vpn_key</i>&nbsp;</a>
+                    <i class="material-icons copybtn" passwordid="{{$index}}">vpn_key</i>&nbsp;</a>
             </div>
             {{end}}
         </div>
         <form method="POST" onsubmit="return manipulateAddPassword()">
             <div class="row">
                 <div class="input-field col s12">
+                    <input id="titlePre" type="text" class="validate" placeholder="{{$title}}" required>
                     <input id="namePre" type="text" class="validate" placeholder="{{$name}}" required>
                     <input id="passwordPre" type="password" class="validate" placeholder="{{$password}}" minlength="8" required>
                 </div>
@@ -89,6 +93,7 @@
         <form id="addPassword" method="POST" hidden>
             <div class="row">
                 <div class="input-field col s12">
+                    <input name="title" id="title" type="text" class="validate" placeholder="{{$title}}" required>
                     <input name="name" id="name" type="text" class="validate" placeholder="{{$name}}" required>
                     <input name="password" id="password" type="password" class="validate" placeholder="{{$password}}" required>
                 </div>

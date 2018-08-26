@@ -41,11 +41,21 @@
 }
 
 /*
- Password list item style properties
+ Password list title style properties
 */
 
-.password {
+.passwordTitle {
     color: #273746;
     font-weight: 700;
+    font-size: 16px;
+}
+
+/*
+ Password list name style properties
+*/
+
+.passwordName {
+    color: #273746;
+    font-weight: normal;
     font-size: 16px;
 }
