@@ -10,6 +10,13 @@ import (
 	"lheinrich.de/secpass/shorts"
 )
 
+// Password structure
+type Password struct {
+	Title    string
+	Name     string
+	Password string
+}
+
 // Index function
 func Index(w http.ResponseWriter, r *http.Request) {
 	// check session
@@ -32,26 +39,26 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// add password
-		name, password := r.PostFormValue("name"), r.PostFormValue("password")
+		title, name, password := r.PostFormValue("title"), r.PostFormValue("name"), r.PostFormValue("password")
 		if name != "" && password != "" {
 			// insert into db
-			_, err := conf.DB.Exec(conf.GetSQL("add_password"), name, password, user)
+			_, err := conf.DB.Exec(conf.GetSQL("add_password"), title, name, password, user)
 			shorts.Check(err)
 		}
 
 		// edit password
-		passwordEditID, passwordEditInput := r.PostFormValue("passwordEditIDAfter"), r.PostFormValue("passwordEditInputAfter")
+		passwordEditTitle, passwordEditID, passwordEditInput := r.PostFormValue("passwordEditTitleAfter"), r.PostFormValue("passwordEditIDAfter"), r.PostFormValue("passwordEditInputAfter")
 		if passwordEditID != "" && passwordEditInput != "" {
 			// update db
-			_, err := conf.DB.Exec(conf.GetSQL("edit_password"), passwordEditInput, passwordEditID, user)
+			_, err := conf.DB.Exec(conf.GetSQL("edit_password"), passwordEditInput, passwordEditTitle, passwordEditID, user)
 			shorts.Check(err)
 		}
 
 		// delete password
-		passwordDeleteInput := r.PostFormValue("passwordDeleteInput")
-		if passwordDeleteInput != "" {
+		passwordDeleteTitle, passwordDeleteInput := r.PostFormValue("passwordDeleteTitle"), r.PostFormValue("passwordDeleteInput")
+		if passwordDeleteTitle != "" && passwordDeleteInput != "" {
 			// delete from db
-			_, err := conf.DB.Exec(conf.GetSQL("delete_password"), passwordDeleteInput, user)
+			_, err := conf.DB.Exec(conf.GetSQL("delete_password"), passwordDeleteTitle, passwordDeleteInput, user)
 			shorts.Check(err)
 		}
 
@@ -64,26 +71,27 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 // return passwords as map
-func passwords(user string) map[string]string {
+func passwords(user string) []Password {
 	// query db and check for error
 	rows, errQuery := conf.DB.Query(conf.GetSQL("passwords"), user)
 	shorts.Check(errQuery)
 
-	passwordMap := map[string]string{}
+	passwordList := []Password{}
 
 	// loop through rows
 	for rows.Next() {
 		// define variables to write into
+		var title string
 		var name string
 		var password string
 
 		// read from rows
-		errScan := rows.Scan(&name, &password)
+		errScan := rows.Scan(&title, &name, &password)
 		shorts.Check(errScan)
 
-		// put into map
-		passwordMap[name] = password
+		// put into list
+		passwordList = append(passwordList, Password{Title: title, Name: name, Password: password})
 	}
 
-	return passwordMap
+	return passwordList
 }

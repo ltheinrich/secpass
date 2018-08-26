@@ -38,5 +38,6 @@
     "generatePassword": "Passwort generieren",
     "pwnedFound": "Dein Account wurde in folgenden Datensätzen gefunden:",
     "pwnedNotFound": "Dein Account wurde in keinen Datensätzen gefunden.",
-    "close": "Schließen"
+    "close": "Schließen",
+    "title": "Titel"
 }

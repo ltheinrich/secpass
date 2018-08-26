@@ -17,7 +17,7 @@ type Data struct {
 	Special   int
 	LoggedOut bool
 	TwoFactor TwoFactorData
-	Passwords map[string]string
+	Passwords []Password
 	Pwns      []string
 }
 
