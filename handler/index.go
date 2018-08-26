@@ -3,6 +3,8 @@ package handler
 import (
 	"net/http"
 
+	"lheinrich.de/secpass/spuser"
+
 	"lheinrich.de/secpass/conf"
 
 	"lheinrich.de/secpass/shorts"
@@ -13,6 +15,22 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	// check session
 	user := checkSession(r)
 	if user != "" {
+		// define special and pwns
+		special := 0
+		var pwns []string
+
+		// haveibeenpwned integration
+		if r.URL.Path == "/haveibeenpwned" {
+			account := r.FormValue("account")
+			pwnedList := spuser.PwnedList(account)
+			if len(pwnedList) == 0 {
+				special = -1
+			} else {
+				special = -2
+				pwns = pwnedList
+			}
+		}
+
 		// add password
 		name, password := r.PostFormValue("name"), r.PostFormValue("password")
 		if name != "" && password != "" {
@@ -38,7 +56,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// execute template
-		shorts.Check(tpl.ExecuteTemplate(w, "index.html", Data{User: user, Lang: getLang(r), Passwords: passwords(user)}), false)
+		shorts.Check(tpl.ExecuteTemplate(w, "index.html", Data{User: user, Lang: getLang(r), Passwords: passwords(user), Special: special, Pwns: pwns}), false)
 	}
 
 	// redirect to login
