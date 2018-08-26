@@ -13,8 +13,6 @@ import (
 	"lheinrich.de/secpass/spuser"
 )
 
-var expiresCookie = time.Now().Add(-100 * time.Hour)
-
 // Login function
 func Login(w http.ResponseWriter, r *http.Request) {
 	// check logged in and redirect to index if so
@@ -24,17 +22,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			// delete session
 			delete(spuser.Sessions, cookie(r, "secpass_uuid"))
 
-			// define cookies
-			cookieUUID := http.Cookie{Name: "secpass_uuid", Value: "null", Path: "/", MaxAge: -1, Expires: expiresCookie}
-			cookieName := http.Cookie{Name: "secpass_name", Value: "null", Path: "/", MaxAge: -1, Expires: expiresCookie}
-			cookieHash := http.Cookie{Name: "secpass_hash", Value: "null", Path: "/", MaxAge: -1, Expires: expiresCookie}
-			cookieLang := http.Cookie{Name: "secpass_lang", Value: conf.Config["app"]["defaultLanguage"], Path: "/", MaxAge: -1, Expires: expiresCookie}
-
 			// delete cookies
-			http.SetCookie(w, &cookieUUID)
-			http.SetCookie(w, &cookieName)
-			http.SetCookie(w, &cookieHash)
-			http.SetCookie(w, &cookieLang)
+			deleteAllCookies(w)
 
 			// redirect to login page
 			redirect(w, "/login")
@@ -60,9 +49,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		var twoFactorSecret string
 		var key string
 
-		// read data from database and check for error
-		err := conf.DB.QueryRow(conf.GetSQL("login"), name).Scan(&username, &passwordHash, &twoFactorSecret, &key)
-		shorts.Check(err, true)
+		// read data from database
+		conf.DB.QueryRow(conf.GetSQL("login"), name).Scan(&username, &passwordHash, &twoFactorSecret, &key)
 
 		// compare passwords
 		if bcrypt.CompareHashAndPassword([]byte(passwordHash), []byte(password)) == nil {
@@ -110,5 +98,5 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// execute template
-	shorts.Check(tpl.ExecuteTemplate(w, "login.html", Data{User: "", Lang: getLang(r), Special: special, LoggedOut: true}), false)
+	shorts.Check(tpl.ExecuteTemplate(w, "login.html", Data{User: "", Lang: getLang(r), Special: special, LoggedOut: true}))
 }

@@ -7,12 +7,8 @@ import (
 	"database/sql"
 	"encoding/base64"
 	"encoding/hex"
-	"fmt"
 	"io"
 	"log"
-	"os"
-	"path"
-	"time"
 
 	// implement postgresql driver
 	_ "github.com/lib/pq"
@@ -23,44 +19,6 @@ import (
 // LogInfo log only error or everything
 var LogInfo = true
 
-// InitLogging Enable logging to file with automatic error printing
-func InitLogging(logInfo bool) {
-	// set LogInfo
-	LogInfo = logInfo
-
-	// create directories
-	os.MkdirAll("logs", os.ModePerm)
-
-	// create new file and check for error
-	file, err := os.Create("logs/" + time.Now().Format("2006-01-02.txt"))
-	defer file.Close()
-
-	if err == nil {
-		log.SetOutput(file)
-	} else {
-		fmt.Println(err)
-	}
-}
-
-// InitLoggingFile Enable logging to specified file
-func InitLoggingFile(fileName string, logInfo bool) error {
-	// set LogInfo
-	LogInfo = logInfo
-
-	// split directories from filename and create them
-	directory, _ := path.Split(fileName)
-	os.MkdirAll(directory, os.ModePerm)
-
-	// create new file and check for error
-	file, err := os.Create(fileName)
-	defer file.Close()
-	if err == nil {
-		log.SetOutput(file)
-	}
-
-	return err
-}
-
 // UUID generate random uuid and return it as a string
 func UUID() string {
 	// generate uuid
@@ -69,14 +27,11 @@ func UUID() string {
 }
 
 // Check Print error if exists
-func Check(err error, isError bool) {
+func Check(err error) {
 	// check whether error exists
 	if err != nil {
-		// check whether to print or not
-		if isError || LogInfo == true {
-			// print error
-			log.Println(err)
-		}
+		// print error
+		log.Println(err)
 	}
 }
 
@@ -84,8 +39,8 @@ func Check(err error, isError bool) {
 func ConnectPostgreSQL(host, port, database, username, password string, ssl string) *sql.DB {
 	// open database connection and check for errors
 	db, err := sql.Open("postgres", "postgres://"+username+":"+password+"@"+host+"/"+database+"?sslmode="+ssl)
-	Check(err, true)
-	Check(db.Ping(), true)
+	Check(err)
+	Check(db.Ping())
 
 	// return database connection
 	return db
@@ -118,12 +73,12 @@ func Encrypt(text string, key []byte) string {
 	plain := []byte(text)
 
 	block, err := aes.NewCipher(key)
-	Check(err, true)
+	Check(err)
 
 	cipherText := make([]byte, aes.BlockSize+len(plain))
 	iv := cipherText[:aes.BlockSize]
 	_, err = io.ReadFull(rand.Reader, iv)
-	Check(err, true)
+	Check(err)
 
 	stream := cipher.NewCFBEncrypter(block, iv)
 	stream.XORKeyStream(cipherText[aes.BlockSize:], plain)
@@ -134,10 +89,10 @@ func Encrypt(text string, key []byte) string {
 // Decrypt text with key
 func Decrypt(text string, key []byte) string {
 	cipherText, err := base64.URLEncoding.DecodeString(text)
-	Check(err, true)
+	Check(err)
 
 	block, err := aes.NewCipher(key)
-	Check(err, true)
+	Check(err)
 
 	iv := cipherText[:aes.BlockSize]
 	cipherText = cipherText[aes.BlockSize:]

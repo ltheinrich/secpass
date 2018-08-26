@@ -38,11 +38,11 @@ func CleanupSessions() {
 func PwnedList(name string) []string {
 	// http request and check error
 	resp, err := http.DefaultClient.Get("https://haveibeenpwned.com/api/v2/breachedaccount/" + name)
-	shorts.Check(err, false)
+	shorts.Check(err)
 
 	// read body and check error
 	read, errRead := ioutil.ReadAll(resp.Body)
-	shorts.Check(errRead, false)
+	shorts.Check(errRead)
 
 	// struct for json
 	type titleStruct struct {
@@ -71,7 +71,7 @@ func TwoFactorSecret(user string) string {
 	// read from query
 	var secret string
 	err := row.Scan(&secret)
-	shorts.Check(err, true)
+	shorts.Check(err)
 
 	// return
 	return secret
@@ -80,11 +80,11 @@ func TwoFactorSecret(user string) string {
 // EnableTwoFactor enable two-factor authentication
 func EnableTwoFactor(user, secret string) {
 	_, err := conf.DB.Exec(conf.GetSQL("enable_two_factor"), secret, user)
-	shorts.Check(err, true)
+	shorts.Check(err)
 }
 
 // DisableTwoFactor disable two-factor authentication
 func DisableTwoFactor(user string) {
 	_, err := conf.DB.Exec(conf.GetSQL("disable_two_factor"), user)
-	shorts.Check(err, true)
+	shorts.Check(err)
 }

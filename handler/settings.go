@@ -56,13 +56,13 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 
 				// read user from database
 				errQuery := conf.DB.QueryRow(conf.GetSQL("login"), user).Scan(&username, &passwordHash, &secret, &key)
-				shorts.Check(errQuery, true)
+				shorts.Check(errQuery)
 
 				// compare passwords
 				if bcrypt.CompareHashAndPassword([]byte(passwordHash), []byte(currentPassword)) == nil && user == username {
 					// generate bcrypt hash
 					password, errPassword := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost+1)
-					shorts.Check(errPassword, true)
+					shorts.Check(errPassword)
 
 					// re-encrypt key
 					decryptedKey := shorts.Decrypt(key, shorts.GenerateKey(currentPassword))
@@ -70,7 +70,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 
 					// change password in db and check error
 					_, errExec := conf.DB.Exec(conf.GetSQL("change_password"), string(password), encryptedKey, user)
-					shorts.Check(errExec, true)
+					shorts.Check(errExec)
 
 					// password changed successfully
 					special = -1
@@ -88,13 +88,23 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path == "/settings/delete_forever" {
 			deleteForever := r.PostFormValue("delete_forever")
 			if deleteForever == "delete_account_forever" {
-				// delete account in db, sessions, cookies
-				conf.DB.Exec(conf.GetSQL("delete_account"), user, user)
+				// delete passwords in db
+				_, errPasswords := conf.DB.Exec(conf.GetSQL("delete_passwords"), user)
+				shorts.Check(errPasswords)
+
+				// delete account in db
+				_, errAccount := conf.DB.Exec(conf.GetSQL("delete_account"), user)
+				shorts.Check(errAccount)
+
+				// delete session
 				for sessionUUID, session := range spuser.Sessions {
 					if session.User == user {
 						delete(spuser.Sessions, sessionUUID)
 					}
 				}
+
+				// delete cookie
+				deleteAllCookies(w)
 
 				// redirect to index page
 				redirect(w, "/")
@@ -133,11 +143,11 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 			if !skip {
 				// two-factor authentication key generation
 				key, errKey := totp.Generate(totp.GenerateOpts{Issuer: "secpass", AccountName: user, Algorithm: otp.AlgorithmSHA512})
-				shorts.Check(errKey, true)
+				shorts.Check(errKey)
 
 				// image generation
 				image, errImg := key.Image(200, 200)
-				shorts.Check(errImg, true)
+				shorts.Check(errImg)
 
 				// image encoding
 				buf := bytes.Buffer{}
@@ -172,7 +182,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// execute template
-		shorts.Check(tpl.ExecuteTemplate(w, "settings.html", Data{User: user, Lang: getLang(r), Special: special, TwoFactor: twoFactorData}), false)
+		shorts.Check(tpl.ExecuteTemplate(w, "settings.html", Data{User: user, Lang: getLang(r), Special: special, TwoFactor: twoFactorData}))
 	}
 
 	// redirect to login
