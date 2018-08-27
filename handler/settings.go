@@ -6,6 +6,7 @@ import (
 	"image/png"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/pquerna/otp"
 	"github.com/pquerna/otp/totp"
@@ -21,7 +22,7 @@ import (
 // Settings function
 func Settings(w http.ResponseWriter, r *http.Request) {
 	// check session
-	user := checkSession(r)
+	user := checkSession(w, r)
 	if user != "" {
 		// define variables
 		special := 0
@@ -36,8 +37,15 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 		// change language
 		lang := r.PostFormValue("language")
 		if lang != "" {
+			// define date
+			date := time.Now()
+			year := strconv.Itoa(date.Year() + 1)
+			month := date.Month().String()
+			day := strconv.Itoa(date.Day())
+			expires, _ := time.Parse("20060102", year+month+day)
+
 			// change language cookie
-			http.SetCookie(w, &http.Cookie{Name: "secpass_lang", Value: lang})
+			http.SetCookie(w, &http.Cookie{Name: "secpass_lang", Value: lang, Expires: expires})
 
 			// reload page
 			reloadPage = true

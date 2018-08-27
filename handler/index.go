@@ -20,7 +20,7 @@ type Password struct {
 // Index function
 func Index(w http.ResponseWriter, r *http.Request) {
 	// check session
-	user := checkSession(r)
+	user := checkSession(w, r)
 	if user != "" {
 		// define special and pwns
 		special := 0
