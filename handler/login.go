@@ -61,7 +61,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			// check two-factor authentication is enabled
 			if twoFactorSecret != "" {
 				// validate one-time password
-				if len(oneTimePassword) < 6 || len(oneTimePassword) > 8 || !totp.Validate(oneTimePassword, twoFactorSecret) {
+				if (len(oneTimePassword) != 6 && len(oneTimePassword) != 8) || !totp.Validate(oneTimePassword, twoFactorSecret) {
 					// skip log-in and output error
 					skipLogin = true
 					special = 2

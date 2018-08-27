@@ -114,15 +114,17 @@ func setupHandlers() {
 	// register handlers
 	http.HandleFunc("/", handler.Index)
 
-	// directories
-	http.HandleFunc("/css/", handler.CSS)
-	http.HandleFunc("/images/", handler.Image)
-	http.HandleFunc("/js/", handler.JS)
+	// web files
+	http.HandleFunc("/web/", handler.Web)
 
-	// pages
+	// register
 	http.HandleFunc("/register", handler.Register)
+
+	// login and logout
 	http.HandleFunc("/login", handler.Login)
 	http.HandleFunc("/login/logout", handler.Login)
+
+	// settings and account deletion handler
 	http.HandleFunc("/settings", handler.Settings)
 	http.HandleFunc("/settings/delete_forever", handler.Settings)
 }

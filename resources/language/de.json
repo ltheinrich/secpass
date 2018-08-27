@@ -39,5 +39,6 @@
     "pwnedFound": "Dein Account wurde in folgenden Datensätzen gefunden:",
     "pwnedNotFound": "Dein Account wurde in keinen Datensätzen gefunden.",
     "close": "Schließen",
-    "title": "Titel"
+    "title": "Titel",
+    "entryExists": "Dieser Eintrag existiert bereits."
 }

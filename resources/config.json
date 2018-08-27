@@ -12,9 +12,7 @@
         "certificateFile": "resources/ssl/cert.pem",
         "keyFile": "resources/ssl/key.pem",
         "templatesDirectory": "resources/templates/*/*",
-        "cssDirectory": "resources/css",
-        "imageDirectory": "resources/images",
-        "jsDirectory": "resources/js"
+        "webDirectory": "resources/web"
     },
     "web": {
         "title": "secpass",
