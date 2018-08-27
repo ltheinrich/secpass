@@ -95,15 +95,40 @@ func getLang(r *http.Request) string {
 }
 
 // checkSession check whether logged in and return username or empty string
-func checkSession(r *http.Request) string {
+func checkSession(w http.ResponseWriter, r *http.Request) string {
 	if cookiesExist(r, "secpass_uuid", "secpass_name") {
+		// define cookies
 		cookieUUID, _ := r.Cookie("secpass_uuid")
 		cookieName, _ := r.Cookie("secpass_name")
+		cookieHash, _ := r.Cookie("secpass_hash")
+
+		// get cookie values
 		uuid := cookieUUID.Value
 		name := cookieName.Value
-		user := spuser.Sessions[uuid].User
+
+		// session data
+		session := spuser.Sessions[uuid]
+		user := session.User
 
 		if user == name {
+			// define expires time
+			expires := time.Now().Add(10 * time.Minute)
+
+			// change session expires time
+			session.Expires = expires
+			spuser.Sessions[uuid] = session
+
+			// change cookie expires time
+			cookieUUID.Expires = expires
+			cookieName.Expires = expires
+			cookieHash.Expires = expires
+
+			// update cookies
+			http.SetCookie(w, cookieUUID)
+			http.SetCookie(w, cookieName)
+			http.SetCookie(w, cookieHash)
+
+			// return user
 			return user
 		}
 	}

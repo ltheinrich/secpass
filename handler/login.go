@@ -16,7 +16,7 @@ import (
 // Login function
 func Login(w http.ResponseWriter, r *http.Request) {
 	// check logged in and redirect to index if so
-	if checkSession(r) != "" {
+	if checkSession(w, r) != "" {
 		// logout
 		if r.URL.Path == "/login/logout" {
 			// delete session
@@ -71,7 +71,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			if !skipLogin {
 				// generate uuid and define session expiration date
 				uuid := shorts.UUID()
-				expires := time.Now().Add(time.Hour)
+				expires := time.Now().Add(10 * time.Minute)
 
 				// decrypt key
 				decryptedKey := shorts.Decrypt(key, shorts.GenerateKey(password))

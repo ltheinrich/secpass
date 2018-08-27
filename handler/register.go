@@ -13,7 +13,7 @@ import (
 // Register function
 func Register(w http.ResponseWriter, r *http.Request) {
 	// check logged in and redirect to index if so
-	if checkSession(r) != "" {
+	if checkSession(w, r) != "" {
 		redirect(w, "/")
 		return
 	}
