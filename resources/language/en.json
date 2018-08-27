@@ -39,5 +39,6 @@
     "pwnedFound": "Your account has been found in the following datasets:",
     "pwnedNotFound": "Your account could not be found.",
     "close": "Schließen",
-    "title": "Title"
+    "title": "Title",
+    "entryExists": "This entry already exists."
 }

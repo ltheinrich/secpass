@@ -8,7 +8,9 @@
 <div class="card-panel blue-grey darken-1 border">
     <div class="col card-content white-text">
         <h5>{{lang .Lang "passwordList"}}</h5>
-        <br>
+        <br> {{if eq .Special -3}}
+        <p class="error">{{lang .Lang "entryExists"}}</p>
+        {{end}}
         <div class="row" id="pwnedList">
             <div class="col s12 m5">
                 {{if eq .Special -1}}
@@ -105,7 +107,7 @@
     </div>
 </div>
 {{template "javascript" .}}
-<script type="text/javascript" src="/js/sjcl.js"></script>
-<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/web/sjcl.js"></script>
+<script type="text/javascript" src="/web/index.js"></script>
 <!---->
 {{template "footer" .}}

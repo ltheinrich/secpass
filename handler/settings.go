@@ -131,7 +131,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 
 			// enable two factor authentication
 			oneTimePassword, twoFactorSecret := r.PostFormValue("oneTimePassword"), r.PostFormValue("twoFactorSecret")
-			if twoFactorSecret != "" && len(oneTimePassword) >= 6 && len(oneTimePassword) <= 8 {
+			if twoFactorSecret != "" && (len(oneTimePassword) == 6 || len(oneTimePassword) == 8) {
 				// validate one-time password
 				if totp.Validate(oneTimePassword, twoFactorSecret) {
 					// write to db

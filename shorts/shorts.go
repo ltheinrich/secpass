@@ -40,7 +40,6 @@ func ConnectPostgreSQL(host, port, database, username, password string, ssl stri
 	// open database connection and check for errors
 	db, err := sql.Open("postgres", "postgres://"+username+":"+password+"@"+host+"/"+database+"?sslmode="+ssl)
 	Check(err)
-	Check(db.Ping())
 
 	// return database connection
 	return db

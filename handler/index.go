@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"database/sql"
 	"net/http"
 
 	"lheinrich.de/secpass/spuser"
@@ -41,9 +42,21 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		// add password
 		title, name, password := r.PostFormValue("title"), r.PostFormValue("name"), r.PostFormValue("password")
 		if name != "" && password != "" {
-			// insert into db
-			_, err := conf.DB.Exec(conf.GetSQL("add_password"), title, name, password, user)
-			shorts.Check(err)
+			// check if already exists
+			var queryTitle string
+			errQuery := conf.DB.QueryRow(conf.GetSQL("get_password_entry"), title, name, user).Scan(&queryTitle)
+
+			if errQuery == sql.ErrNoRows {
+				// insert into db
+				_, errExec := conf.DB.Exec(conf.GetSQL("add_password"), title, name, password, user)
+				shorts.Check(errExec)
+			} else if errQuery == nil {
+				// entry already exists
+				special = -3
+			} else {
+				// check error
+				shorts.Check(errQuery)
+			}
 		}
 
 		// edit password

@@ -2,24 +2,26 @@ package handler
 
 import (
 	"io"
+	"mime"
 	"net/http"
 	"os"
 	"path"
+	"path/filepath"
 
 	"lheinrich.de/secpass/conf"
 	"lheinrich.de/secpass/shorts"
 )
 
-// CSS function
-func CSS(w http.ResponseWriter, r *http.Request) {
-	// set content-type
-	w.Header().Set("content-type", "text/css; charset=utf-8")
-
+// Web function
+func Web(w http.ResponseWriter, r *http.Request) {
 	// open file and check for error
 	_, fileName := path.Split(r.URL.Path)
-	file, errFile := os.Open(conf.Config["webserver"]["cssDirectory"] + "/" + fileName)
+	file, errFile := os.Open(conf.Config["webserver"]["webDirectory"] + "/" + fileName)
 	shorts.Check(errFile)
 	defer file.Close()
+
+	// set content-type
+	w.Header().Set("content-type", mime.TypeByExtension(filepath.Ext(fileName))+"; charset=utf-8")
 
 	// write out file
 	_, errCopy := io.Copy(w, file)

@@ -29,7 +29,8 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		// check whether passwords match
 		if password == repeat {
 			// check whether name already exists
-			errQuery := conf.DB.QueryRow("SELECT password FROM users WHERE name = $1", name).Scan(nil)
+			var queryName string
+			errQuery := conf.DB.QueryRow(conf.GetSQL("get_password"), name).Scan(&queryName)
 
 			// name does not exist
 			if errQuery == sql.ErrNoRows {
@@ -49,7 +50,8 @@ func Register(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			// name exists, print
+			// check error - name exists, print
+			shorts.Check(errQuery)
 			special = 1
 		} else {
 			// passwords does not match, print
