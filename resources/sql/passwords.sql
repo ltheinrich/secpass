@@ -1,1 +1,11 @@
-SELECT title, name, password FROM passwords WHERE author = $1 ORDER BY title ASC;
+SELECT
+    title,
+    name,
+    PASSWORD
+FROM
+    passwords
+WHERE
+    author = $1
+ORDER BY
+    title ASC;
+

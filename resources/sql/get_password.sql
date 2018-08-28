@@ -1,1 +1,7 @@
-SELECT name FROM users WHERE name = $1;
+SELECT
+    name
+FROM
+    users
+WHERE
+    name = $1;
+

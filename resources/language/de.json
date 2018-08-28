@@ -41,5 +41,6 @@
     "close": "Schließen",
     "title": "Titel",
     "entryExists": "Dieser Eintrag existiert bereits.",
-    "clearClipboard": "Zwischenablage leeren"
+    "clearClipboard": "Zwischenablage leeren",
+    "passwordLength": "Passwort-Länge"
 }

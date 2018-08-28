@@ -1,1 +1,3 @@
-INSERT INTO passwords (title, name, password, author) VALUES ($1, $2, $3, $4);
+INSERT INTO passwords (title, name, PASSWORD, author)
+    VALUES ($1, $2, $3, $4);
+
