@@ -40,5 +40,6 @@
     "pwnedNotFound": "Your account could not be found.",
     "close": "Schließen",
     "title": "Title",
-    "entryExists": "This entry already exists."
+    "entryExists": "This entry already exists.",
+    "clearClipboard": "Clear clipboard"
 }

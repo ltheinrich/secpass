@@ -29,12 +29,38 @@ if (copybtn != null) {
             var el = document.createElement("textarea");
 
             // get passwordid, password and cookie hash
-            var passwordid = event.srcElement.getAttribute("passwordid");
+            var passwordid = event.target.getAttribute("passwordid");
             var password = document.getElementById("pw-" + passwordid).value;
             var cookie = getCookie('secpass_hash');
 
             // decrypt and fill element
             el.value = sjcl.decrypt(cookie, password);
+
+            // add element to page and select
+            document.body.appendChild(el);
+            el.select();
+
+            // copy and remove element
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            // hide others
+            document.getElementById("passwordView").style.display = "none";
+            document.getElementById("passwordEdit").style.display = "none";
+            document.getElementById("passwordDelete").style.display = "none";
+        });
+    }
+}
+
+// clear clipboard
+var clearbtn = document.querySelectorAll('.clearbtn');
+if (clearbtn != null) {
+    for (i = 0; i < clearbtn.length; i++) {
+        // add click listener
+        clearbtn[i].addEventListener('click', function (event) {
+            // define textarea and fill
+            var el = document.createElement("textarea");
+            el.value = " ";
 
             // add element to page and select
             document.body.appendChild(el);
@@ -59,7 +85,7 @@ if (viewbtn != null) {
         // add click listener
         viewbtn[i].addEventListener('click', function (event) {
             // get passwordid, password and cookie hash
-            var passwordid = event.srcElement.getAttribute("passwordid");
+            var passwordid = event.target.getAttribute("passwordid");
             var password = document.getElementById("pw-" + passwordid);
             var cookie = getCookie('secpass_hash');
 
@@ -94,7 +120,7 @@ if (editbtn != null) {
             var el = document.getElementById("passwordEdit");
 
             // get passwordid, password and cookie hash
-            var passwordid = event.srcElement.getAttribute("passwordid");
+            var passwordid = event.target.getAttribute("passwordid");
             var password = document.getElementById("pw-" + passwordid);
             var cookie = getCookie('secpass_hash');
 
@@ -137,7 +163,7 @@ if (deletebtn != null) {
             var el = document.getElementById("passwordDelete");
 
             // get passwordid, input and title element
-            var passwordid = document.getElementById("pw-" + event.srcElement.getAttribute("passwordid"));
+            var passwordid = document.getElementById("pw-" + event.target.getAttribute("passwordid"));
             var input = document.getElementById("passwordDeleteInput");
             var title = document.getElementById("passwordDeleteTitle");
 
