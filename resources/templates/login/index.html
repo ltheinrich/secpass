@@ -85,16 +85,20 @@
                     <input id="titlePre" type="text" class="validate" placeholder="{{$title}}" required>
                     <input id="namePre" type="text" class="validate" placeholder="{{$name}}" required>
                     <input id="passwordPre" type="password" class="validate" placeholder="{{$password}}" minlength="4" required>
+                    <p><label><input type="checkbox" id="showPassword">
+                            <span>{{lang .Lang "showPassword"}}</span></label></p>
+                    <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "createEntry"}}
+                        <i class="material-icons right">save</i>
+                    </button>
+                    &nbsp;
+                    <button class="btn waves-effect waves-light" id="generatePassword" type="button">{{lang .Lang "generatePassword"}}
+                        <i class="material-icons right">cached</i>
+                    </button>
+                    <div class="input-field inline">
+                        <input id="passwordLength" type="number" value="16" min="4" max="8192">
+                    </div>
                 </div>
             </div>
-            <p><label><input type="checkbox" id="showPassword">
-                    <span>{{lang .Lang "showPassword"}}</span></label></p>
-            <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "createEntry"}}
-                <i class="material-icons right">save</i>
-            </button>
-            <button class="btn waves-effect waves-light" id="generatePassword" type="button">{{lang .Lang "generatePassword"}}
-                <i class="material-icons right">cached</i>
-            </button>
         </form>
         <form id="addPassword" method="POST" hidden>
             <div class="row">

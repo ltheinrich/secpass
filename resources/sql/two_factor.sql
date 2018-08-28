@@ -1,1 +1,7 @@
-SELECT secret FROM users WHERE name = $1;
+SELECT
+    secret
+FROM
+    users
+WHERE
+    name = $1;
+

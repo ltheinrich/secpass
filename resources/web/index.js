@@ -219,11 +219,29 @@ function manipulateEditPassword() {
 // generate password function
 function generatePassword() {
     // chars to use
-    charset = "abcdefghijklmnopqrstuvwxyz!ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_abcdefghijklmnopqrstuvwxyz#ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@";
-    password = "";
+    var charset = "abcdefghijklmnopqrstuvwxyz!ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_abcdefghijklmnopqrstuvwxyz#ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@";
+    var password = "";
+
+    // define password length
+    var length = 16;
+    try {
+        var el = document.getElementById("passwordLength");
+        length = parseInt(el.value);
+    } catch (err) {
+        console.log("err passwordLength not int")
+    }
+
+    // prevent crashing or weak passwords
+    if (length > 8192) {
+        el.value = 8192
+        length = 8192
+    } else if (length < 4) {
+        el.value = 4
+        length = 4
+    }
 
     // add random chars
-    for (var i = 0, n = charset.length; i < 16; ++i) {
+    for (var i = 0, n = charset.length; i < length; ++i) {
         password += charset.charAt(Math.floor(Math.random() * n));
     }
 

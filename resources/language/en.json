@@ -41,5 +41,6 @@
     "close": "Schließen",
     "title": "Title",
     "entryExists": "This entry already exists.",
-    "clearClipboard": "Clear clipboard"
+    "clearClipboard": "Clear clipboard",
+    "passwordLength": "Password length"
 }

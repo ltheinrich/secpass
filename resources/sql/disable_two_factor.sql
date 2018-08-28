@@ -1,1 +1,7 @@
-UPDATE users SET secret = '' WHERE name = $1;
+UPDATE
+    users
+SET
+    secret = ''
+WHERE
+    name = $1;
+

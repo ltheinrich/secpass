@@ -1,1 +1,5 @@
-DELETE FROM passwords WHERE title = $1 AND name = $2 AND author = $3;
+DELETE FROM passwords
+WHERE title = $1
+    AND name = $2
+    AND author = $3;
+
