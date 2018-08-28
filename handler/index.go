@@ -41,7 +41,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 		// add password
 		title, name, password := r.PostFormValue("title"), r.PostFormValue("name"), r.PostFormValue("password")
-		if name != "" && password != "" {
+		if name != "" && password != "" && len(password) >= 4 {
 			// check if already exists
 			var queryTitle string
 			errQuery := conf.DB.QueryRow(conf.GetSQL("get_password_entry"), title, name, user).Scan(&queryTitle)
@@ -61,7 +61,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 		// edit password
 		passwordEditTitle, passwordEditID, passwordEditInput := r.PostFormValue("passwordEditTitleAfter"), r.PostFormValue("passwordEditIDAfter"), r.PostFormValue("passwordEditInputAfter")
-		if passwordEditID != "" && passwordEditInput != "" {
+		if passwordEditID != "" && passwordEditInput != "" && len(passwordEditInput) >= 4 {
 			// update db
 			_, err := conf.DB.Exec(conf.GetSQL("edit_password"), passwordEditInput, passwordEditTitle, passwordEditID, user)
 			shorts.Check(err)
