@@ -36,7 +36,7 @@
             <form method="POST" id="passwordEdit" onsubmit="return manipulateEditPassword()" hidden>
                 <input id="passwordEditTitle" name="passwordEditTitle" value="" hidden>
                 <input id="passwordEditID" name="passwordEditID" value="" hidden>
-                <input id="passwordEditInput" name="passwordEditInput" minlength="8" value="" required>
+                <input id="passwordEditInput" name="passwordEditInput" minlength="4" value="" required>
                 <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "editEntry"}}
                     <i class="material-icons right">edit</i>
                 </button>
@@ -44,7 +44,7 @@
             <form method="POST" id="passwordEditAfter" hidden>
                 <input id="passwordEditTitleAfter" name="passwordEditTitleAfter" value="" hidden>
                 <input id="passwordEditIDAfter" name="passwordEditIDAfter" value="" hidden>
-                <input id="passwordEditInputAfter" name="passwordEditInputAfter" minlength="8" value="" required>
+                <input id="passwordEditInputAfter" name="passwordEditInputAfter" minlength="4" value="" required>
                 <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "editEntry"}}
                     <i class="material-icons right">edit</i>
                 </button>
@@ -80,7 +80,7 @@
                 <div class="input-field col s12">
                     <input id="titlePre" type="text" class="validate" placeholder="{{$title}}" required>
                     <input id="namePre" type="text" class="validate" placeholder="{{$name}}" required>
-                    <input id="passwordPre" type="password" class="validate" placeholder="{{$password}}" minlength="8" required>
+                    <input id="passwordPre" type="password" class="validate" placeholder="{{$password}}" minlength="4" required>
                 </div>
             </div>
             <p><label><input type="checkbox" id="showPassword">
@@ -95,9 +95,9 @@
         <form id="addPassword" method="POST" hidden>
             <div class="row">
                 <div class="input-field col s12">
-                    <input name="title" id="title" type="text" class="validate" placeholder="{{$title}}" required>
-                    <input name="name" id="name" type="text" class="validate" placeholder="{{$name}}" required>
-                    <input name="password" id="password" type="password" class="validate" placeholder="{{$password}}" required>
+                    <input name="title" id="title" required>
+                    <input name="name" id="name" required>
+                    <input name="password" id="password" minlength="4" required>
                 </div>
             </div>
             <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "createEntry"}}
