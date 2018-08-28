@@ -4,7 +4,9 @@
 <!---->
 {{$editEntry := lang .Lang "editEntry"}} {{$deleteEntry := lang .Lang "deleteEntry"}}
 <!---->
-{{$name := lang .Lang "name"}} {{$password := lang .Lang "password"}} {{$title := lang .Lang "title"}}
+{{$name := lang .Lang "name"}} {{$password := lang .Lang "password"}}
+<!---->
+{{$title := lang .Lang "title"}} {{$clearClipboard := lang .Lang "clearClipboard"}}
 <div class="card-panel blue-grey darken-1 border">
     <div class="col card-content white-text">
         <h5>{{lang .Lang "passwordList"}}</h5>
@@ -70,6 +72,8 @@
                     <i class="material-icons editbtn" passwordid="{{$index}}">edit</i>&nbsp;</a>
                 <a class="secondary-content" title="{{$viewEntry}}" href="#">
                     <i class="material-icons viewbtn" passwordid="{{$index}}">search</i>&nbsp;</a>
+                <a class="secondary-content" title="{{$clearClipboard}}" href="#">
+                    <i class="material-icons clearbtn">lock_open</i>&nbsp;</a>
                 <a class="secondary-content" title="{{$copyPassword}}" href="#">
                     <i class="material-icons copybtn" passwordid="{{$index}}">vpn_key</i>&nbsp;</a>
             </div>
