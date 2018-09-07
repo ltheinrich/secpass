@@ -127,4 +127,7 @@ func setupHandlers() {
 	// settings and account deletion handler
 	http.HandleFunc("/settings", handler.Settings)
 	http.HandleFunc("/settings/delete_forever", handler.Settings)
+
+	// password entry
+	http.HandleFunc("/entry", handler.Entry)
 }

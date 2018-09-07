@@ -1,8 +1,8 @@
 {{define "javascript"}}
-<script type="text/javascript" src="/web/jquery.min.js"></script>
 <script type="text/javascript" src="/web/materialize.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('.sidenav').sidenav();
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems, null);
     });
 </script> {{end}}

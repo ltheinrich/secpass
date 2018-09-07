@@ -184,8 +184,7 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if reloadPage {
-			w.Header().Set("location", "/settings?special="+strconv.Itoa(special))
-			w.WriteHeader(http.StatusSeeOther)
+			redirect(w, "/settings?special="+strconv.Itoa(special))
 			return
 		}
 

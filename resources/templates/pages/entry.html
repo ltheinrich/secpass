@@ -1,0 +1,91 @@
+{{template "header" .}}
+<div class="card-panel blue-grey darken-1 border">
+    <div class="col card-content white-text">
+        <h5>{{lang .Lang "passwordEntry"}}</h5>
+        <br>
+
+        <!-- create entry: exists -->
+        {{if eq .Special -1}}
+        <p class="error">{{lang .Lang "entryExists"}}</p>
+        <!-- edit entry: not exists -->
+        {{else if eq .Special -2}}
+        <p class="error">{{lang .Lang "entryNotExists"}}</p>
+        {{end}}
+
+        <div>
+            <!-- hidden forms -->
+            <form method="POST" id="form" hidden>
+                <input id="title" name="title" value="{{.Entry.Title}}">
+                <input id="name" name="name" value="{{.Entry.Name}}">
+                <input id="mail" name="mail" value="{{.Entry.Mail}}">
+                <input id="password" name="password" minlength="4" value="{{.Entry.Value}}">
+                <input id="url" name="url" value="{{.Entry.URL}}">
+                <input id="backupCode" name="backupCode" value="{{.Entry.BackupCode}}">
+                <textarea id="notes" name="notes" value="{{.Entry.Notes}}"></textarea>
+                <input type="checkbox" id="delete" name="delete" value="delete">
+            </form>
+
+            <!-- form -->
+            <form method="POST" onsubmit="return manipulateForm()">
+                <!-- titlte -->
+                <input id="titlePre" name="titlePre" value="{{.Entry.Title}}" required>
+                <label for="titlePre">{{lang .Lang "title"}}</label>
+
+                <!-- name -->
+                <input id="namePre" name="namePre" value="{{.Entry.Name}}">
+                <label for="namePre">{{lang .Lang "name"}}</label>
+
+                <!-- e-mail -->
+                <input class="validate" type="email" id="mailPre" name="mailPre" value="{{.Entry.Mail}}">
+                <label for="mailPre">{{lang .Lang "mailAddress"}}</label>
+
+                <!-- password -->
+                <input class="validate" type="password" id="passwordPre" name="passwordPre" minlength="4" value=""
+                    required>
+                <label for="passwordPre">{{lang .Lang "password"}}</label>
+
+                <!-- show/generate password -->
+                <p>
+                    <label><input type="checkbox" id="showPassword"><span>{{lang .Lang "showPassword"}}</span>&nbsp;</label>
+                    <button class="btn-floating waves-effect waves-light" id="generatePassword" type="button">
+                        <i class="material-icons right">cached</i></button>
+                </p>
+
+                <!-- url -->
+                <input class="validate" type="url" id="urlPre" name="urlPre" value="{{.Entry.URL}}">
+                <label for="urlPre">{{lang .Lang "website"}}</label>
+
+                <!-- backup code -->
+                <input id="backupCodePre" name="backupCodePre" value="{{.Entry.BackupCode}}">
+                <label for="backupCodePre">{{lang .Lang "backupCode"}}</label>
+
+                <!-- notes -->
+                <textarea class="materialize-textarea" id="notesPre" name="notesPre">{{.Entry.Notes}}</textarea>
+                <label for="notesPre">{{lang .Lang "notes"}}</label>
+
+                <!-- delete -->
+                {{if eq .Entry.ID 0}}
+                <br><br>
+                {{else}}
+                <p><label><input type="checkbox" id="deletePre" name="deletePre"><span>{{lang .Lang "deleteEntry"}}</span></label></p>
+                {{end}}
+
+                <!-- submit button -->
+                <button class="btn waves-effect waves-light" type="submit">
+                    {{if eq .Entry.ID 0}}
+                    {{lang .Lang "createEntry"}}
+                    <i class="material-icons right">add</i>
+                    {{else}}
+                    {{lang .Lang "editEntry"}}
+                    <i class="material-icons right">edit</i>
+                    {{end}}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{{template "javascript" .}}
+<script type="text/javascript" src="/web/sjcl.js"></script>
+<script type="text/javascript" src="/web/entry.js"></script>
+<!---->
+{{template "footer" .}}

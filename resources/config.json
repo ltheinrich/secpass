@@ -20,8 +20,7 @@
         "privacy": "/privacy"
     },
     "app": {
-        "logInfo": "true",
-        "logFile": "logs/2006-01-02.txt",
+        "logFile": "log.txt",
         "languageDirectory": "resources/language",
         "defaultLanguage": "en",
         "sqlDirectory": "resources/sql"

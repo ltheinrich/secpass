@@ -1,6 +1,6 @@
 SELECT
     name,
-    PASSWORD,
+    passwordHash,
     secret,
     crypter
 FROM

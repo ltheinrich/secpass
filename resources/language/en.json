@@ -42,5 +42,11 @@
     "title": "Title",
     "entryExists": "This entry already exists.",
     "clearClipboard": "Clear clipboard",
-    "passwordLength": "Password length"
+    "passwordLength": "Password length",
+    "passwordEntry": "Password entry",
+    "mailAddress": "E-mail address",
+    "website": "Website",
+    "backupCode": "Backup code",
+    "notes": "Notes",
+    "entryNotExists": "This entry does not exist."
 }
