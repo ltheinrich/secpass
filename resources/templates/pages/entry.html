@@ -39,18 +39,6 @@
                 <input class="validate" type="email" id="mailPre" name="mailPre" value="{{.Entry.Mail}}">
                 <label for="mailPre">{{lang .Lang "mailAddress"}}</label>
 
-                <!-- password -->
-                <input class="validate" type="password" id="passwordPre" name="passwordPre" minlength="4" value=""
-                    required>
-                <label for="passwordPre">{{lang .Lang "password"}}</label>
-
-                <!-- show/generate password -->
-                <p>
-                    <label><input type="checkbox" id="showPassword"><span>{{lang .Lang "showPassword"}}</span>&nbsp;</label>
-                    <button class="btn-floating waves-effect waves-light" id="generatePassword" type="button" title="{{$generatePassword}}">
-                        <i class="material-icons right">cached</i></button>
-                </p>
-
                 <!-- url -->
                 <input class="validate" type="url" id="urlPre" name="urlPre" value="{{.Entry.URL}}">
                 <label for="urlPre">{{lang .Lang "website"}}</label>
@@ -63,9 +51,21 @@
                 <textarea class="materialize-textarea" id="notesPre" name="notesPre">{{.Entry.Notes}}</textarea>
                 <label for="notesPre">{{lang .Lang "notes"}}</label>
 
+                <!-- password -->
+                <input class="validate" type="password" id="passwordPre" name="passwordPre" minlength="4" value=""
+                    required>
+                <label for="passwordPre">{{lang .Lang "password"}}</label>
+
+                <!-- show/generate password -->
+                <p>
+                    <label><input type="checkbox" id="showPassword"><span>{{lang .Lang "showPassword"}}</span>&nbsp;</label>
+                    <button class="btn-floating waves-effect waves-light" id="generatePassword" type="button" title="{{$generatePassword}}">
+                        <i class="material-icons right">cached</i></button>
+                </p>
+
                 <!-- delete -->
                 {{if eq .Entry.ID 0}}
-                <br><br>
+                <br>
                 {{else}}
                 <p><label><input type="checkbox" id="deletePre" name="deletePre"><span>{{lang .Lang "deleteEntry"}}</span></label></p>
                 {{end}}
