@@ -1,11 +1,11 @@
 {
     "postgresql": {
-        "database": "jshwybrv",
         "host": "horton.elephantsql.com",
-        "password": "",
         "port": "5432",
         "ssl": "disable",
-        "username": "jshwybrv"
+        "database": "jshwybrv",
+        "username": "jshwybrv",
+        "password": ""
     },
     "webserver": {
         "address": ":2215",

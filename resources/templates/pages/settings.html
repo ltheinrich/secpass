@@ -27,9 +27,11 @@
                     {{else if eq .Special -3}}
                     <p class="error">{{lang .Lang "passwordNotEqual"}}</p>
                     {{end}}
-                    <input name="currentPassword" type="password" class="validate" placeholder="{{$currentPassword}}" minlength="8">
+                    <input name="currentPassword" type="password" class="validate" placeholder="{{$currentPassword}}"
+                        minlength="8">
                     <input name="newPassword" type="password" class="validate" placeholder="{{$newPassword}}" minlength="8">
-                    <input name="repeatNewPassword" type="password" class="validate" placeholder="{{$repeatNewPassword}}" minlength="8">
+                    <input name="repeatNewPassword" type="password" class="validate" placeholder="{{$repeatNewPassword}}"
+                        minlength="8">
                 </div>
                 <br>
                 <div class="input-field col s12">
@@ -48,7 +50,8 @@
                             <span>{{lang .Lang "disableTwoFactor"}}</span>
                         </label></p>
                     {{end}}
-                    <input name="oneTimePassword" type="text" class="validate" placeholder="{{$oneTimePassword}}" minlength="6" maxlength="8">
+                    <input name="oneTimePassword" type="text" class="validate" placeholder="{{$oneTimePassword}}"
+                        minlength="6" maxlength="8">
                 </div>
             </div>
             <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "save"}}
@@ -61,7 +64,8 @@
     <br>
     <form action="/settings/delete_forever" method="POST">
         {{if eq .Special -4}}
-        <p><label><input type="checkbox" name="delete_forever" value="delete_account_forever"><span>{{lang .Lang "deleteAccount"}}</span></label></p>
+        <p><label><input type="checkbox" name="delete_forever" value="delete_account_forever">
+                <span>{{lang .Lang "deleteAccount"}}</span></label></p>
         {{end}}
         <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "deleteAccount"}}
             <i class="material-icons left">delete_forever</i>
@@ -69,7 +73,8 @@
     </form>
 </div> {{template "javascript" .}}
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('select').formSelect();
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems, null);
     });
 </script> {{template "footer" .}}
