@@ -1,0 +1,65 @@
+{{template "header" .}} {{$editEntry := lang .Lang "editEntry"}}
+<!---->
+{{$copyPassword := lang .Lang "copyPassword"}} {{$viewEntry := lang .Lang "viewEntry"}}
+<!---->
+{{$clearClipboard := lang .Lang "clearClipboard"}} {{$createEntry := lang .Lang "createEntry"}}
+<div class="card-panel blue-grey darken-1 border">
+    <div class="col card-content white-text">
+        <!-- title -->
+        <h5>{{lang .Lang "passwordList"}}
+            <a class="secondary-content" title="{{$createEntry}}" href="/entry"><i class="material-icons">add_circle_outline</i>&nbsp;</a>
+            <a class="secondary-content" title="{{$clearClipboard}}" href="#"><i class="material-icons clearbtn">lock_open</i>&nbsp;</a></h5>
+        <br>
+
+        <!-- haveibeenpwned list -->
+        <div class="row" id="pwnedList">
+            <div class="col s12 m5">
+                <!-- not found -->
+                {{if eq .Special -1}}
+                <div class="card-panel green">
+                    <span class="white-text">
+                        {{lang .Lang "pwnedNotFound"}}
+                        <a class="btn-floating waves-effect waves-light" id="closePwnedList"><i class="material-icons">close</i></a>
+                    </span>
+                </div>
+
+                <!-- found -->
+                {{else if eq .Special -2}}
+                <div class="card-panel red">
+                    <span class="white-text">
+                        {{lang .Lang "pwnedFound"}}<br>
+                        <br> {{range $index, $dataset := .Pwns}}{{$dataset}}<br>{{end}}
+                        <a class="btn-floating waves-effect waves-light right" id="closePwnedList"><i class="material-icons">close</i></a>
+                    </span>
+                </div>
+                {{end}}
+            </div>
+        </div>
+
+        <!-- password view -->
+        <input id="passwordView" value="" readonly hidden>
+
+        <!-- list -->
+        <div class="collection">
+            {{range $index, $password := .Passwords}}
+            <div class="collection-item"><a class="passwordTitle">{{$password.Title}}</a> <a class="passwordName">{{$password.Name}}</a>&nbsp;
+                <input id="pw-{{$password.ID}}" title="{{$password.Title}}" name="{{$password.Name}}" value="{{$password.Value}}"
+                    disabled hidden>
+                <a class="secondary-content" href="/haveibeenpwned?account={{$password.Name}}" title="haveibeenpwned">
+                    <i class="material-icons">check</i>&nbsp;</a>
+                <a class="secondary-content" title="{{$editEntry}}" href="/entry?id={{$password.ID}}">
+                    <i class="material-icons">edit</i>&nbsp;</a>
+                <a class="secondary-content" title="{{$viewEntry}}" href="#">
+                    <i class="material-icons viewbtn" passwordid="{{$password.ID}}">search</i>&nbsp;</a>
+                <a class="secondary-content" title="{{$copyPassword}}" href="#">
+                    <i class="material-icons copybtn" passwordid="{{$password.ID}}">vpn_key</i>&nbsp;</a>
+            </div>
+            {{end}}
+        </div>
+    </div>
+</div>
+{{template "javascript" .}}
+<script type="text/javascript" src="/web/sjcl.js"></script>
+<script type="text/javascript" src="/web/index.js"></script>
+<!---->
+{{template "footer" .}}

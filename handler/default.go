@@ -17,6 +17,7 @@ type Data struct {
 	Special   int
 	LoggedOut bool
 	TwoFactor TwoFactorData
+	Entry     Password
 	Passwords []Password
 	Pwns      []string
 }
@@ -70,6 +71,12 @@ func LoadTemplates() {
 
 // redirect to location
 func redirect(w http.ResponseWriter, location string) {
+	w.Header().Set("location", location)
+	w.WriteHeader(http.StatusSeeOther)
+}
+
+// redirect to location temporary
+func redirectTemp(w http.ResponseWriter, location string) {
 	w.Header().Set("location", location)
 	w.WriteHeader(http.StatusTemporaryRedirect)
 }

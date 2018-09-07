@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"database/sql"
 	"net/http"
 
 	"lheinrich.de/secpass/spuser"
@@ -10,13 +9,6 @@ import (
 
 	"lheinrich.de/secpass/shorts"
 )
-
-// Password structure
-type Password struct {
-	Title    string
-	Name     string
-	Password string
-}
 
 // Index function
 func Index(w http.ResponseWriter, r *http.Request) {
@@ -39,52 +31,16 @@ func Index(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		// add password
-		title, name, password := r.PostFormValue("title"), r.PostFormValue("name"), r.PostFormValue("password")
-		if name != "" && password != "" && len(password) >= 4 {
-			// check if already exists
-			var queryTitle string
-			errQuery := conf.DB.QueryRow(conf.GetSQL("get_password_entry"), title, name, user).Scan(&queryTitle)
-
-			if errQuery == sql.ErrNoRows {
-				// insert into db
-				_, errExec := conf.DB.Exec(conf.GetSQL("add_password"), title, name, password, user)
-				shorts.Check(errExec)
-			} else if errQuery == nil {
-				// entry already exists
-				special = -3
-			} else {
-				// check error
-				shorts.Check(errQuery)
-			}
-		}
-
-		// edit password
-		passwordEditTitle, passwordEditID, passwordEditInput := r.PostFormValue("passwordEditTitleAfter"), r.PostFormValue("passwordEditIDAfter"), r.PostFormValue("passwordEditInputAfter")
-		if passwordEditID != "" && passwordEditInput != "" && len(passwordEditInput) >= 4 {
-			// update db
-			_, err := conf.DB.Exec(conf.GetSQL("edit_password"), passwordEditInput, passwordEditTitle, passwordEditID, user)
-			shorts.Check(err)
-		}
-
-		// delete password
-		passwordDeleteTitle, passwordDeleteInput := r.PostFormValue("passwordDeleteTitle"), r.PostFormValue("passwordDeleteInput")
-		if passwordDeleteTitle != "" && passwordDeleteInput != "" {
-			// delete from db
-			_, err := conf.DB.Exec(conf.GetSQL("delete_password"), passwordDeleteTitle, passwordDeleteInput, user)
-			shorts.Check(err)
-		}
-
 		// execute template
-		shorts.Check(tpl.ExecuteTemplate(w, "index.html", Data{User: user, Lang: getLang(r), Passwords: passwords(user), Special: special, Pwns: pwns}))
+		shorts.Check(tpl.ExecuteTemplate(w, "index.html", Data{User: user, Lang: getLang(r), Passwords: getPasswords(user), Special: special, Pwns: pwns}))
 	}
 
 	// redirect to login
 	redirect(w, "/login")
 }
 
-// return passwords as map
-func passwords(user string) []Password {
+// return getPasswords as map
+func getPasswords(user string) []Password {
 	// query db and check for error
 	rows, errQuery := conf.DB.Query(conf.GetSQL("passwords"), user)
 	shorts.Check(errQuery)
@@ -94,16 +50,21 @@ func passwords(user string) []Password {
 	// loop through rows
 	for rows.Next() {
 		// define variables to write into
+		var id int
 		var title string
 		var name string
+		var mail string
 		var password string
+		var url string
+		var backupCode string
+		var notes string
 
 		// read from rows
-		errScan := rows.Scan(&title, &name, &password)
+		errScan := rows.Scan(&id, &title, &name, &mail, &password, &url, &backupCode, &notes)
 		shorts.Check(errScan)
 
 		// put into list
-		passwordList = append(passwordList, Password{Title: title, Name: name, Password: password})
+		passwordList = append(passwordList, Password{ID: id, Title: title, Name: name, Mail: mail, Value: password, URL: url, BackupCode: backupCode, Notes: notes})
 	}
 
 	return passwordList

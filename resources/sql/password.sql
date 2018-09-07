@@ -1,5 +1,4 @@
 SELECT
-    id,
     title,
     name,
     mail,
@@ -10,7 +9,6 @@ SELECT
 FROM
     passwords
 WHERE
-    author = $1
-ORDER BY
-    title ASC;
+    id = $1
+    AND author = $2;
 

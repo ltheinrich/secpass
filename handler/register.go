@@ -46,7 +46,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 				shorts.Check(errExec)
 
 				// redirect and return
-				redirect(w, "/login")
+				redirectTemp(w, "/login")
 				return
 			}
 

@@ -42,5 +42,11 @@
     "title": "Titel",
     "entryExists": "Dieser Eintrag existiert bereits.",
     "clearClipboard": "Zwischenablage leeren",
-    "passwordLength": "Passwort-Länge"
+    "passwordLength": "Passwort-Länge",
+    "passwordEntry": "Passwort-Eintrag",
+    "mailAddress": "E-Mail Adresse",
+    "website": "Webseite",
+    "backupCode": "Wiederherstellungscode",
+    "notes": "Notizen",
+    "entryNotExists": "Dieser Eintrag existiert nicht."
 }
