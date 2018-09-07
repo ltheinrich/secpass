@@ -42,10 +42,10 @@
         <!-- list -->
         <div class="collection">
             {{range $index, $password := .Passwords}}
-            <div class="collection-item"><a class="passwordTitle">{{$password.Title}}</a> <a class="passwordName">{{$password.Name}}</a>&nbsp;
-                <input id="pw-{{$password.ID}}" title="{{$password.Title}}" name="{{$password.Name}}" value="{{$password.Value}}"
-                    disabled hidden>
-                <a class="secondary-content" href="/haveibeenpwned?account={{$password.Name}}" title="haveibeenpwned">
+            <div class="collection-item"><a class="passwordTitle">{{$password.Title}}</a>
+                <a class="passwordName">{{if $password.Name}}{{$password.Name}}{{else}}{{$password.Mail}}{{end}}</a>
+                <input id="pw-{{$password.ID}}" value="{{$password.Value}}" disabled hidden>
+                <a class="secondary-content" title="haveibeenpwned" href="/haveibeenpwned?account={{if $password.Name}}{{$password.Name}}{{else}}{{$password.Mail}}{{end}}">
                     <i class="material-icons">check</i>&nbsp;</a>
                 <a class="secondary-content" title="{{$editEntry}}" href="/entry?id={{$password.ID}}">
                     <i class="material-icons">edit</i>&nbsp;</a>

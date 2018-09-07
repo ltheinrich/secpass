@@ -1,4 +1,4 @@
-{{template "header" .}}
+{{template "header" .}} {{$generatePassword := lang .Lang "generatePassword"}}
 <div class="card-panel blue-grey darken-1 border">
     <div class="col card-content white-text">
         <h5>{{lang .Lang "passwordEntry"}}</h5>
@@ -47,7 +47,7 @@
                 <!-- show/generate password -->
                 <p>
                     <label><input type="checkbox" id="showPassword"><span>{{lang .Lang "showPassword"}}</span>&nbsp;</label>
-                    <button class="btn-floating waves-effect waves-light" id="generatePassword" type="button">
+                    <button class="btn-floating waves-effect waves-light" id="generatePassword" type="button" title="{{$generatePassword}}">
                         <i class="material-icons right">cached</i></button>
                 </p>
 
