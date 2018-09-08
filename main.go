@@ -72,13 +72,13 @@ func setupDB() {
 	// define config values
 	host := conf.Config["postgresql"]["host"]
 	port := conf.Config["postgresql"]["port"]
+	ssl := conf.Config["postgresql"]["ssl"]
 	database := conf.Config["postgresql"]["database"]
 	username := conf.Config["postgresql"]["username"]
 	password := conf.Config["postgresql"]["password"]
-	ssl := conf.Config["postgresql"]["ssl"]
 
 	// connect to postgresql database and setup
-	conf.DB = shorts.ConnectPostgreSQL(host, port, database, username, password, ssl)
+	conf.DB = shorts.ConnectPostgreSQL(host, port, ssl, database, username, password)
 	_, err := conf.DB.Exec(conf.GetSQL("setup"))
 	shorts.Check(err)
 }

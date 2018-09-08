@@ -36,7 +36,7 @@ func Check(err error) {
 }
 
 // ConnectPostgreSQL Connection to postgresql database
-func ConnectPostgreSQL(host, port, database, username, password string, ssl string) *sql.DB {
+func ConnectPostgreSQL(host, port, ssl, database, username, password string) *sql.DB {
 	// open database connection and check for errors
 	db, err := sql.Open("postgres", "postgres://"+username+":"+password+"@"+host+"/"+database+"?sslmode="+ssl)
 	Check(err)

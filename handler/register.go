@@ -42,8 +42,10 @@ func Register(w http.ResponseWriter, r *http.Request) {
 
 				// hash password and insert user
 				passwordHash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost+1)
-				_, errExec := conf.DB.Exec(conf.GetSQL("register"), name, string(passwordHash), "", encryptedKey)
-				shorts.Check(errExec)
+				_, errExecRegister := conf.DB.Exec(conf.GetSQL("register"), name, string(passwordHash), "", encryptedKey)
+				_, errExecADC := conf.DB.Exec(conf.GetSQL("add_default_category"), name)
+				shorts.Check(errExecRegister)
+				shorts.Check(errExecADC)
 
 				// redirect and return
 				redirectTemp(w, "/login")

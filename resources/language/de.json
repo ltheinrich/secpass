@@ -48,5 +48,14 @@
     "website": "Webseite",
     "backupCode": "Wiederherstellungscode",
     "notes": "Notizen",
-    "entryNotExists": "Dieser Eintrag existiert nicht."
+    "entryNotExists": "Dieser Eintrag existiert nicht.",
+    "categories": "Kategorien",
+    "category": "Kategorie",
+    "viewCategory": "Kategorie anzeigen",
+    "editCategory": "Kategorie bearbeiten",
+    "deleteCategory": "Kategorie löschen",
+    "showUncategorized": "Zeige unkategorisierte Einträge",
+    "passwords": "Passwörter",
+    "createCategory": "Kategorie erstellen",
+    "needNameOrMail": "Du musst einen Namen oder eine E-Mail Adresse angeben."
 }

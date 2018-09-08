@@ -10,11 +10,15 @@
         <!-- edit entry: not exists -->
         {{else if eq .Special -2}}
         <p class="error">{{lang .Lang "entryNotExists"}}</p>
+        <!-- no name or mail -->
+        {{else if eq .Special -3}}
+        <p class="error">{{lang .Lang "needNameOrMail"}}</p>
         {{end}}
 
         <div>
             <!-- hidden forms -->
             <form method="POST" id="form" hidden>
+                <input id="category" name="category" value="{{.Entry.Category}}">
                 <input id="title" name="title" value="{{.Entry.Title}}">
                 <input id="name" name="name" value="{{.Entry.Name}}">
                 <input id="mail" name="mail" value="{{.Entry.Mail}}">
@@ -27,24 +31,34 @@
 
             <!-- form -->
             <form method="POST" onsubmit="return manipulateForm()">
-                <!-- titlte -->
-                <input id="titlePre" name="titlePre" value="{{.Entry.Title}}" required>
+                <!-- category -->
+                <select id="categoryPre" name="categoryPre">
+                    {{$categoryID := .Entry.Category}}
+                    {{range $index, $category := .Categories}}
+                    <option value="{{$category.ID}}" {{if eq $categoryID $category.ID}} selected{{end}}>{{$category.Name}}</option>
+                    {{end}}
+
+                </select>
+
+                <!-- title -->
+                <input class="validate" id="titlePre" name="titlePre" value="{{.Entry.Title}}" autocomplete="off"
+                    required>
                 <label for="titlePre">{{lang .Lang "title"}}</label>
 
                 <!-- name -->
-                <input id="namePre" name="namePre" value="{{.Entry.Name}}">
+                <input id="namePre" name="namePre" value="{{.Entry.Name}}" autocomplete="off">
                 <label for="namePre">{{lang .Lang "name"}}</label>
 
                 <!-- e-mail -->
-                <input class="validate" type="email" id="mailPre" name="mailPre" value="{{.Entry.Mail}}">
+                <input class="validate" type="email" id="mailPre" name="mailPre" value="{{.Entry.Mail}}" autocomplete="off">
                 <label for="mailPre">{{lang .Lang "mailAddress"}}</label>
 
                 <!-- url -->
-                <input class="validate" type="url" id="urlPre" name="urlPre" value="{{.Entry.URL}}">
+                <input class="validate" type="url" id="urlPre" name="urlPre" value="{{.Entry.URL}}" autocomplete="off">
                 <label for="urlPre">{{lang .Lang "website"}}</label>
 
                 <!-- backup code -->
-                <input id="backupCodePre" name="backupCodePre" value="{{.Entry.BackupCode}}">
+                <input id="backupCodePre" name="backupCodePre" value="{{.Entry.BackupCode}}" autocomplete="off">
                 <label for="backupCodePre">{{lang .Lang "backupCode"}}</label>
 
                 <!-- notes -->
@@ -53,7 +67,7 @@
 
                 <!-- password -->
                 <input class="validate" type="password" id="passwordPre" name="passwordPre" minlength="4" value=""
-                    required>
+                    autocomplete="off" required>
                 <label for="passwordPre">{{lang .Lang "password"}}</label>
 
                 <!-- show/generate password -->
@@ -87,5 +101,11 @@
 {{template "javascript" .}}
 <script type="text/javascript" src="/web/sjcl.js"></script>
 <script type="text/javascript" src="/web/entry.js"></script>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems, null);
+    });
+</script>
 <!---->
 {{template "footer" .}}

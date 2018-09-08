@@ -12,14 +12,22 @@ import (
 
 // Data to pass into template
 type Data struct {
-	User      string
-	Lang      string
-	Special   int
-	LoggedOut bool
-	TwoFactor TwoFactorData
-	Entry     Password
-	Passwords []Password
-	Pwns      []string
+	User            string
+	Lang            string
+	Special         int
+	LoggedOut       bool
+	TwoFactor       TwoFactorData
+	Entry           Password
+	Passwords       []Password
+	Pwns            []string
+	Categories      []Category
+	DefaultCategory Category
+}
+
+// Category to pass with Data
+type Category struct {
+	ID   int
+	Name string
 }
 
 // TwoFactorData data for two-factor authentication

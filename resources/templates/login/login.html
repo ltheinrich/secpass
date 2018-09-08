@@ -1,6 +1,8 @@
 {{template "header" .}}
 <!---->
-{{$name := lang .Lang "name"}} {{$password := lang .Lang "password"}} {{$oneTimePassword := lang .Lang "oneTimePassword"}}
+{{$name := lang .Lang "name"}} {{$password := lang .Lang "password"}}
+<!---->
+{{$oneTimePassword := lang .Lang "oneTimePassword"}}
 <div class="card-panel blue-grey darken-1 border">
     <form method="POST">
         <div class="col card-content white-text">
@@ -13,8 +15,10 @@
             <div class="row">
                 <div class="input-field col s12">
                     <input name="name" type="text" class="validate" placeholder="{{$name}}" required>
-                    <input name="password" type="password" class="validate" placeholder="{{$password}}" minlength="8" required>
-                    <input name="oneTimePassword" type="text" class="validate" placeholder="{{$oneTimePassword}}" minlength="6" maxlength="8">
+                    <input name="password" type="password" class="validate" placeholder="{{$password}}" autocomplete="off"
+                        minlength="8" required>
+                    <input name="oneTimePassword" type="text" class="validate" placeholder="{{$oneTimePassword}}"
+                        autocomplete="off" minlength="6" maxlength="8">
                 </div>
             </div>
             <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "login"}}
