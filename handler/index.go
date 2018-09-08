@@ -44,14 +44,18 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 		// edit category
 		if categoryName != "" {
+			// query and check for error
 			_, err := conf.DB.Exec(conf.GetSQL("edit_category"), categoryName, categoryID, user)
 			shorts.Check(err)
 		}
 
 		// delete category
 		if categoryDelete != "" {
+			// query
 			_, errPasswords := conf.DB.Exec(conf.GetSQL("delete_category_passwords"), categoryDelete, user)
 			_, errCategory := conf.DB.Exec(conf.GetSQL("delete_category"), categoryDelete, user)
+
+			// check for error
 			shorts.Check(errPasswords)
 			shorts.Check(errCategory)
 		}
@@ -119,6 +123,7 @@ func getCategories(user string) []Category {
 		categoryList = append(categoryList, Category{ID: id, Name: name})
 	}
 
+	// return Category list
 	return categoryList
 }
 
@@ -131,5 +136,6 @@ func getCategory(id int, user string) Category {
 	err := conf.DB.QueryRow(conf.GetSQL("get_category"), id, user).Scan(&name)
 	shorts.Check(err)
 
+	// return Category
 	return Category{ID: id, Name: name}
 }

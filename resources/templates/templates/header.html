@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html>
 
+<!-- header -->
+
 <head>
     <meta charset='utf-8'>
     <title>{{config "web" "title"}}</title>
@@ -13,17 +15,27 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/web/favicon.png">
 </head>
 
+<!-- body -->
+
 <body>
+    <!-- desktop navigation -->
     <nav>
         <div class="nav-wrapper">
+            <!-- mobile navigation opener -->
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+            <!-- title left -->
             <ul id="nav-mobile" class="left hide-on-med-and-down">
                 <li><a href="/">{{config "web" "title"}}</a></li>
             </ul>
+
+            <!-- links right -->
             <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <!-- guest -->
                 {{if .LoggedOut}}
                 <li><a href="/login">{{lang .Lang "login"}}</a></li>
                 <li><a href="/register">{{lang .Lang "register"}}</a></li>
+                <!-- user -->
                 {{else}}
                 <li><a href="/settings">{{lang .Lang "settings"}}</a></li>
                 <li><a href="/login/logout">{{lang .Lang "logout"}}</a></li>
@@ -31,11 +43,15 @@
             </ul>
         </div>
     </nav>
+
+    <!-- mobile navigation -->
     <ul class="sidenav" id="mobile-demo">
         <li><a href="/">{{config "web" "title"}}</a></li>
+        <!-- guest -->
         {{if .LoggedOut}}
         <li><a href="/login">{{lang .Lang "login"}}</a></li>
         <li><a href="/register">{{lang .Lang "register"}}</a></li>
+        <!-- user -->
         {{else}}
         <li><a href="/settings">{{lang .Lang "settings"}}</a></li>
         <li><a href="/login/logout">{{lang .Lang "logout"}}</a></li>

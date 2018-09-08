@@ -92,6 +92,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 		} else {
+			// wrong password
 			special = 1
 		}
 	}

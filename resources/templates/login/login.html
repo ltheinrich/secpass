@@ -6,12 +6,18 @@
 <div class="card-panel blue-grey darken-1 border">
     <form method="POST">
         <div class="col card-content white-text">
+            <!-- title -->
             <h5>{{lang .Lang "login"}}</h5>
+
+            <!-- wrong login data -->
             {{if eq .Special 1}}
             <p class="error">{{lang .Lang "loginWrong"}}</p>
+            <!-- wrong two-factor password -->
             {{else if eq .Special 2}}
             <p class="error">{{lang .Lang "wrongTwoFactorPassword"}}</p>
             {{end}}
+
+            <!-- login input -->
             <div class="row">
                 <div class="input-field col s12">
                     <input name="name" type="text" class="validate" placeholder="{{$name}}" required>
@@ -21,9 +27,13 @@
                         autocomplete="off" minlength="6" maxlength="8">
                 </div>
             </div>
+
+            <!-- submit button -->
             <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "login"}}
                 <i class="material-icons right">send</i>
             </button>
+
+            <!-- cookie warning-->
             <p>{{lang .Lang "cookieWarning"}}</p>
         </div>
     </form>

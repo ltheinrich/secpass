@@ -14,9 +14,11 @@ import (
 
 // Web function
 func Web(w http.ResponseWriter, r *http.Request) {
-	// open file and check for error
+	// define file name and open file
 	_, fileName := path.Split(r.URL.Path)
 	file, errFile := os.Open(conf.Config["webserver"]["webDirectory"] + "/" + fileName)
+
+	// check for error and defer close
 	shorts.Check(errFile)
 	defer file.Close()
 

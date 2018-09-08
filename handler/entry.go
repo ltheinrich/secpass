@@ -28,10 +28,14 @@ func Entry(w http.ResponseWriter, r *http.Request) {
 	// check session
 	user := checkSession(w, r)
 	if user != "" {
-		// define special and form values
+		// define special
 		special := 0
+
+		// define id and category
 		id, _ := strconv.Atoi(r.FormValue("id"))
 		category, _ := strconv.Atoi(r.PostFormValue("category"))
+
+		// define form values
 		title, name, mail, password := r.PostFormValue("title"), r.PostFormValue("name"), r.PostFormValue("mail"), r.PostFormValue("password")
 		url, backupCode, notes := r.PostFormValue("url"), r.PostFormValue("backupCode"), r.PostFormValue("notes")
 
@@ -121,7 +125,7 @@ func getPassword(id int, user string) Password {
 		errScan := rows.Scan(&title, &name, &mail, &password, &url, &backupCode, &notes, &category)
 		shorts.Check(errScan)
 
-		// return
+		// return password
 		return Password{ID: id, Title: title, Name: name, Mail: mail, Value: password, URL: url, BackupCode: backupCode, Notes: notes, Category: category}
 	}
 
