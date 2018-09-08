@@ -6,55 +6,85 @@
 <div class="card-panel blue-grey darken-1 border">
     <form method="POST">
         <div class="col card-content white-text">
+            <!-- title -->
             <h5>{{lang .Lang "settings"}}</h5>
+
+            <!-- change language -->
             <div class="row">
                 <div class="input-field col s12">
+                    <!-- select -->
                     <select name="language">
                         <option value="{{.Lang}}" disabled selected>{{lang .Lang "changeLanguage"}}</option>
                         {{range $lang := languages}}
                         <option value="{{$lang}}">{{lang $lang "LanguageName"}}</option>
                         {{end}}
                     </select>
+
+                    <!-- label -->
                     <label>{{lang .Lang "language"}}</label>
                 </div>
                 <br>
+
+                <!-- change password -->
                 <div class="input-field col s12">
+                    <!-- title -->
                     <h6>{{lang .Lang "changePassword"}}</h6>
+
+                    <!-- changed password successfully-->
                     {{if eq .Special -1}}
                     <p class="success">{{lang .Lang "changedPassword"}}</p>
+                    <!-- password wrong-->
                     {{else if eq .Special -2}}
                     <p class="error">{{lang .Lang "passwordWrong"}}</p>
+                    <!-- password is wrong -->
                     {{else if eq .Special -3}}
                     <p class="error">{{lang .Lang "passwordNotEqual"}}</p>
                     {{end}}
+
+                    <!-- current password -->
                     <input name="currentPassword" type="password" class="validate" placeholder="{{$currentPassword}}"
                         autocomplete="off" minlength="8">
+
+                    <!-- new password -->
                     <input name="newPassword" type="password" class="validate" placeholder="{{$newPassword}}"
                         autocomplete="off" minlength="8">
+
+                    <!-- repeat new password -->
                     <input name="repeatNewPassword" type="password" class="validate" placeholder="{{$repeatNewPassword}}"
                         autocomplete="off" minlength="8">
                 </div>
                 <br>
+
+                <!-- two-factor authentication -->
                 <div class="input-field col s12">
+                    <!-- title -->
                     <h6>{{lang .Lang "twoFactorAuthentication"}}</h6>
+
+                    <!-- wrong one-time password -->
                     {{if .TwoFactor.OneTimePasswordWrong}}
                     <p class="error">{{lang .Lang "wrongTwoFactorPassword"}}</p>
                     {{end}}
-                    <!---->
+
+
+                    <!-- two-factor disabled -->
                     {{if .TwoFactor.Disabled}}
                     <img src="data:image/png;base64,{{.TwoFactor.Image}}" width="200" height="200">
                     <input name="twoFactorSecret" type="text" value="{{.TwoFactor.Secret}}" readonly>
-                    <!---->
+                    <!-- two-factor enabled -->
                     {{else}}
                     <p><label>
                             <input type="checkbox" name="disableTwoFactor" value="disableTwoFactorAuthentication">
                             <span>{{lang .Lang "disableTwoFactor"}}</span>
                         </label></p>
                     {{end}}
+
+                    <!-- one-time password input -->
                     <input name="oneTimePassword" type="text" class="validate" placeholder="{{$oneTimePassword}}"
                         autocomplete="off" minlength="6" maxlength="8">
                 </div>
             </div>
+
+            <!-- submit button -->
             <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "save"}}
                 <i class="material-icons right">save</i>
             </button>
@@ -63,11 +93,16 @@
     <br>
     <hr>
     <br>
+
+    <!-- delete account -->
     <form action="/settings/delete_forever" method="POST">
+        <!-- button clicked-->
         {{if eq .Special -4}}
         <p><label><input type="checkbox" name="delete_forever" value="delete_account_forever">
                 <span>{{lang .Lang "deleteAccount"}}</span></label></p>
         {{end}}
+
+        <!-- submit button -->
         <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "deleteAccount"}}
             <i class="material-icons left">delete_forever</i>
         </button>

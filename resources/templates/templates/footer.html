@@ -1,6 +1,10 @@
 {{define "footer"}} {{$imprint := config "web" "imprint"}} {{$privacy := config "web" "privacy"}}
+<!-- footer -->
 <footer class="border">
-    <a href="https://lheinrich.de/secpass">Copyright &copy; 2018 Lennart Heinrich</a>
+    <!-- left -->
+    <a href="https://lheinrich.de/secpass">&copy; 2018 Lennart Heinrich</a>
+
+    <!-- links (right) -->
     <div class="right">
         <a href="{{$imprint}}">{{lang .Lang "imprint"}}</a>&nbsp;
         <a href="{{$privacy}}">{{lang .Lang "privacy"}}</a>

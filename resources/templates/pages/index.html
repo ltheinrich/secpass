@@ -9,6 +9,12 @@
 {{$editCategory := lang .Lang "editCategory"}} {{$deleteCategory := lang .Lang "deleteCategory"}}
 <!---->
 {{$showUncategorized := lang .Lang "showUncategorized"}} {{$createCategory := lang .Lang "createCategory"}}
+<!---->
+{{$category := lang .Lang "category"}} {{$title := lang .Lang "title"}} {{$name := lang .Lang "name"}}
+<!---->
+{{$mailAddress := lang .Lang "mailAddress"}} {{$website := lang .Lang "website"}} {{$ := lang .Lang "backupCode"}}
+<!---->
+{{$notes := lang .Lang "notes"}} {{$password := lang .Lang "password"}}
 <div class="card-panel blue-grey darken-1 border">
     <div class="col card-content white-text">
         <!-- title -->
@@ -51,15 +57,26 @@
         <div class="collection">
             {{range $index, $password := .Passwords}}
             <div class="collection-item passwordentry" category="{{$password.Category}}">
+                <!-- name -->
                 <a class="passwordTitle">{{$password.Title}}</a>
                 <a class="passwordName">{{if $password.Name}}{{$password.Name}}{{else}}{{$password.Mail}}{{end}}</a>
+
+                <!-- encrypted password -->
                 <input id="pw-{{$password.ID}}" value="{{$password.Value}}" disabled hidden>
+
+                <!-- haveibeenpwned -->
                 <a class="secondary-content" title="haveibeenpwned" href="/haveibeenpwned?account={{if $password.Name}}{{$password.Name}}{{else}}{{$password.Mail}}{{end}}">
                     <i class="material-icons">check</i>&nbsp;</a>
+
+                <!-- edit -->
                 <a class="secondary-content" title="{{$editEntry}}" href="/entry?id={{$password.ID}}">
                     <i class="material-icons">edit</i>&nbsp;</a>
+
+                <!-- view -->
                 <a class="secondary-content" title="{{$viewEntry}}" href="#">
                     <i class="material-icons viewbtn" passwordid="{{$password.ID}}">search</i>&nbsp;</a>
+
+                <!-- copy -->
                 <a class="secondary-content" title="{{$copyPassword}}" href="#">
                     <i class="material-icons copybtn" passwordid="{{$password.ID}}">vpn_key</i>&nbsp;</a>
             </div>
@@ -71,7 +88,8 @@
             <!-- create -->
             <form method="POST" id="createCategory" hidden>
                 <br>
-                <input id="categoryNew" name="categoryNew" value="" autocomplete="off" required>
+                <input id="categoryNew" name="categoryNew" value="" autocomplete="off" placeholder="{{$category}}"
+                    required>
                 <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "createCategory"}}
                     <i class="material-icons right">add</i>
                 </button>
@@ -81,7 +99,7 @@
             <form method="POST" id="editCategory" hidden>
                 <br>
                 <input id="categoryID" name="categoryID" value="" autocomplete="off" hidden>
-                <input id="categoryName" name="categoryName" value="" required>
+                <input id="categoryName" name="categoryName" value="" placeholder="{{$category}}" required>
                 <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "editCategory"}}
                     <i class="material-icons right">edit</i>
                 </button>
@@ -111,11 +129,18 @@
             {{range $index, $category := .Categories}}
             {{if not (eq $category.ID $defaultCategoryID)}}
             <div class="collection-item">
+                <!-- title -->
                 <a class="passwordName">{{$category.Name}}</a>
+
+                <!-- delete -->
                 <a class="secondary-content" title="{{$deleteCategory}}" href="#">
                     <i class="material-icons deletecategory" id="{{$category.ID}}">delete</i>&nbsp;</a>
+
+                <!-- edit -->
                 <a class="secondary-content" title="{{$editCategory}}" href="#">
                     <i class="material-icons editcategory" id="{{$category.ID}}" name="{{$category.Name}}">edit</i>&nbsp;</a>
+
+                <!-- show -->
                 <a class="secondary-content" title="{{$viewCategory}}" href="#">
                     <i class="material-icons viewcategory" id="{{$category.ID}}">search</i>&nbsp;</a>
             </div>

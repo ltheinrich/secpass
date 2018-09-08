@@ -32,12 +32,12 @@
             <!-- form -->
             <form method="POST" onsubmit="return manipulateForm()">
                 <!-- category -->
+                <label for="categoryPre">{{lang .Lang "category"}}</label>
                 <select id="categoryPre" name="categoryPre">
                     {{$categoryID := .Entry.Category}}
                     {{range $index, $category := .Categories}}
                     <option value="{{$category.ID}}" {{if eq $categoryID $category.ID}} selected{{end}}>{{$category.Name}}</option>
                     {{end}}
-
                 </select>
 
                 <!-- title -->

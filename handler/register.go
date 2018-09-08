@@ -40,10 +40,14 @@ func Register(w http.ResponseWriter, r *http.Request) {
 				// encrypt key
 				encryptedKey := shorts.Encrypt(key, shorts.GenerateKey(password))
 
-				// hash password and insert user
+				// hash password
 				passwordHash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost+1)
+
+				// insert user into db and add default category
 				_, errExecRegister := conf.DB.Exec(conf.GetSQL("register"), name, string(passwordHash), "", encryptedKey)
 				_, errExecADC := conf.DB.Exec(conf.GetSQL("add_default_category"), name)
+
+				// check for error
 				shorts.Check(errExecRegister)
 				shorts.Check(errExecADC)
 
@@ -52,8 +56,10 @@ func Register(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			// check error - name exists, print
+			// check error
 			shorts.Check(errQuery)
+
+			// name exists, print
 			special = 1
 		} else {
 			// passwords does not match, print

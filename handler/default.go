@@ -79,12 +79,14 @@ func LoadTemplates() {
 
 // redirect to location
 func redirect(w http.ResponseWriter, location string) {
+	// change location and write status code
 	w.Header().Set("location", location)
 	w.WriteHeader(http.StatusSeeOther)
 }
 
 // redirect to location temporary
 func redirectTemp(w http.ResponseWriter, location string) {
+	// change location and write status code
 	w.Header().Set("location", location)
 	w.WriteHeader(http.StatusTemporaryRedirect)
 }
@@ -102,10 +104,13 @@ func cookiesExist(r *http.Request, names ...string) bool {
 
 // getLang get language or default language
 func getLang(r *http.Request) string {
+	// get cookie and use default it not existing
 	lang, err := r.Cookie("secpass_lang")
 	if err != nil {
 		return conf.Config["app"]["defaultLanguage"]
 	}
+
+	// return value
 	return lang.Value
 }
 
@@ -147,14 +152,18 @@ func checkSession(w http.ResponseWriter, r *http.Request) string {
 			return user
 		}
 	}
+
+	// return logged out
 	return ""
 }
 
 // cookie return cookie value
 func cookie(r *http.Request, name string) string {
+	// get cookie and check for error
 	cookie, err := r.Cookie(name)
 	shorts.Check(err)
 
+	// return value
 	return cookie.Value
 }
 
