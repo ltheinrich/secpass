@@ -100,6 +100,10 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 				_, errPasswords := conf.DB.Exec(conf.GetSQL("delete_passwords"), user)
 				shorts.Check(errPasswords)
 
+				// delete categories in db
+				_, errCategories := conf.DB.Exec(conf.GetSQL("delete_categories"), user)
+				shorts.Check(errCategories)
+
 				// delete account in db
 				_, errAccount := conf.DB.Exec(conf.GetSQL("delete_account"), user)
 				shorts.Check(errAccount)

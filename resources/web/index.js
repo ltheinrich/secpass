@@ -19,6 +19,27 @@ function getCookie(cname) {
     return "";
 }
 
+// loop through entries and hide/show
+function showCategory(category) {
+    var entries = document.querySelectorAll('.passwordentry');
+    if (entries != null) {
+        for (i = 0; i < entries.length; i++) {
+            var entry = entries[i];
+
+            if (entry.getAttribute("category") == category) {
+                // show
+                entry.style.display = "block";
+            } else {
+                // hide
+                entry.style.display = "none";
+            }
+        }
+    }
+}
+
+// show only uncategorized
+showCategory(document.getElementById("showall").getAttribute("name"));
+
 // clear clipboard
 var clearbtn = document.querySelectorAll('.clearbtn');
 if (clearbtn != null) {
@@ -90,11 +111,111 @@ if (viewbtn != null) {
                 el.style.display = "block";
             } else {
                 // hide
+                el.value = "";
                 el.style.display = "none";
             }
         });
     }
 }
+
+// show category create
+document.getElementById("createcategory").addEventListener('click', function (event) {
+    // get element
+    var el = document.getElementById("createCategory");
+
+    // check that it is not displayed
+    if (el.style.display === "none") {
+        // show and hide others
+        el.style.display = "block";
+        document.getElementById("editCategory").style.display = "none";
+        document.getElementById("deleteCategory").style.display = "none";
+    } else {
+        // hide
+        el.value = "";
+        el.style.display = "none";
+    }
+});
+
+// show category edit
+var editcategory = document.querySelectorAll('.editcategory');
+if (editcategory != null) {
+    for (i = 0; i < editcategory.length; i++) {
+        // add click listener
+        editcategory[i].addEventListener('click', function (event) {
+            // get category id and category edit
+            var id = event.target.getAttribute("id");
+            var name = event.target.getAttribute("name");
+            var el = document.getElementById("editCategory");
+
+            // categoryID and categoryName elements
+            var categoryID = document.getElementById("categoryID");
+            var categoryName = document.getElementById("categoryName");
+
+            // check that it is not displayed
+            if (el.style.display === "none" || categoryID.value != id) {
+                // fill element and show
+                categoryID.value = id;
+                categoryName.value = name;
+                el.style.display = "block";
+
+                // hide others
+                document.getElementById("createCategory").style.display = "none";
+                document.getElementById("deleteCategory").style.display = "none";
+            } else {
+                // hide
+                el.value = "";
+                el.style.display = "none";
+            }
+        });
+    }
+}
+
+// show category delete
+var deletecategory = document.querySelectorAll('.deletecategory');
+if (deletecategory != null) {
+    for (i = 0; i < deletecategory.length; i++) {
+        // add click listener
+        deletecategory[i].addEventListener('click', function (event) {
+            // get category id and category delete elements
+            var id = event.target.getAttribute("id");
+            var el = document.getElementById("deleteCategory");
+            var categoryDelete = document.getElementById("categoryDelete");
+
+            // check that it is not displayed
+            if (el.style.display === "none" || categoryDelete.value != id) {
+                // fill element and show
+                categoryDelete.value = id;
+                el.style.display = "block";
+
+                // hide others
+                document.getElementById("createCategory").style.display = "none";
+                document.getElementById("editCategory").style.display = "none";
+            } else {
+                // hide
+                categoryDelete.value = "";
+                el.style.display = "none";
+            }
+        });
+    }
+}
+
+// view password with category
+var viewcategory = document.querySelectorAll('.viewcategory');
+if (viewcategory != null) {
+    for (i = 0; i < viewcategory.length; i++) {
+        // add click listener
+        viewcategory[i].addEventListener('click', function (event) {
+            // get category and show/hide
+            var id = event.target.getAttribute("id");
+            showCategory(id);
+        });
+    }
+}
+
+// show uncategorized entries
+document.getElementById("showall").addEventListener('click', function (event) {
+    showCategory(document.getElementById("showall").getAttribute("name"));
+});
 
 // close pwned list
 var closePwnedList = document.getElementById("closePwnedList")

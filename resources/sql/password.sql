@@ -5,7 +5,8 @@ SELECT
     passwordValue,
     url,
     backupCode,
-    notes
+    notes,
+    category
 FROM
     passwords
 WHERE

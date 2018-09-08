@@ -32,6 +32,7 @@ function manipulateForm() {
     document.getElementById("url").value = document.getElementById("urlPre").value;
     document.getElementById("backupCode").value = document.getElementById("backupCodePre").value;
     document.getElementById("notes").value = document.getElementById("notesPre").value;
+    document.getElementById("category").value = document.getElementById("categoryPre").value;
 
     // forward delete if exists
     var deletePre = document.getElementById("deletePre");

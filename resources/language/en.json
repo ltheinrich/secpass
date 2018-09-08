@@ -48,5 +48,14 @@
     "website": "Website",
     "backupCode": "Backup code",
     "notes": "Notes",
-    "entryNotExists": "This entry does not exist."
+    "entryNotExists": "This entry does not exist.",
+    "categories": "Categories",
+    "category": "Category",
+    "viewCategory": "Show category",
+    "editCategory": "Edit category",
+    "deleteCategory": "Delete category",
+    "showUncategorized": "Show uncategorized entries",
+    "passwords": "Passwords",
+    "createCategory": "Create category",
+    "needNameOrMail": "You must provide a name or a e-mail address."
 }
