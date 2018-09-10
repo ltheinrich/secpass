@@ -4,7 +4,8 @@
 <!---->
 {{$oneTimePassword := lang .Lang "oneTimePassword"}}
 <div class="card-panel blue-grey darken-1 border">
-    <form method="POST">
+    <!-- form-->
+    <form method="POST" id="login">
         <div class="col card-content white-text">
             <!-- title -->
             <h5>{{lang .Lang "login"}}</h5>
@@ -20,16 +21,17 @@
             <!-- login input -->
             <div class="row">
                 <div class="input-field col s12">
-                    <input name="name" type="text" class="validate" placeholder="{{$name}}" required>
-                    <input name="password" type="password" class="validate" placeholder="{{$password}}" autocomplete="off"
-                        minlength="8" required>
+                    <input name="name" id="name" type="text" class="validate" placeholder="{{$name}}" required>
+                    <input name="password" id="password" type="password" class="validate" value="{{.Entry.Value}}"
+                        placeholder="{{$password}}" autocomplete="off" minlength="8" required>
                     <input name="oneTimePassword" type="text" class="validate" placeholder="{{$oneTimePassword}}"
                         autocomplete="off" minlength="6" maxlength="8">
+                    <input id="crypter" value="{{.Crypter}}" hidden>
                 </div>
             </div>
 
             <!-- submit button -->
-            <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "login"}}
+            <button class="btn waves-effect waves-light" href="#" id="submitbtn">{{lang .Lang "login"}}
                 <i class="material-icons right">send</i>
             </button>
 
@@ -38,4 +40,6 @@
         </div>
     </form>
 </div>
-{{template "javascript" .}} {{template "footer" .}}
+{{template "javascript" .}}
+<script type="text/javascript" src="/web/js/login.js"></script>
+{{template "footer" .}}

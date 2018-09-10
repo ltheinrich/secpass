@@ -7,12 +7,12 @@
 <head>
     <meta charset='utf-8'>
     <title>{{config "web" "title"}}</title>
-    <link href="/web/material-icons.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="/web/materialize.min.css" media="screen,projection">
-    <link href="/web/main.css" rel="stylesheet">
+    <link href="/web/css/material-icons.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/web/css/materialize.min.css" media="screen,projection">
+    <link href="/web/css/main.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="/web/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/web/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/web/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/web/images/favicon.png">
 </head>
 
 <!-- body -->
@@ -38,7 +38,7 @@
                 <!-- user -->
                 {{else}}
                 <li><a href="/settings">{{lang .Lang "settings"}}</a></li>
-                <li><a href="/login/logout">{{lang .Lang "logout"}}</a></li>
+                <li><a href="/login/logout" id="logout">{{lang .Lang "logout"}}</a></li>
                 {{end}}
             </ul>
         </div>
@@ -54,7 +54,7 @@
         <!-- user -->
         {{else}}
         <li><a href="/settings">{{lang .Lang "settings"}}</a></li>
-        <li><a href="/login/logout">{{lang .Lang "logout"}}</a></li>
+        <li><a href="/login/logout" id="logoutMobile">{{lang .Lang "logout"}}</a></li>
         {{end}}
     </ul>
 

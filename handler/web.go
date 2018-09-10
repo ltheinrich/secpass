@@ -7,6 +7,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"strings"
 
 	"lheinrich.de/secpass/conf"
 	"lheinrich.de/secpass/shorts"
@@ -15,8 +16,8 @@ import (
 // Web function
 func Web(w http.ResponseWriter, r *http.Request) {
 	// define file name and open file
-	_, fileName := path.Split(r.URL.Path)
-	file, errFile := os.Open(conf.Config["webserver"]["webDirectory"] + "/" + fileName)
+	directory, fileName := path.Split(r.URL.Path)
+	file, errFile := os.Open(conf.Config["webserver"]["webDirectory"] + getWebfileDirectory(directory) + fileName)
 
 	// check for error and defer close
 	shorts.Check(errFile)
@@ -28,4 +29,21 @@ func Web(w http.ResponseWriter, r *http.Request) {
 	// write out file
 	_, errCopy := io.Copy(w, file)
 	shorts.Check(errCopy)
+}
+
+// detect css, js oder images directory
+func getWebfileDirectory(directory string) string {
+	if strings.HasPrefix(directory, "/web/css/") {
+		// css file
+		return "/css/"
+	} else if strings.HasPrefix(directory, "/web/js/") {
+		// js file
+		return "/js/"
+	} else if strings.HasPrefix(directory, "/web/images/") {
+		// image file
+		return "/images/"
+	}
+
+	// just a file
+	return "/"
 }

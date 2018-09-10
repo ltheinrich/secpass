@@ -4,7 +4,7 @@
 <!---->
 {{$currentPassword := lang .Lang "currentPassword"}} {{$oneTimePassword := lang .Lang "oneTimePassword"}}
 <div class="card-panel blue-grey darken-1 border">
-    <form method="POST">
+    <form method="POST" id="settings">
         <div class="col card-content white-text">
             <!-- title -->
             <h5>{{lang .Lang "settings"}}</h5>
@@ -42,16 +42,19 @@
                     {{end}}
 
                     <!-- current password -->
-                    <input name="currentPassword" type="password" class="validate" placeholder="{{$currentPassword}}"
+                    <input name="currentPassword" id="currentPassword" type="password" class="validate" placeholder="{{$currentPassword}}"
                         autocomplete="off" minlength="8">
 
                     <!-- new password -->
-                    <input name="newPassword" type="password" class="validate" placeholder="{{$newPassword}}"
+                    <input name="newPassword" id="newPassword" type="password" class="validate" placeholder="{{$newPassword}}"
                         autocomplete="off" minlength="8">
 
                     <!-- repeat new password -->
-                    <input name="repeatNewPassword" type="password" class="validate" placeholder="{{$repeatNewPassword}}"
+                    <input name="repeatNewPassword" id="repeatNewPassword" type="password" class="validate" placeholder="{{$repeatNewPassword}}"
                         autocomplete="off" minlength="8">
+
+                    <!-- crypter -->
+                    <input name="crypter" id="crypter" hidden>
                 </div>
                 <br>
 
@@ -85,7 +88,7 @@
             </div>
 
             <!-- submit button -->
-            <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "save"}}
+            <button class="btn waves-effect waves-light" id="submitbtn">{{lang .Lang "save"}}
                 <i class="material-icons right">save</i>
             </button>
         </div>
@@ -113,4 +116,6 @@
         var elems = document.querySelectorAll('select');
         var instances = M.FormSelect.init(elems, null);
     });
-</script> {{template "footer" .}}
+</script>
+<script type="text/javascript" src="/web/js/settings.js"></script>
+{{template "footer" .}}

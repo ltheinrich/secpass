@@ -52,8 +52,8 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// change password
-		currentPassword, newPassword, repeatNewPassword := r.PostFormValue("currentPassword"), r.PostFormValue("newPassword"), r.PostFormValue("repeatNewPassword")
-		if currentPassword != "" && len(newPassword) >= 8 && len(repeatNewPassword) >= 8 {
+		currentPassword, newPassword, repeatNewPassword, crypter := r.PostFormValue("currentPassword"), r.PostFormValue("newPassword"), r.PostFormValue("repeatNewPassword"), r.PostFormValue("crypter")
+		if currentPassword != "" && len(newPassword) >= 8 && len(repeatNewPassword) >= 8 && crypter != "" {
 			// check passwords match
 			if newPassword == repeatNewPassword {
 				// define variables to write into
@@ -72,12 +72,8 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 					password, errPassword := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost+1)
 					shorts.Check(errPassword)
 
-					// re-encrypt key
-					decryptedKey := shorts.Decrypt(key, shorts.GenerateKey(currentPassword))
-					encryptedKey := shorts.Encrypt(decryptedKey, shorts.GenerateKey(newPassword))
-
 					// change password in db and check error
-					_, errExec := conf.DB.Exec(conf.GetSQL("change_password"), string(password), encryptedKey, user)
+					_, errExec := conf.DB.Exec(conf.GetSQL("change_password"), string(password), crypter, user)
 					shorts.Check(errExec)
 
 					// password changed successfully
@@ -193,7 +189,8 @@ func Settings(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// execute template
-		shorts.Check(tpl.ExecuteTemplate(w, "settings.html", Data{User: user, Lang: getLang(r), Special: special, TwoFactor: twoFactorData}))
+		shorts.Check(tpl.ExecuteTemplate(w, "settings.html", Data{User: user, Lang: getLang(r),
+			Special: special, TwoFactor: twoFactorData}))
 	}
 
 	// redirect to login

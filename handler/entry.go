@@ -50,7 +50,7 @@ func Entry(w http.ResponseWriter, r *http.Request) {
 		// add password
 		if id == 0 && title != "" && (name != "" || mail != "") && len(password) >= 4 {
 			// check if already exists
-			errQuery := conf.DB.QueryRow(conf.GetSQL("password"), id, user).Scan(&trash, &trash, &trash, &trash, &trash, &trash, &trash)
+			errQuery := conf.DB.QueryRow(conf.GetSQL("get_password"), id, user).Scan(&trash, &trash, &trash, &trash, &trash, &trash, &trash)
 
 			if errQuery == sql.ErrNoRows {
 				// insert into db
@@ -70,7 +70,7 @@ func Entry(w http.ResponseWriter, r *http.Request) {
 		// edit password
 		if id != 0 && title != "" && (name != "" || mail != "") && len(password) >= 4 {
 			// check if exists
-			errQuery := conf.DB.QueryRow(conf.GetSQL("password"), id, user).Scan(&trash, &trash, &trash, &trash, &trash, &trash, &trash, &trash)
+			errQuery := conf.DB.QueryRow(conf.GetSQL("get_password"), id, user).Scan(&trash, &trash, &trash, &trash, &trash, &trash, &trash, &trash)
 
 			if errQuery == nil {
 				// update db
@@ -106,7 +106,7 @@ func Entry(w http.ResponseWriter, r *http.Request) {
 // return password
 func getPassword(id int, user string) Password {
 	// query db and check for error
-	rows, errQuery := conf.DB.Query(conf.GetSQL("password"), id, user)
+	rows, errQuery := conf.DB.Query(conf.GetSQL("get_password"), id, user)
 	shorts.Check(errQuery)
 
 	// return if exist

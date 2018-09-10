@@ -20,7 +20,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		// logout
 		if r.URL.Path == "/login/logout" {
 			// delete session
-			delete(spuser.Sessions, cookie(r, "secpass_uuid"))
+			delete(spuser.Sessions, getCookie(r, "secpass_uuid"))
 
 			// delete cookies
 			deleteAllCookies(w)
@@ -35,8 +35,9 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// output login data wrong
+	// output login data wrong, crypter key
 	special := 0
+	var crypter string
 
 	// define values
 	name, password := r.PostFormValue("name"), r.PostFormValue("password")
@@ -73,23 +74,17 @@ func Login(w http.ResponseWriter, r *http.Request) {
 				uuid := shorts.UUID()
 				expires := time.Now().Add(10 * time.Minute)
 
-				// decrypt key
-				decryptedKey := shorts.Decrypt(key, shorts.GenerateKey(password))
-
 				// define cookies
 				cookieUUID := http.Cookie{Name: "secpass_uuid", Value: uuid, Expires: expires}
 				cookieName := http.Cookie{Name: "secpass_name", Value: username, Expires: expires}
-				cookieHash := http.Cookie{Name: "secpass_hash", Value: decryptedKey, Expires: expires}
 
 				// add session and set cookies
 				spuser.Sessions[uuid] = spuser.Session{User: username, Expires: expires}
 				http.SetCookie(w, &cookieUUID)
 				http.SetCookie(w, &cookieName)
-				http.SetCookie(w, &cookieHash)
 
-				// redirect to index
-				redirect(w, "/")
-				return
+				// send crypter
+				crypter = key
 			}
 		} else {
 			// wrong password
@@ -98,5 +93,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// execute template
-	shorts.Check(tpl.ExecuteTemplate(w, "login.html", Data{User: "", Lang: getLang(r), Special: special, LoggedOut: true}))
+	shorts.Check(tpl.ExecuteTemplate(w, "login.html", Data{User: "", Lang: getLang(r), Special: special,
+		LoggedOut: true, Crypter: crypter}))
 }
