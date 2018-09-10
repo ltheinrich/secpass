@@ -34,11 +34,13 @@
                 <!-- guest -->
                 {{if .LoggedOut}}
                 <li><a href="/login">{{lang .Lang "login"}}</a></li>
+                {{if (not (eq (config "web" "disableRegistration") "true"))}}
                 <li><a href="/register">{{lang .Lang "register"}}</a></li>
+                {{end}}
                 <!-- user -->
                 {{else}}
                 <li><a href="/settings">{{lang .Lang "settings"}}</a></li>
-                <li><a href="/login/logout" id="logout">{{lang .Lang "logout"}}</a></li>
+                <li><a href="#" id="logout">{{lang .Lang "logout"}}</a></li>
                 {{end}}
             </ul>
         </div>
@@ -50,11 +52,13 @@
         <!-- guest -->
         {{if .LoggedOut}}
         <li><a href="/login">{{lang .Lang "login"}}</a></li>
+        {{if (not (eq (config "web" "disableRegistration") "true"))}}
         <li><a href="/register">{{lang .Lang "register"}}</a></li>
+        {{end}}
         <!-- user -->
         {{else}}
         <li><a href="/settings">{{lang .Lang "settings"}}</a></li>
-        <li><a href="/login/logout" id="logoutMobile">{{lang .Lang "logout"}}</a></li>
+        <li><a href="#" id="logoutMobile">{{lang .Lang "logout"}}</a></li>
         {{end}}
     </ul>
 
