@@ -22,6 +22,7 @@ type Data struct {
 	Pwns            []string
 	Categories      []Category
 	DefaultCategory Category
+	Crypter         string
 }
 
 // Category to pass with Data
@@ -62,12 +63,6 @@ var (
 	// let cookies expire
 	expiresCookie = time.Now().Add(-100 * time.Hour)
 )
-
-// name function
-func name(w http.ResponseWriter, r *http.Request) {
-	// execute template
-	shorts.Check(tpl.ExecuteTemplate(w, "name", nil))
-}
 
 // LoadTemplates parse
 func LoadTemplates() {
@@ -120,7 +115,6 @@ func checkSession(w http.ResponseWriter, r *http.Request) string {
 		// define cookies
 		cookieUUID, _ := r.Cookie("secpass_uuid")
 		cookieName, _ := r.Cookie("secpass_name")
-		cookieHash, _ := r.Cookie("secpass_hash")
 
 		// get cookie values
 		uuid := cookieUUID.Value
@@ -141,12 +135,10 @@ func checkSession(w http.ResponseWriter, r *http.Request) string {
 			// change cookie expires time
 			cookieUUID.Expires = expires
 			cookieName.Expires = expires
-			cookieHash.Expires = expires
 
 			// update cookies
 			http.SetCookie(w, cookieUUID)
 			http.SetCookie(w, cookieName)
-			http.SetCookie(w, cookieHash)
 
 			// return user
 			return user
@@ -157,8 +149,8 @@ func checkSession(w http.ResponseWriter, r *http.Request) string {
 	return ""
 }
 
-// cookie return cookie value
-func cookie(r *http.Request, name string) string {
+// getCookie return getCookie value
+func getCookie(r *http.Request, name string) string {
 	// get cookie and check for error
 	cookie, err := r.Cookie(name)
 	shorts.Check(err)
@@ -167,7 +159,7 @@ func cookie(r *http.Request, name string) string {
 	return cookie.Value
 }
 
-// delete cookie with specified name
+// deleteCookie with specified name
 func deleteCookie(w http.ResponseWriter, name string) {
 	// define cookie and delete
 	cookie := http.Cookie{Name: name, Value: "null", Path: "/", MaxAge: -1, Expires: expiresCookie}
@@ -186,6 +178,6 @@ func deleteCookies(w http.ResponseWriter, names []string) {
 // delete all secpass cookies
 func deleteAllCookies(w http.ResponseWriter) {
 	// define cookies and delete them
-	cookies := []string{"secpass_hash", "secpass_uuid", "secpass_name", "secpass_lang"}
+	cookies := []string{"secpass_uuid", "secpass_name", "secpass_lang"}
 	deleteCookies(w, cookies)
 }

@@ -4,7 +4,7 @@
 <!---->
 {{$repeatPassword := lang .Lang "repeatPassword"}}
 <div class="card-panel blue-grey darken-1 border">
-    <form method="POST">
+    <form method="POST" id="register">
         <div class="col card-content white-text">
             <!-- title -->
             <h5>{{lang .Lang "register"}}</h5>
@@ -20,20 +20,23 @@
             <!-- register input -->
             <div class="row">
                 <div class="input-field col s12">
-                    <input name="name" type="text" class="validate" placeholder="{{$name}}" required>
-                    <input name="password" type="password" class="validate" placeholder="{{$password}}" minlength="8"
-                        required>
-                    <input name="repeat" type="password" class="validate" placeholder="{{$repeatPassword}}" minlength="8"
-                        required>
+                    <input name="name" id="name" type="text" class="validate" placeholder="{{$name}}" required>
+                    <input name="password" id="password" type="password" class="validate" placeholder="{{$password}}"
+                        minlength="8" required>
+                    <input name="repeat" id="repeat" type="password" class="validate" placeholder="{{$repeatPassword}}"
+                        minlength="8" required>
+                    <input name="crypter" id="crypter" hidden>
                 </div>
             </div>
 
             <!-- submit button -->
-            <button class="btn waves-effect waves-light" type="submit">{{lang .Lang "register"}}
+            <button class="btn waves-effect waves-light" id="submitbtn">{{lang .Lang "register"}}
                 <i class="material-icons right">send</i>
             </button>
             <p>{{lang .Lang "cookieWarning"}}</p>
         </div>
     </form>
 </div>
-{{template "javascript" .}} {{template "footer" .}}
+{{template "javascript" .}}
+<script type="text/javascript" src="/web/js/register.js"></script>
+{{template "footer" .}}

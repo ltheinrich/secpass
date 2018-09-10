@@ -22,29 +22,24 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	special := 0
 
 	// define values
-	name, password, repeat := r.PostFormValue("name"), r.PostFormValue("password"), r.PostFormValue("repeat")
+	name, password := r.PostFormValue("name"), r.PostFormValue("password")
+	repeat, crypter := r.PostFormValue("repeat"), r.PostFormValue("crypter")
 
 	// check for input
-	if name != "" && password != "" && repeat != "" && len(password) >= 8 && len(repeat) >= 8 {
+	if name != "" && password != "" && repeat != "" && len(password) >= 8 && len(repeat) >= 8 && crypter != "" {
 		// check whether passwords match
 		if password == repeat {
 			// check whether name already exists
 			var queryName string
-			errQuery := conf.DB.QueryRow(conf.GetSQL("get_password"), name).Scan(&queryName)
+			errQuery := conf.DB.QueryRow(conf.GetSQL("get_name"), name).Scan(&queryName)
 
 			// name does not exist
 			if errQuery == sql.ErrNoRows {
-				// generate random key
-				key := shorts.Encrypt(shorts.UUID(), shorts.GenerateKey(shorts.UUID()))
-
-				// encrypt key
-				encryptedKey := shorts.Encrypt(key, shorts.GenerateKey(password))
-
 				// hash password
 				passwordHash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost+1)
 
 				// insert user into db and add default category
-				_, errExecRegister := conf.DB.Exec(conf.GetSQL("register"), name, string(passwordHash), "", encryptedKey)
+				_, errExecRegister := conf.DB.Exec(conf.GetSQL("register"), name, string(passwordHash), "", crypter)
 				_, errExecADC := conf.DB.Exec(conf.GetSQL("add_default_category"), name)
 
 				// check for error
@@ -52,7 +47,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 				shorts.Check(errExecADC)
 
 				// redirect and return
-				redirectTemp(w, "/login")
+				redirect(w, "/login")
 				return
 			}
 

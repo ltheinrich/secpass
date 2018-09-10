@@ -1,24 +1,3 @@
-// get cookie
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-
-    return "";
-}
-
 // loop through entries and hide/show
 function showCategory(category) {
     var entries = document.querySelectorAll('.passwordentry');
@@ -73,10 +52,10 @@ if (copybtn != null) {
             // get passwordid, password and cookie hash
             var passwordid = event.target.getAttribute("passwordid");
             var password = document.getElementById("pw-" + passwordid).value;
-            var cookie = getCookie('secpass_hash');
+            var crypter = sessionStorage.getItem("crypter");
 
             // decrypt and fill element
-            el.value = sjcl.decrypt(cookie, password);
+            el.value = sjcl.decrypt(crypter, password);
 
             // add element to page and select
             document.body.appendChild(el);
@@ -98,11 +77,11 @@ if (viewbtn != null) {
             // get passwordid, password and cookie hash
             var passwordid = event.target.getAttribute("passwordid");
             var password = document.getElementById("pw-" + passwordid);
-            var cookie = getCookie('secpass_hash');
+            var crypter = sessionStorage.getItem("crypter");
 
             // get element and decrypt
             var el = document.getElementById("passwordView");
-            var decrypted = sjcl.decrypt(cookie, password.value);
+            var decrypted = sjcl.decrypt(crypter, password.value);
 
             // check that it is not displayed
             if (el.style.display === "none" || el.value != decrypted) {

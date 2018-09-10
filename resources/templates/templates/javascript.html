@@ -1,8 +1,79 @@
 {{define "javascript"}}
-<script type="text/javascript" src="/web/materialize.min.js"></script>
+<script type="text/javascript" src="/web/js/materialize.min.js"></script>
+<script type="text/javascript" src="/web/js/sjcl.js"></script>
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function () {
         var elems = document.querySelectorAll('.sidenav');
         var instances = M.Sidenav.init(elems, null);
     });
+
+
+    // get a cookie
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+
+        return "";
+    }
+
+    // set a cookie
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    // hash string
+    function hash(text) {
+        var rawHash = sjcl.hash.sha256.hash("sp_" + sjcl.hash.sha256.hash("secpass_" + text));
+        var hash = sjcl.codec.hex.fromBits(rawHash);
+        return hash;
+    };
+
+    // hash one time
+    function hashOne(text) {
+        var rawHash = sjcl.hash.sha256.hash("secpasso_" + text);
+        var hash = sjcl.codec.hex.fromBits(rawHash);
+        return hash;
+    };
+
+    // generate uuid
+    function uuid() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    }
+
+    // logout remove crypter
+    var logout = document.getElementById("logout");
+    if (logout != null) {
+        logout.addEventListener('click', function () {
+            sessionStorage.removeItem("crypter");
+        });
+    }
+
+    // logout mobile remove crypter
+    var logoutMobile = document.getElementById("logoutMobile");
+    if (logoutMobile != null) {
+        logoutMobile.addEventListener('click', function () {
+            sessionStorage.removeItem("crypter");
+        });
+    }
 </script> {{end}}

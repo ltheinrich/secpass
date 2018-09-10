@@ -1,26 +1,7 @@
-// get cookie
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-
-    return "";
-}
-
+// decrypt password
 try {
-    document.getElementById("passwordPre").value = sjcl.decrypt(getCookie('secpass_hash'), document.getElementById("password").value);
+    var crypter = sessionStorage.getItem("crypter");
+    document.getElementById("passwordPre").value = sjcl.decrypt(crypter, document.getElementById("password").value);
 } catch (exception) { }
 
 // encrypt password
@@ -42,7 +23,8 @@ function manipulateForm() {
 
     // encrypt password
     var password = document.getElementById("passwordPre").value;
-    document.getElementById("password").value = sjcl.encrypt(getCookie('secpass_hash'), password, { ks: 256 });
+    var crypter = sessionStorage.getItem("crypter");
+    document.getElementById("password").value = sjcl.encrypt(crypter, password, { ks: 256 });
 
     // submit and return
     document.getElementById("form").submit();

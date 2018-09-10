@@ -66,7 +66,7 @@ func PwnedList(name string) []string {
 // TwoFactorSecret get two-factor authentication secret and "" if disabled
 func TwoFactorSecret(user string) string {
 	// query db
-	row := conf.DB.QueryRow(conf.GetSQL("two_factor"), user)
+	row := conf.DB.QueryRow(conf.GetSQL("get_two_factor_secret"), user)
 
 	// read from query
 	var secret string

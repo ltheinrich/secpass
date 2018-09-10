@@ -1,7 +1,15 @@
 SELECT
-    name
+    title,
+    name,
+    mail,
+    passwordValue,
+    url,
+    backupCode,
+    notes,
+    category
 FROM
-    users
+    passwords
 WHERE
-    name = $1;
+    id = $1
+    AND author = $2;
 

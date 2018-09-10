@@ -72,7 +72,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 // return passwords as list
 func getPasswords(user string) []Password {
 	// query db and check for error
-	rows, errQuery := conf.DB.Query(conf.GetSQL("passwords"), user)
+	rows, errQuery := conf.DB.Query(conf.GetSQL("get_passwords"), user)
 	shorts.Check(errQuery)
 
 	passwordList := []Password{}
