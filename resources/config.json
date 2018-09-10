@@ -17,7 +17,8 @@
     "web": {
         "title": "secpass",
         "imprint": "/imprint",
-        "privacy": "/privacy"
+        "privacy": "/privacy",
+        "disableRegistration": "false"
     },
     "app": {
         "logFile": "log.txt",

@@ -12,6 +12,11 @@ import (
 
 // Register function
 func Register(w http.ResponseWriter, r *http.Request) {
+	if conf.Config["web"]["disableRegistration"] == "true" {
+		redirect(w, "/login")
+		return
+	}
+
 	// check logged in and redirect to index if so
 	if checkSession(w, r) != "" {
 		redirect(w, "/")
