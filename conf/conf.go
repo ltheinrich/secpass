@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"lheinrich.de/secpass/shorts"
+	"lheinrich.de/lheinrich/secpass/shorts"
 )
 
 var (

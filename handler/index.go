@@ -4,11 +4,11 @@ import (
 	"net/http"
 	"strconv"
 
-	"lheinrich.de/secpass/spuser"
+	"lheinrich.de/lheinrich/secpass/spuser"
 
-	"lheinrich.de/secpass/conf"
+	"lheinrich.de/lheinrich/secpass/conf"
 
-	"lheinrich.de/secpass/shorts"
+	"lheinrich.de/lheinrich/secpass/shorts"
 )
 
 // Index function
