@@ -9,11 +9,11 @@ import (
 	"strings"
 	"time"
 
-	"lheinrich.de/secpass/spuser"
+	"lheinrich.de/lheinrich/secpass/spuser"
 
-	"lheinrich.de/secpass/conf"
-	"lheinrich.de/secpass/handler"
-	"lheinrich.de/secpass/shorts"
+	"lheinrich.de/lheinrich/secpass/conf"
+	"lheinrich.de/lheinrich/secpass/handler"
+	"lheinrich.de/lheinrich/secpass/shorts"
 )
 
 // main function

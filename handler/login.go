@@ -8,9 +8,9 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
-	"lheinrich.de/secpass/conf"
-	"lheinrich.de/secpass/shorts"
-	"lheinrich.de/secpass/spuser"
+	"lheinrich.de/lheinrich/secpass/conf"
+	"lheinrich.de/lheinrich/secpass/shorts"
+	"lheinrich.de/lheinrich/secpass/spuser"
 )
 
 // Login function

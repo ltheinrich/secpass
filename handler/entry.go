@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"lheinrich.de/secpass/conf"
+	"lheinrich.de/lheinrich/secpass/conf"
 
-	"lheinrich.de/secpass/shorts"
+	"lheinrich.de/lheinrich/secpass/shorts"
 )
 
 // Password structure
