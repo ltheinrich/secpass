@@ -6,11 +6,20 @@
  Border distance for box
 */
 
-.border {
-    margin-top: 5%;
-    margin-right: 10%;
-    margin-left: 10%;
-    margin-bottom: 2%;
+@media (min-width:320px) {
+    .border {
+        margin: -1px 0 5% 0;
+    }
+
+    footer {
+        padding-right: 2px;
+        padding-left: 2px;
+    }
+}
+@media (min-width:1025px) {
+    .border {
+        margin: 5% 10%;
+    }
 }
 
 /*
