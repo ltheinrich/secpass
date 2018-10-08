@@ -6,8 +6,8 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
-	"lheinrich.de/lheinrich/secpass/internal/pkg/conf"
-	"lheinrich.de/lheinrich/secpass/internal/pkg/shorts"
+	"github.com/lheinrichde/secpass/internal/pkg/conf"
+	"github.com/lheinrichde/secpass/internal/pkg/shorts"
 )
 
 // Register function
