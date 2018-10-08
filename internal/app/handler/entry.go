@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"lheinrich.de/lheinrich/secpass/internal/pkg/conf"
-	"lheinrich.de/lheinrich/secpass/internal/pkg/shorts"
+	"github.com/lheinrichde/secpass/internal/pkg/conf"
+	"github.com/lheinrichde/secpass/internal/pkg/shorts"
 )
 
 // Password structure

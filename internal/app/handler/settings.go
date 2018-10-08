@@ -11,9 +11,9 @@ import (
 	"github.com/pquerna/otp"
 	"github.com/pquerna/otp/totp"
 
-	"lheinrich.de/lheinrich/secpass/internal/pkg/conf"
-	"lheinrich.de/lheinrich/secpass/internal/pkg/shorts"
-	"lheinrich.de/lheinrich/secpass/internal/pkg/spuser"
+	"github.com/lheinrichde/secpass/internal/pkg/conf"
+	"github.com/lheinrichde/secpass/internal/pkg/shorts"
+	"github.com/lheinrichde/secpass/internal/pkg/spuser"
 
 	"golang.org/x/crypto/bcrypt"
 )

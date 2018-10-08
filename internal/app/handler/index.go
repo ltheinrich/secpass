@@ -4,10 +4,10 @@ import (
 	"net/http"
 	"strconv"
 
-	"lheinrich.de/lheinrich/secpass/internal/pkg/shorts"
-	"lheinrich.de/lheinrich/secpass/internal/pkg/spuser"
+	"github.com/lheinrichde/secpass/internal/pkg/shorts"
+	"github.com/lheinrichde/secpass/internal/pkg/spuser"
 
-	"lheinrich.de/lheinrich/secpass/internal/pkg/conf"
+	"github.com/lheinrichde/secpass/internal/pkg/conf"
 )
 
 // Index function

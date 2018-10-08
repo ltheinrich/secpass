@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"lheinrich.de/lheinrich/secpass/internal/pkg/shorts"
+	"github.com/lheinrichde/secpass/internal/pkg/shorts"
 )
 
 var (

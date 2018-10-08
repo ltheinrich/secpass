@@ -9,8 +9,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"lheinrich.de/lheinrich/secpass/internal/pkg/conf"
-	"lheinrich.de/lheinrich/secpass/internal/pkg/shorts"
+	"github.com/lheinrichde/secpass/internal/pkg/conf"
+	"github.com/lheinrichde/secpass/internal/pkg/shorts"
 )
 
 // Web function
