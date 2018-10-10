@@ -54,7 +54,7 @@
     "sha3",
   ]
   pruneopts = "UT"
-  revision = "5295e8364332db77d75fce11f1d19c053919a9c9"
+  revision = "7c1a557ab941a71c619514f229f0b27ccb0c27cf"
 
 [solve-meta]
   analyzer-name = "dep"
