@@ -9,10 +9,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/lheinrichde/secpass/internal/app/handler"
-	"github.com/lheinrichde/secpass/internal/pkg/conf"
-	"github.com/lheinrichde/secpass/internal/pkg/shorts"
-	"github.com/lheinrichde/secpass/internal/pkg/spuser"
+	"github.com/ltheinrich/secpass/internal/app/handler"
+	"github.com/ltheinrich/secpass/internal/pkg/conf"
+	"github.com/ltheinrich/secpass/internal/pkg/shorts"
+	"github.com/ltheinrich/secpass/internal/pkg/spuser"
 )
 
 // main function

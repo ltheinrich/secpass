@@ -8,10 +8,10 @@ import (
 
 	"golang.org/x/crypto/bcrypt"
 
-	"github.com/lheinrichde/secpass/internal/pkg/conf"
-	"github.com/lheinrichde/secpass/internal/pkg/spuser"
+	"github.com/ltheinrich/secpass/internal/pkg/conf"
+	"github.com/ltheinrich/secpass/internal/pkg/spuser"
 
-	"github.com/lheinrichde/secpass/internal/pkg/shorts"
+	"github.com/ltheinrich/secpass/internal/pkg/shorts"
 )
 
 // Login function

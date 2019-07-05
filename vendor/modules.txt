@@ -1,0 +1,20 @@
+# github.com/boombuler/barcode v1.0.1-0.20190219062509-6c824513bacc
+github.com/boombuler/barcode
+github.com/boombuler/barcode/qr
+github.com/boombuler/barcode/utils
+# github.com/lib/pq v1.1.1
+github.com/lib/pq
+github.com/lib/pq/oid
+github.com/lib/pq/scram
+# github.com/pquerna/otp v1.2.0
+github.com/pquerna/otp
+github.com/pquerna/otp/totp
+github.com/pquerna/otp/hotp
+# github.com/satori/go.uuid v1.2.0
+github.com/satori/go.uuid
+# golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
+golang.org/x/crypto/bcrypt
+golang.org/x/crypto/sha3
+golang.org/x/crypto/blowfish
+# golang.org/x/sys v0.0.0-20190626221950-04f50cda93cb
+golang.org/x/sys/cpu

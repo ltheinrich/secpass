@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/lheinrichde/secpass/internal/pkg/conf"
-	"github.com/lheinrichde/secpass/internal/pkg/shorts"
+	"github.com/ltheinrich/secpass/internal/pkg/conf"
+	"github.com/ltheinrich/secpass/internal/pkg/shorts"
 )
 
 // Sessions map
