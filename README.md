@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.com/ltheinrich/secpass.svg)](https://travis-ci.com/ltheinrich/secpass)
 [![Discord](https://img.shields.io/discord/488792767657410560.svg)](https://discord.gg/jjRruxx)
 
-# SecPass
+# Secpass
 Secure web-based password manager
 
 ## Building from source
