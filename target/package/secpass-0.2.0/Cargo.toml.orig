@@ -1,0 +1,12 @@
+[package]
+name = "secpass"
+version = "0.2.0" # becomes 2.0.0
+authors = ["Lennart Heinrich <lennart@ltheinrich.de>"]
+edition = "2018"
+license = "ISC"
+repository = "https://github.com/ltheinrich/secpass"
+description = "Secure web-based password manager"
+readme = "README.md"
+
+[dependencies]
+kern = "0.3.0"
