@@ -25,10 +25,10 @@ RUN mkdir -p /opt/secpass
 
 WORKDIR /opt/secpass
 
-COPY ./resources.zip /opt/secpass
-COPY ./secpass-linux-amd64 /opt/secpass
+COPY ./resources.tar.xz /opt/secpass
+COPY ./secpass-linux-x86_64 /opt/secpass
 
-RUN cd /opt/secpass && unzip resources.zip && rm resources.zip
+RUN cd /opt/secpass && tar xfJ resources.tar.xz && rm resources.tar.xz
 
 RUN sed -i "s/127.0.0.1/secpassdb/g" /opt/secpass/resources/config.json
 RUN sed -i "s/5432/12215/g" /opt/secpass/resources/config.json
@@ -37,7 +37,7 @@ RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 
 EXPOSE 2215
 
-ENTRYPOINT ["/opt/secpass/secpass-linux-amd64"]
+ENTRYPOINT ["/opt/secpass/secpass-linux-x86_64"]
 ' > Dockerfile
 echo ok
 
@@ -75,8 +75,8 @@ echo ok
 
 # download using wget utility
 echo -e "\033[1mDownload:\033[0m"
-wget -q --show-progress https://github.com/ltheinrich/secpass/releases/download/$1/resources.zip
-wget -q --show-progress https://github.com/ltheinrich/secpass/releases/download/$1/secpass-linux-amd64 && chmod +x ./secpass-linux-amd64
+wget -q --show-progress https://github.com/ltheinrich/secpass/releases/download/$1/resources.tar.xz
+wget -q --show-progress https://github.com/ltheinrich/secpass/releases/download/$1/secpass-linux-x86_64 && chmod +x ./secpass-linux-x86_64
 
 # list files
 echo -e "\033[1mNew Files:\033[0m"
