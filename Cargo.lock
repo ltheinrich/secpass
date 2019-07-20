@@ -2,15 +2,15 @@
 # It is not intended for manual editing.
 [[package]]
 name = "kern"
-version = "0.3.0"
+version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "secpass"
 version = "0.2.0"
 dependencies = [
- "kern 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "kern 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [metadata]
-"checksum kern 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "0029fefdf40efa2457c88b127ec82904d1fc82b7514e37725553fd78499b8435"
+"checksum kern 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)" = "436f3ce04bc6f47fc7a948731e0191dddbbe995fe18f978151ed6fc81282208d"

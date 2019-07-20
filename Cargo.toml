@@ -9,4 +9,4 @@ description = "Secure web-based password manager"
 readme = "README.md"
 
 [dependencies]
-kern = "0.3.0"
+kern = "0.3.2"
