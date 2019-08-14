@@ -3,7 +3,7 @@ module github.com/ltheinrich/secpass
 go 1.12
 
 require (
-	github.com/lib/pq v1.1.1
+	github.com/lib/pq v1.2.0
 	github.com/pquerna/otp v1.2.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/stretchr/objx v0.2.0 // indirect
