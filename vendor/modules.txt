@@ -20,7 +20,7 @@ github.com/pquerna/otp/totp
 # github.com/satori/go.uuid v1.2.0
 ## explicit
 github.com/satori/go.uuid
-# golang.org/x/crypto v0.0.0-20220128200615-198e4374d7ed
+# golang.org/x/crypto v0.0.0-20220131195533-30dcbda58838
 ## explicit; go 1.17
 golang.org/x/crypto/bcrypt
 golang.org/x/crypto/blowfish
