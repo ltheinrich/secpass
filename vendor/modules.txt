@@ -5,7 +5,7 @@ github.com/boombuler/barcode/qr
 github.com/boombuler/barcode/utils
 # github.com/davecgh/go-spew v1.1.1
 ## explicit
-# github.com/lib/pq v1.10.5
+# github.com/lib/pq v1.10.6
 ## explicit; go 1.13
 github.com/lib/pq
 github.com/lib/pq/oid
@@ -20,7 +20,7 @@ github.com/pquerna/otp/totp
 # github.com/satori/go.uuid v1.2.0
 ## explicit
 github.com/satori/go.uuid
-# golang.org/x/crypto v0.0.0-20220513210258-46612604a0f9
+# golang.org/x/crypto v0.0.0-20220517005047-85d78b3ac167
 ## explicit; go 1.17
 golang.org/x/crypto/bcrypt
 golang.org/x/crypto/blowfish
