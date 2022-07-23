@@ -8,8 +8,8 @@ require (
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/pquerna/otp v1.3.0
 	github.com/satori/go.uuid v1.2.0
-	golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d
-	golang.org/x/sys v0.0.0-20220721230656-c6bc011c0c49 // indirect
+	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa
+	golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f // indirect
 	gopkg.in/check.v1 v1.0.0-20200902074654-038fdea0a05b // indirect
 )
 
