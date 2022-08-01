@@ -9,7 +9,7 @@ require (
 	github.com/pquerna/otp v1.3.0
 	github.com/satori/go.uuid v1.2.0
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa
-	golang.org/x/sys v0.0.0-20220730100132-1609e554cd39 // indirect
+	golang.org/x/sys v0.0.0-20220731174439-a90be440212d // indirect
 	gopkg.in/check.v1 v1.0.0-20200902074654-038fdea0a05b // indirect
 )
 
