@@ -25,7 +25,7 @@ github.com/satori/go.uuid
 golang.org/x/crypto/bcrypt
 golang.org/x/crypto/blowfish
 golang.org/x/crypto/sha3
-# golang.org/x/sys v0.0.0-20220913175220-63ea55921009
+# golang.org/x/sys v0.0.0-20220915200043-7b5979e65e41
 ## explicit; go 1.17
 golang.org/x/sys/cpu
 # gopkg.in/check.v1 v1.0.0-20200902074654-038fdea0a05b
