@@ -12,10 +12,11 @@ github.com/lib/pq/oid
 github.com/lib/pq/scram
 # github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e
 ## explicit; go 1.12
-# github.com/pquerna/otp v1.3.0
+# github.com/pquerna/otp v1.4.0
 ## explicit; go 1.12
 github.com/pquerna/otp
 github.com/pquerna/otp/hotp
+github.com/pquerna/otp/internal
 github.com/pquerna/otp/totp
 # github.com/satori/go.uuid v1.2.0
 ## explicit
