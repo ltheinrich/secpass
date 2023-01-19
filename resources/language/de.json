@@ -57,5 +57,6 @@
     "showUncategorized": "Zeige unkategorisierte Einträge",
     "passwords": "Passwörter",
     "createCategory": "Kategorie erstellen",
-    "needNameOrMail": "Du musst einen Namen oder eine E-Mail Adresse angeben."
+    "needNameOrMail": "Du musst einen Namen oder eine E-Mail Adresse angeben.",
+    "registration": "Registrierung"
 }

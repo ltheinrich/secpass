@@ -57,5 +57,6 @@
     "showUncategorized": "Show uncategorized entries",
     "passwords": "Passwords",
     "createCategory": "Create category",
-    "needNameOrMail": "You must provide a name or a e-mail address."
+    "needNameOrMail": "You must provide a name or a e-mail address.",
+    "registration": "Registration"
 }
