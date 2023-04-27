@@ -5,7 +5,7 @@ github.com/boombuler/barcode/qr
 github.com/boombuler/barcode/utils
 # github.com/davecgh/go-spew v1.1.1
 ## explicit
-# github.com/lib/pq v1.10.8
+# github.com/lib/pq v1.10.9
 ## explicit; go 1.13
 github.com/lib/pq
 github.com/lib/pq/oid
