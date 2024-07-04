@@ -1,4 +1,4 @@
-# github.com/boombuler/barcode v1.0.1
+# github.com/boombuler/barcode v1.0.2
 ## explicit
 github.com/boombuler/barcode
 github.com/boombuler/barcode/qr

@@ -13,4 +13,4 @@ require (
 	gopkg.in/check.v1 v1.0.0-20200902074654-038fdea0a05b // indirect
 )
 
-require github.com/boombuler/barcode v1.0.1 // indirect
+require github.com/boombuler/barcode v1.0.2 // indirect
